@@ -48,7 +48,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="ScrollSynchronizer.cs" />
     <Compile Include="DoubleBox.cs" />
     <Compile Include="EditableTextBlock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

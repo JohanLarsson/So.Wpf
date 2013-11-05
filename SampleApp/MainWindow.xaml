@@ -47,18 +47,19 @@
                 </controls:TreeListView>
             </TabItem>
             <TabItem Header="ScrollSynchronizer">
+                <TabItem.Resources>
+
+                    <Style TargetType="ScrollViewer">
+                        <Setter Property="controls:ScrollSynchronizer.ScrollGroup" Value="Group1" />
+                    </Style>
+                </TabItem.Resources>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ScrollViewer Grid.Column="0"  controls:ScrollSynchronizer.ScrollGroup="Group1">
-                        <ListBox ItemsSource="{Binding ScrollItems}"/>
-                    </ScrollViewer>
-                    <ScrollViewer Grid.Column="1"  controls:ScrollSynchronizer.ScrollGroup="Group1">
-                        <ListBox ItemsSource="{Binding ScrollItems}" 
-                             controls:ScrollSynchronizer.ScrollGroup="Group1"/>
-                    </ScrollViewer>
+                    <ListBox Grid.Column="0" ItemsSource="{Binding ScrollItems}"/>
+                    <ListBox Grid.Column="1" ItemsSource="{Binding ScrollItems}"/>
 
                 </Grid>
             </TabItem>
