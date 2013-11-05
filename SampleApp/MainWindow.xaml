@@ -48,7 +48,6 @@
             </TabItem>
             <TabItem Header="ScrollSynchronizer">
                 <TabItem.Resources>
-
                     <Style TargetType="ScrollViewer">
                         <Setter Property="controls:ScrollSynchronizer.ScrollGroup" Value="Group1" />
                     </Style>
@@ -60,8 +59,17 @@
                     </Grid.ColumnDefinitions>
                     <ListBox Grid.Column="0" ItemsSource="{Binding ScrollItems}"/>
                     <ListBox Grid.Column="1" ItemsSource="{Binding ScrollItems}"/>
-
                 </Grid>
+            </TabItem>
+            <TabItem Header="EditableTextBlock">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding DummyText}"/>
+                    <controls:EditableTextBlock Text="{Binding DummyText}" SelectAllTextOnFocus="True"/>
+                    <controls:EditableTextBlock Text="{Binding DummyText}" SelectAllTextOnFocus="True"/>
+                </StackPanel>
+
+
+
             </TabItem>
         </TabControl>
     </Grid>

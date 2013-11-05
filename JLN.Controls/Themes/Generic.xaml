@@ -126,7 +126,6 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-
     <!--Apply this style to all controls of type 'TreeListView'.-->
     <Style TargetType="{x:Type controls:TreeListView}">
         <!--Set the control template.-->

@@ -15,7 +15,7 @@ namespace JLN.Controls
     {
         static EditableTextBlock()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(EditableTextBlock), new FrameworkPropertyMetadata(typeof(EditableTextBlock)));
+            //DefaultStyleKeyProperty.OverrideMetadata(typeof(EditableTextBlock), new FrameworkPropertyMetadata(typeof(EditableTextBlock)));
         }
 
         public EditableTextBlock()
