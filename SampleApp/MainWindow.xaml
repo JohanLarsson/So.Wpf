@@ -62,10 +62,15 @@
                 </Grid>
             </TabItem>
             <TabItem Header="EditableTextBlock">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding DummyText}"/>
-                    <controls:EditableTextBlock Text="{Binding DummyText}" SelectAllTextOnFocus="True"/>
-                    <controls:EditableTextBlock Text="{Binding DummyText}" SelectAllTextOnFocus="True"/>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="TextBlocK "/>
+                        <TextBlock Text="{Binding DummyText}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="EditableTextBlock "/>
+                        <controls:EditableTextBlock Text="{Binding DummyText}"/>
+                    </StackPanel>
                 </StackPanel>
 
 

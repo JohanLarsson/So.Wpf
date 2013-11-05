@@ -177,10 +177,11 @@
         </Setter>
     </Style>
 
-    <Style x:Key="TextBoxAsEditableTextBlockStyle" TargetType="{x:Type TextBox}">
+    <Style x:Key="TextBoxAsEditableTextBlockStyle" TargetType="{x:Type controls:EditableTextBlock}">
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="BorderBrush" Value="{x:Null}"/>
         <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="BlueViolet"/>
         <Setter Property="Margin" Value="-2,0,-2,0"/>
         <Setter Property="AllowDrop" Value="true"/>
         <Setter Property="MaxLines" Value="1"/>
