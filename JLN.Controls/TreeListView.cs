@@ -6,6 +6,7 @@ namespace JLN.Controls
     /// <summary>
     /// Represents a control that displays hierarchical data in a tree structure
     /// that has items that can expand and collapse.
+    /// http://www.codeproject.com/Articles/24973/TreeListView
     /// </summary>
     public class TreeListView : TreeView
     {
