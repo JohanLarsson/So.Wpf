@@ -111,10 +111,6 @@
             <FrameworkElement Width="{Binding RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource TreeListViewConverter}}"/>
             <!--Use a standard toggle button-->
             <ToggleButton IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TreeViewItem}}" 
-                          Width="15"
-                          Height="15"
-                          VerticalAlignment="Center" 
-                          Margin="1" 
                           Style="{StaticResource ExpandCollapseToggleStyle}"/>
         </StackPanel>
         <ControlTemplate.Triggers>
