@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -11,6 +10,7 @@ namespace JLN.Controls
     {
         private readonly PropertyChangedEventHandler _handler;
         private readonly Dictionary<T, int> _items = new Dictionary<T, int>(); 
+
         public OcPropertyChangedListener(ObservableCollection<T> collection, PropertyChangedEventHandler handler)
         {
             _handler = handler;
