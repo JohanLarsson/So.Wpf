@@ -48,9 +48,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ManualRelayCommand.cs" />
     <Compile Include="MultiplyConverter.cs" />
     <Compile Include="OcPropertyChangedListener.cs" />
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="RelayCommandBase.cs" />
     <Compile Include="ScrollSynchronizer.cs" />
     <Compile Include="DoubleBox.cs" />
     <Compile Include="EditableTextBlock.cs" />
