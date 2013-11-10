@@ -15,7 +15,7 @@ namespace JLN.Controls
         
         public override event EventHandler CanExecuteChanged;
 
-        public virtual void RaiseExecuteChanged()
+        public virtual void RaiseCanExecuteChanged()
         {
             var handler = CanExecuteChanged;
             if (handler != null) 
