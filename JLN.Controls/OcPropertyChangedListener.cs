@@ -1,53 +1,53 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Windows;
+using JLN.Controls.Annotations;
 
 namespace JLN.Controls
 {
-    public class OcPropertyChangedListener<T> : OcPropertyChangedListener where T : INotifyPropertyChanged
+    public class OcPropertyChangedListener<T> : INotifyPropertyChanged where T : INotifyPropertyChanged
     {
-        private readonly PropertyChangedEventHandler _handler;
-        private readonly Dictionary<T, int> _items = new Dictionary<T, int>(); 
+        private readonly ObservableCollection<T> _collection;
+        private readonly string _propertyName;
+        //private readonly EventHandler<PropertyChangedEventArgs> _handler;
+        private readonly Dictionary<T, int> _items = new Dictionary<T, int>();
 
-        public OcPropertyChangedListener(ObservableCollection<T> collection, PropertyChangedEventHandler handler)
+        public OcPropertyChangedListener(ObservableCollection<T> collection, string propertyName = "")
         {
-            _handler = handler;
-            collection.CollectionChanged += (sender, e) =>
+            _collection = collection;
+            _propertyName = propertyName ?? "";
+            //_handler = handler;
+            CollectionChangedEventManager.AddHandler(collection, CollectionChanged);
+        }
+
+        private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
             {
-                if (e.Action == NotifyCollectionChangedAction.Move)
-                    return;
-                if (e.Action == NotifyCollectionChangedAction.Reset)
-                {
-                    foreach (T item in _items.Keys.Except(collection).ToList())
-                    {
-                        item.PropertyChanged -= handler;
-                        _items.Remove(item);
-                    }
-                    Dictionary<T, int> dictionary = collection.ToDictionary(x => x, x => collection.Count(y => y.Equals(x)));
-                    foreach (T newItem in dictionary.Keys.Except(_items.Keys))
-                    {
-                        newItem.PropertyChanged += handler;
-                        _items.Add(newItem,dictionary[newItem]);
-                    }
-                    foreach (var i in dictionary)
-                    {
-                        _items[i.Key] = i.Value;
-                    }
-                }
-                if (e.OldItems != null)
-                    foreach (T item in e.OldItems)
-                    {
-                        _items[item]--;
-                        if (_items[item] == 0)
-                        {
-                            item.PropertyChanged -= _handler;
-                        }
-                    }
-                if (e.NewItems != null)
+                case NotifyCollectionChangedAction.Add:
                     Add(e.NewItems.Cast<T>());
-            };
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    Remove(e.OldItems.Cast<T>());
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    Add(e.NewItems.Cast<T>());
+                    Remove(e.OldItems.Cast<T>());
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    Reset();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
         }
 
         private void Add(IEnumerable<T> newItems)
@@ -61,18 +61,57 @@ namespace JLN.Controls
                 else
                 {
                     _items.Add(item, 1);
-                    item.PropertyChanged += _handler;
+                    PropertyChangedEventManager.AddHandler(item, ChildPropertyChanged, _propertyName);
                 }
             }
         }
+
+        private void Remove(IEnumerable<T> oldItems)
+        {
+            foreach (T item in oldItems)
+            {
+                _items[item]--;
+                if (_items[item] == 0)
+                {
+                    PropertyChangedEventManager.RemoveHandler(item, ChildPropertyChanged, _propertyName);
+                }
+            }
+        }
+
+        private void Reset()
+        {
+            foreach (T item in _items.Keys.Except(_collection).ToList())
+            {
+                PropertyChangedEventManager.RemoveHandler(item, ChildPropertyChanged, _propertyName);
+                _items.Remove(item);
+            }
+            Dictionary<T, int> dictionary = _collection.ToDictionary(x => x, x => _collection.Count(y => y.Equals(x)));
+            foreach (T newItem in dictionary.Keys.Except(_items.Keys))
+            {
+                PropertyChangedEventManager.AddHandler(newItem, ChildPropertyChanged, _propertyName);
+                _items.Add(newItem, dictionary[newItem]);
+            }
+            foreach (var i in dictionary)
+            {
+                _items[i.Key] = i.Value;
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void ChildPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+                handler(sender, new PropertyChangedEventArgs(e.PropertyName));
+        }
     }
 
-    public class OcPropertyChangedListener
+    public static class OcPropertyChangedListener
     {
-        public static OcPropertyChangedListener<T> Create<T>(ObservableCollection<T> collection,
-    PropertyChangedEventHandler handler) where T : INotifyPropertyChanged
+        public static OcPropertyChangedListener<T> Create<T>(ObservableCollection<T> collection, string propertyName = "") where T : INotifyPropertyChanged
         {
-            return new OcPropertyChangedListener<T>(collection, handler);
+            return new OcPropertyChangedListener<T>(collection, propertyName);
         }
     }
 }

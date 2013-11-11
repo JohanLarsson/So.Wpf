@@ -17,7 +17,8 @@ namespace JLN.Controls.Tests
             var fakeInpc = new FakeInpc();
             var oc = new ObservableCollection<FakeInpc>();
             var events = new  List<FakeInpc>();
-            var listener = OcPropertyChangedListener.Create(oc, (sender, args) => events.Add((FakeInpc) sender));
+            var listener = OcPropertyChangedListener.Create(oc);//, (sender, args) => events.Add((FakeInpc)sender));
+            listener.PropertyChanged += (sender, args) => events.Add((FakeInpc)sender);   
             Assert.IsFalse(fakeInpc.HasHandler);
             oc.Add(fakeInpc);
             Assert.IsTrue(fakeInpc.HasHandler);
@@ -31,7 +32,8 @@ namespace JLN.Controls.Tests
             var fakeInpc = new FakeInpc();
             var oc = new ObservableCollection<FakeInpc>();
             var events = new List<FakeInpc>();
-            var listener = OcPropertyChangedListener.Create(oc, (sender, args) => events.Add((FakeInpc)sender));
+            var listener = OcPropertyChangedListener.Create(oc);//, (sender, args) => events.Add((FakeInpc)sender));
+            listener.PropertyChanged += (sender, args) => events.Add((FakeInpc) sender);            
             Assert.IsFalse(fakeInpc.HasHandler);
             oc.Add(fakeInpc);
             oc.Add(fakeInpc);
@@ -48,7 +50,8 @@ namespace JLN.Controls.Tests
             var fakeInpc = new FakeInpc();
             var oc = new ObservableCollection<FakeInpc>();
             var events = new List<FakeInpc>();
-            var listener = OcPropertyChangedListener.Create(oc, (sender, args) => events.Add((FakeInpc)sender));
+            var listener = OcPropertyChangedListener.Create(oc);//, (sender, args) => events.Add((FakeInpc)sender));
+            listener.PropertyChanged += (sender, args) => events.Add((FakeInpc)sender);   
             Assert.IsFalse(fakeInpc.HasHandler);
             oc.Add(fakeInpc);
             Assert.IsTrue(fakeInpc.HasHandler);
@@ -64,7 +67,8 @@ namespace JLN.Controls.Tests
             var fakeInpc = new FakeInpc();
             var oc = new ObservableCollection<FakeInpc>();
             var events = new List<FakeInpc>();
-            var listener = OcPropertyChangedListener.Create(oc, (sender, args) => events.Add((FakeInpc)sender));
+            var listener = OcPropertyChangedListener.Create(oc);//, (sender, args) => events.Add((FakeInpc)sender));
+            listener.PropertyChanged += (sender, args) => events.Add((FakeInpc)sender);   
             Assert.IsFalse(fakeInpc.HasHandler);
             oc.Add(fakeInpc);
             Assert.IsTrue(fakeInpc.HasHandler);
@@ -72,6 +76,25 @@ namespace JLN.Controls.Tests
             Assert.AreEqual(fakeInpc, events.Single());
             oc.Clear();
             Assert.IsFalse(fakeInpc.HasHandler);
+        }
+
+        [Test]
+        public void ReplaceTest()
+        {
+            var fakeInpc1 = new FakeInpc();
+            var fakeInpc2 = new FakeInpc();
+            var oc = new ObservableCollection<FakeInpc>();
+            var events = new List<FakeInpc>();
+            var listener = OcPropertyChangedListener.Create(oc);//, (sender, args) => events.Add((FakeInpc)sender));
+            listener.PropertyChanged += (sender, args) => events.Add((FakeInpc)sender);
+            Assert.IsFalse(fakeInpc1.HasHandler);
+            oc.Add(fakeInpc1);
+            Assert.IsTrue(fakeInpc1.HasHandler);
+            fakeInpc1.Raise();
+            Assert.AreEqual(fakeInpc1, events.Single());
+            oc[0]=fakeInpc2;
+            Assert.IsFalse(fakeInpc1.HasHandler);
+            Assert.IsTrue(fakeInpc2.HasHandler);
         }
     }
 
