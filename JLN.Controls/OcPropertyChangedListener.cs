@@ -4,9 +4,11 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using JLN.Controls.Annotations;
+using Expression = System.Linq.Expressions.Expression;
 
 namespace JLN.Controls
 {
@@ -14,16 +16,18 @@ namespace JLN.Controls
     {
         private readonly ObservableCollection<T> _collection;
         private readonly string _propertyName;
-        //private readonly EventHandler<PropertyChangedEventArgs> _handler;
         private readonly Dictionary<T, int> _items = new Dictionary<T, int>();
 
         public OcPropertyChangedListener(ObservableCollection<T> collection, string propertyName = "")
         {
             _collection = collection;
             _propertyName = propertyName ?? "";
-            //_handler = handler;
             CollectionChangedEventManager.AddHandler(collection, CollectionChanged);
         }
+
+        public OcPropertyChangedListener(ObservableCollection<T> collection, Expression<Func<object>> property):
+            this(collection,OcPropertyChangedListener.GetPropertyName(property)) { }
+
 
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -112,6 +116,22 @@ namespace JLN.Controls
         public static OcPropertyChangedListener<T> Create<T>(ObservableCollection<T> collection, string propertyName = "") where T : INotifyPropertyChanged
         {
             return new OcPropertyChangedListener<T>(collection, propertyName);
+        }
+
+        public static OcPropertyChangedListener<T> Create<T>(ObservableCollection<T> collection, Expression<Func<object>> property) where T : INotifyPropertyChanged
+        {
+            return new OcPropertyChangedListener<T>(collection, GetPropertyName(property));
+        }
+
+        public static string GetPropertyName(Expression<Func<object>> property)
+        {
+            var memberExpression = property.Body as MemberExpression;
+            if (memberExpression != null)
+                return memberExpression.Member.Name;
+            var unaryExpression = property.Body as UnaryExpression;
+            var expression = unaryExpression.Operand;
+            throw new NotImplementedException("message");
+            
         }
     }
 }

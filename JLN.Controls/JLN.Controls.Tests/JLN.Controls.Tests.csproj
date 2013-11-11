@@ -46,6 +46,7 @@
     <Compile Include="OcPropertyChangedListenerTests.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReflectionHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
