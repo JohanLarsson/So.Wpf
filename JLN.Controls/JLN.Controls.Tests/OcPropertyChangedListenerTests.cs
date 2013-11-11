@@ -32,7 +32,7 @@ namespace JLN.Controls.Tests
             var fakeInpc = new FakeInpc();
             var oc = new ObservableCollection<FakeInpc>();
             var events = new List<FakeInpc>();
-            var listener = OcPropertyChangedListener.Create(oc, () => fakeInpc.DummyProperty1);
+            var listener = OcPropertyChangedListener.Create(oc, "DummyProperty1");
             listener.PropertyChanged += (sender, args) => events.Add((FakeInpc)sender);
             Assert.IsFalse(fakeInpc.HasHandler);
             oc.Add(fakeInpc);
@@ -114,13 +114,6 @@ namespace JLN.Controls.Tests
             Assert.IsTrue(fakeInpc2.HasHandler);
         }
 
-        [Test]
-        public void GetPropertyNameTest()
-        {
-            var fakeInpc = new FakeInpc();
-            var propertyName = OcPropertyChangedListener.GetPropertyName(() => fakeInpc.DummyProperty1);
-            Assert.AreEqual("DummyProperty1",propertyName);
-        }
     }
 
     public class FakeInpc : INotifyPropertyChanged
@@ -130,12 +123,12 @@ namespace JLN.Controls.Tests
 
         public void Raise1()
         {
-            OnPropertyChanged(OcPropertyChangedListener.GetPropertyName(() => DummyProperty1));
+            OnPropertyChanged("DummyProperty1");
         }
 
         public void Raise2()
         {
-            OnPropertyChanged(OcPropertyChangedListener.GetPropertyName(() => DummyProperty1));
+            OnPropertyChanged("DummyProperty2");
         }
 
         public bool HasHandler { get { return PropertyChanged != null; } }

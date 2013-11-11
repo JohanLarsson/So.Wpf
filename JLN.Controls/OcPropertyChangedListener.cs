@@ -25,10 +25,6 @@ namespace JLN.Controls
             CollectionChangedEventManager.AddHandler(collection, CollectionChanged);
         }
 
-        public OcPropertyChangedListener(ObservableCollection<T> collection, Expression<Func<object>> property):
-            this(collection,OcPropertyChangedListener.GetPropertyName(property)) { }
-
-
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
@@ -116,22 +112,6 @@ namespace JLN.Controls
         public static OcPropertyChangedListener<T> Create<T>(ObservableCollection<T> collection, string propertyName = "") where T : INotifyPropertyChanged
         {
             return new OcPropertyChangedListener<T>(collection, propertyName);
-        }
-
-        public static OcPropertyChangedListener<T> Create<T>(ObservableCollection<T> collection, Expression<Func<object>> property) where T : INotifyPropertyChanged
-        {
-            return new OcPropertyChangedListener<T>(collection, GetPropertyName(property));
-        }
-
-        public static string GetPropertyName(Expression<Func<object>> property)
-        {
-            var memberExpression = property.Body as MemberExpression;
-            if (memberExpression != null)
-                return memberExpression.Member.Name;
-            var unaryExpression = property.Body as UnaryExpression;
-            var expression = unaryExpression.Operand;
-            throw new NotImplementedException("message");
-            
         }
     }
 }
