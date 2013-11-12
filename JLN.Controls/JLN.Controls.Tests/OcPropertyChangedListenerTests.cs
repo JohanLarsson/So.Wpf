@@ -113,10 +113,9 @@ namespace JLN.Controls.Tests
             Assert.IsFalse(fakeInpc1.HasHandler);
             Assert.IsTrue(fakeInpc2.HasHandler);
         }
-
     }
 
-    public class FakeInpc : INotifyPropertyChanged
+    public class FakeInpc : INotifyPropertyChanged, IEquatable<FakeInpc>
     {
         public int DummyProperty1 { get { return 1; } }
         public int DummyProperty2 { get { return 2; } }
@@ -139,6 +138,34 @@ namespace JLN.Controls.Tests
         {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public bool Equals(FakeInpc other)
+        {
+            return ReferenceEquals(this, other);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((FakeInpc) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return 3;
+        }
+
+        public static bool operator ==(FakeInpc left, FakeInpc right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(FakeInpc left, FakeInpc right)
+        {
+            return !Equals(left, right);
         }
     }
 }

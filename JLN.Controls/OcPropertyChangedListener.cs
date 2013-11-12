@@ -16,8 +16,7 @@ namespace JLN.Controls
     {
         private readonly ObservableCollection<T> _collection;
         private readonly string _propertyName;
-        private readonly Dictionary<T, int> _items = new Dictionary<T, int>();
-
+        private readonly Dictionary<T, int> _items = new Dictionary<T, int>(new ObjectIdentityComparer());
         public OcPropertyChangedListener(ObservableCollection<T> collection, string propertyName = "")
         {
             _collection = collection;
@@ -30,14 +29,14 @@ namespace JLN.Controls
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    Add(e.NewItems.Cast<T>());
+                    AddRange(e.NewItems.Cast<T>());
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    Remove(e.OldItems.Cast<T>());
+                    RemoveRange(e.OldItems.Cast<T>());
                     break;
                 case NotifyCollectionChangedAction.Replace:
-                    Add(e.NewItems.Cast<T>());
-                    Remove(e.OldItems.Cast<T>());
+                    AddRange(e.NewItems.Cast<T>());
+                    RemoveRange(e.OldItems.Cast<T>());
                     break;
                 case NotifyCollectionChangedAction.Move:
                     break;
@@ -50,7 +49,7 @@ namespace JLN.Controls
 
         }
 
-        private void Add(IEnumerable<T> newItems)
+        private void AddRange(IEnumerable<T> newItems)
         {
             foreach (T item in newItems)
             {
@@ -66,13 +65,14 @@ namespace JLN.Controls
             }
         }
 
-        private void Remove(IEnumerable<T> oldItems)
+        private void RemoveRange(IEnumerable<T> oldItems)
         {
             foreach (T item in oldItems)
             {
                 _items[item]--;
                 if (_items[item] == 0)
                 {
+                    _items.Remove(item);
                     PropertyChangedEventManager.RemoveHandler(item, ChildPropertyChanged, _propertyName);
                 }
             }
@@ -80,21 +80,12 @@ namespace JLN.Controls
 
         private void Reset()
         {
-            foreach (T item in _items.Keys.Except(_collection).ToList())
+            foreach (T item in _items.Keys.ToList())
             {
                 PropertyChangedEventManager.RemoveHandler(item, ChildPropertyChanged, _propertyName);
                 _items.Remove(item);
             }
-            Dictionary<T, int> dictionary = _collection.ToDictionary(x => x, x => _collection.Count(y => y.Equals(x)));
-            foreach (T newItem in dictionary.Keys.Except(_items.Keys))
-            {
-                PropertyChangedEventManager.AddHandler(newItem, ChildPropertyChanged, _propertyName);
-                _items.Add(newItem, dictionary[newItem]);
-            }
-            foreach (var i in dictionary)
-            {
-                _items[i.Key] = i.Value;
-            }
+            AddRange(_collection);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -103,7 +94,19 @@ namespace JLN.Controls
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
-                handler(sender, new PropertyChangedEventArgs(e.PropertyName));
+                handler(sender, e);
+        }
+
+        private class ObjectIdentityComparer : IEqualityComparer<T>
+        {
+            public bool Equals(T x, T y)
+            {
+                return object.ReferenceEquals(x, y);
+            }
+            public int GetHashCode(T obj)
+            {
+                return System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(obj);
+            }
         }
     }
 
