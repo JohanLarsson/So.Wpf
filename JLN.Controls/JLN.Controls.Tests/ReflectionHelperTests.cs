@@ -10,17 +10,32 @@ namespace JLN.Controls.Tests
     class ReflectionHelperTests
     {
         [Test]
-        public void GetPropertyNameTest()
+        public void Level0PropertyTest()
         {
-            var propertyName = RefelectionHelper.GetPropertyName(() => Prop);
-            Assert.AreEqual("Prop",propertyName);
+            string propertyName = ReflectionHelper.GetPropertyName(() => FakeProperty);
+            Assert.AreEqual("FakeProperty", propertyName);
         }
 
-        public string Prop { get; set; }
-    }
+        [Test]
+        public void Level1PropertyTest()
+        {
+            FakeClass fake = null;
+            string propertyName = ReflectionHelper.GetPropertyName(() => fake.Time);
+            Assert.AreEqual("Time", propertyName);
+        }
 
-    public class FakeWithProperty
-    {
-        public int Prop { get; set; }
+        [Test]
+        public void Level2PropertyTest()
+        {
+            FakeClass fake = null;
+            string propertyName = ReflectionHelper.GetPropertyName(() => fake.Time.Date);
+            Assert.AreEqual("Date", propertyName);
+        }
+
+        class FakeClass
+        {
+            public DateTime Time { get; set; }
+        }
+        public int FakeProperty { get; set; }
     }
 }
