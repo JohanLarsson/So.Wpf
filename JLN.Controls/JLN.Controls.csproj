@@ -57,7 +57,7 @@
     <Compile Include="Behaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="ManualRelayCommand.cs" />
     <Compile Include="MultiplyConverter.cs" />
-    <Compile Include="OcPropertyChangedListener.cs" />
+    <Compile Include="OcNpcListener.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ReflectionHelper.cs" />
     <Compile Include="RelayCommand.cs" />
