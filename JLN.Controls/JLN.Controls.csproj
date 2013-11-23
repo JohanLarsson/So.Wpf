@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\BindableSelectedItemBehavior.cs" />
+    <Compile Include="CellTemplateDataGrid.cs" />
     <Compile Include="ManualRelayCommand.cs" />
     <Compile Include="MultiplyConverter.cs" />
     <Compile Include="OcNpcListener.cs" />
