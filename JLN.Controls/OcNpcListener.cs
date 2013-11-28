@@ -20,8 +20,8 @@ namespace JLN.Controls
         public OcNpcListener(ObservableCollection<T> collection, string propertyName = "")
         {
             _collection = collection;
-            AddRange(_collection);
             _propertyName = propertyName ?? "";
+            AddRange(_collection);
             CollectionChangedEventManager.AddHandler(collection, CollectionChanged);
         }
 
