@@ -12,15 +12,16 @@ using Expression = System.Linq.Expressions.Expression;
 
 namespace JLN.Controls
 {
-    public class OcPropertyChangedListener<T> : INotifyPropertyChanged where T : INotifyPropertyChanged
+    public class OcNpcListener<T> : INotifyPropertyChanged where T : INotifyPropertyChanged
     {
         private readonly ObservableCollection<T> _collection;
         private readonly string _propertyName;
         private readonly Dictionary<T, int> _items = new Dictionary<T, int>(new ObjectIdentityComparer());
-        public OcPropertyChangedListener(ObservableCollection<T> collection, string propertyName = "")
+        public OcNpcListener(ObservableCollection<T> collection, string propertyName = "")
         {
             _collection = collection;
             _propertyName = propertyName ?? "";
+            AddRange(_collection);
             CollectionChangedEventManager.AddHandler(collection, CollectionChanged);
         }
 
@@ -110,11 +111,11 @@ namespace JLN.Controls
         }
     }
 
-    public static class OcPropertyChangedListener
+    public static class OcNpcListener
     {
-        public static OcPropertyChangedListener<T> Create<T>(ObservableCollection<T> collection, string propertyName = "") where T : INotifyPropertyChanged
+        public static OcNpcListener<T> Create<T>(ObservableCollection<T> collection, string propertyName = "") where T : INotifyPropertyChanged
         {
-            return new OcPropertyChangedListener<T>(collection, propertyName);
+            return new OcNpcListener<T>(collection, propertyName);
         }
     }
 }
