@@ -95,7 +95,7 @@ namespace JLN.Controls
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
-                handler(sender, e);
+                handler(this, e);
         }
 
         private class ObjectIdentityComparer : IEqualityComparer<T>
@@ -117,5 +117,18 @@ namespace JLN.Controls
         {
             return new OcNpcListener<T>(collection, propertyName);
         }
+    }
+
+    public class ListenerAndChild<T> where T : INotifyPropertyChanged
+    {
+        public ListenerAndChild(OcNpcListener<T> listener, T child)
+        {
+            Listener = listener;
+            Child = child;
+        }
+
+        public OcNpcListener<T> Listener { get; private set; }
+
+        public T Child { get; private set; }
     }
 }

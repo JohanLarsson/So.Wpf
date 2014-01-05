@@ -9,21 +9,36 @@ using NUnit.Framework;
 
 namespace JLN.Controls.Tests
 {
-    public class OcPropertyChangedListenerTests
+    public class OcNpcListenerTests
     {
         [Test]
         public void SimpleAddTest()
         {
             var fakeInpc = new FakeInpc();
             var oc = new ObservableCollection<FakeInpc>();
-            var events = new List<FakeInpc>();
+            var events = new List<ListenerAndChild<FakeInpc>>();
             var listener = OcNpcListener.Create(oc);
-            listener.PropertyChanged += (sender, args) => events.Add((FakeInpc)sender);
+            listener.PropertyChanged += (sender, args) => events.Add((ListenerAndChild<FakeInpc>)sender);
             Assert.IsFalse(fakeInpc.HasHandler);
             oc.Add(fakeInpc);
             Assert.IsTrue(fakeInpc.HasHandler);
             fakeInpc.Raise1();
-            Assert.AreEqual(fakeInpc, events.Single());
+            Assert.AreEqual(fakeInpc, events.Single().Child);
+        }
+
+        [Test, Explicit]
+        public void SimpleAddListenWithPropertyChangedEventManagerTest()
+        {
+            var fakeInpc = new FakeInpc();
+            var oc = new ObservableCollection<FakeInpc>();
+            var events = new List<ListenerAndChild<FakeInpc>>();
+            var listener = OcNpcListener.Create(oc);
+            PropertyChangedEventManager.AddHandler(listener, (sender, args) => events.Add((ListenerAndChild<FakeInpc>)sender), "");
+            Assert.IsFalse(fakeInpc.HasHandler);
+            oc.Add(fakeInpc);
+            Assert.IsTrue(fakeInpc.HasHandler);
+            fakeInpc.Raise1();
+            Assert.AreEqual(fakeInpc, events.Single().Child);
         }
 
         [Test]
@@ -150,7 +165,7 @@ namespace JLN.Controls.Tests
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((FakeInpc) obj);
+            return Equals((FakeInpc)obj);
         }
 
         public override int GetHashCode()
