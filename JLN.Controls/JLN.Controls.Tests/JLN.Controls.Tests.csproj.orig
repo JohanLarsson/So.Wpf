@@ -46,11 +46,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Grid.cs" />
+<<<<<<< HEAD
     <Compile Include="LogicalTreeTest.cs" />
     <Compile Include="OcExtTests.cs" />
+=======
     <Compile Include="DependencyPropertyExtTests.cs" />
     <Compile Include="GridViewColumnWitdhTests.cs" />
+>>>>>>> e539f8529cf31badac498bcf4803ff3db4309029
     <Compile Include="OcNpcListenerTests.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

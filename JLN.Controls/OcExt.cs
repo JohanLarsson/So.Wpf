@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -12,6 +13,35 @@ namespace JLN.Controls
 {
     public static class OcExt
     {
+        public static void InvokeAdd<T>(this ObservableCollection<T> collection, T newItem)
+        {
+            collection.Invoke(()=>collection.Add(newItem));
+        }
+        public static void InvokeAddRange<T>(this ObservableCollection<T> collection, IEnumerable<T> newItems)
+        {
+            collection.Invoke(() =>
+            {
+                foreach (var newItem in newItems)
+                {
+                    collection.Add(newItem);
+                }
+            });
+        }
+        public static void InvokeRemove<T>(this ObservableCollection<T> collection, T oldItem)
+        {
+            collection.Invoke(() => collection.Remove(oldItem));
+        }
+        public static void InvokeClear<T>(this ObservableCollection<T> collection)
+        {
+            collection.Invoke(() => collection.Clear());
+        }
+        public static void Invoke<T>(this ObservableCollection<T> col, Action action)
+        {
+            Dispatcher dispatcher = Application.Current != null
+                ? Application.Current.Dispatcher
+                : Dispatcher.CurrentDispatcher;
+            dispatcher.Invoke(action);
+        }
         public static DispatcherOperation AddAsync<T>(this ObservableCollection<T> collection, T newItem)
         {
             return collection.InvokeAsync(() => collection.Add(newItem));
@@ -26,19 +56,13 @@ namespace JLN.Controls
                 }
             });
         }
-        public static void AddRange<T>(this ObservableCollection<T> collection, IEnumerable<T> newItems)
-        {
-            collection.Invoke(() =>
-            {
-                foreach (var newItem in newItems)
-                {
-                    collection.Add(newItem);
-                }
-            });
-        }
         public static DispatcherOperation RemoveAsync<T>(this ObservableCollection<T> collection, T oldItem)
         {
             return collection.InvokeAsync(() => collection.Remove(oldItem));
+        }
+        public static DispatcherOperation ClearAsync<T>(this ObservableCollection<T> collection)
+        {
+            return collection.InvokeAsync(() => collection.Clear());
         }
         public static DispatcherOperation InvokeAsync<T>(this ObservableCollection<T> col, Action action)
         {
@@ -46,13 +70,6 @@ namespace JLN.Controls
                 ? Application.Current.Dispatcher
                 : Dispatcher.CurrentDispatcher;
             return dispatcher.InvokeAsync(action);
-        }
-        public static void Invoke<T>(this ObservableCollection<T> col, Action action)
-        {
-            Dispatcher dispatcher = Application.Current != null
-                ? Application.Current.Dispatcher
-                : Dispatcher.CurrentDispatcher;
-            dispatcher.Invoke(action);
         }
     }
 }
