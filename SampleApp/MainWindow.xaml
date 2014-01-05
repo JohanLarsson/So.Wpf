@@ -5,6 +5,7 @@
         xmlns:browser="clr-namespace:SampleApp.Browser" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sampleApp="clr-namespace:SampleApp"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" d:DataContext="{d:DesignInstance sampleApp:Vm,IsDesignTimeCreatable=True }">
     <Grid>
@@ -75,6 +76,30 @@
 
 
 
+            </TabItem>
+            <TabItem Header="Gridviewcolumnwidth">
+                <ListView>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Day" controls:GridViewColumnWidth.ColumnWidth="5*">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate DataType="{x:Type system:DateTime}">
+                                        <TextBlock Text="{Binding DayOfWeek}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Date" controls:GridViewColumnWidth.ColumnWidth="*">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate DataType="{x:Type system:DateTime}">
+                                        <TextBlock Text="{Binding Date}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                    <system:DateTime>2014-01-01</system:DateTime>
+                    <system:DateTime>2014-01-02</system:DateTime>
+                </ListView>
             </TabItem>
         </TabControl>
     </Grid>

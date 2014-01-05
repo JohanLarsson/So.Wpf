@@ -57,6 +57,9 @@
     <Compile Include="Behaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="CellTemplateDataGrid.cs" />
     <Compile Include="OcExt.cs" />
+    <Compile Include="ChildPropertyChangedEventArgs.cs" />
+    <Compile Include="DependencyObjectExt.cs" />
+    <Compile Include="GridViewColumnWidth.cs" />
     <Compile Include="ManualRelayCommand.cs" />
     <Compile Include="MultiplyConverter.cs" />
     <Compile Include="OcNpcListener.cs" />

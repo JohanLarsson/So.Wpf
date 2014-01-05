@@ -21,10 +21,9 @@ namespace JLN.Controls
         {
             _collection = collection;
             _propertyName = propertyName ?? "";
-            AddRange(_collection);
+            AddRange(collection);
             CollectionChangedEventManager.AddHandler(collection, CollectionChanged);
         }
-
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
@@ -47,9 +46,7 @@ namespace JLN.Controls
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
         }
-
         private void AddRange(IEnumerable<T> newItems)
         {
             foreach (T item in newItems)
@@ -65,7 +62,6 @@ namespace JLN.Controls
                 }
             }
         }
-
         private void RemoveRange(IEnumerable<T> oldItems)
         {
             foreach (T item in oldItems)
@@ -78,7 +74,6 @@ namespace JLN.Controls
                 }
             }
         }
-
         private void Reset()
         {
             foreach (T item in _items.Keys.ToList())
@@ -88,16 +83,13 @@ namespace JLN.Controls
             }
             AddRange(_collection);
         }
-
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected virtual void ChildPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
-                handler(this, e);
+                handler(this, new ChildPropertyChangedEventArgs(sender, e));
         }
-
         private class ObjectIdentityComparer : IEqualityComparer<T>
         {
             public bool Equals(T x, T y)
