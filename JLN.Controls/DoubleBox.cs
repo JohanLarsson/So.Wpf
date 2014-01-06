@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -23,8 +24,25 @@ namespace JLN.Controls
             double d;
             if(!double.TryParse(Text,out d))
                 return;
-            int i =(int) (d);
+            var decimalIndex = Text.IndexOf(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator, System.StringComparison.Ordinal);
+            if (decimalIndex < 0)
+                decimalIndex = Text.Length;
+            var caretIndex =CaretIndex;
+            double digit;
+            if (caretIndex >= decimalIndex)
+            {
+                digit = (caretIndex - decimalIndex - 1);
 
+            }
+            else if (caretIndex == (decimalIndex + 1))
+            {
+                digit = 0;
+            }
+            else
+            {
+                digit = (caretIndex - decimalIndex);
+            }
+            Text = (d + Math.Pow(10,digit)).ToString();
         }
     }
 }

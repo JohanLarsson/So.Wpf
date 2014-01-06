@@ -13,9 +13,10 @@ namespace JLN.Controls.Tests
         public void IncreaseTest()
         {
             var doubleBox = new DoubleBox();
-            doubleBox.Text = "3.14";
-            doubleBox.CaretIndex = 1;
-
+            doubleBox.Text = "100";
+            doubleBox.CaretIndex = 3;
+            doubleBox.Update(true);
+            Assert.AreEqual("101",doubleBox.Text);
         }
     }
 }
