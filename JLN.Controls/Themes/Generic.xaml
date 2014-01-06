@@ -172,19 +172,27 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style x:Key="TextBoxAsEditableTextBlockStyle" TargetType="{x:Type controls:EditableTextBlock}" BasedOn="{StaticResource {x:Type TextBox}}">
-        <Setter Property="OverridesDefaultStyle" Value="True"/>
+    <Style x:Key="EditableTextBlockStyle" TargetType="TextBox">
         <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="Background" Value="{x:Null}"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Background" Value="BlueViolet"/>
-        <Setter Property="Margin" Value="-2,0,-2,0"/>
-        <Setter Property="AllowDrop" Value="true"/>
+        <!--<Setter Property="Margin" Value="-3,-1,-3,-1"/>-->
         <Setter Property="MaxLines" Value="1"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
-        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <!--<Setter Property="FocusVisualStyle" Value="{x:Null}"/>-->
+        <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Focusable" Value="True"/>
     </Style>
+    <Style TargetType="{x:Type controls:EditableTextBlock}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:EditableTextBlock}">
+                    <TextBox Text="{TemplateBinding Text}" 
+                             Background="{TemplateBinding Background}"
+                             BorderThickness="{TemplateBinding BorderThickness}"
+                             Padding="{TemplateBinding Padding}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

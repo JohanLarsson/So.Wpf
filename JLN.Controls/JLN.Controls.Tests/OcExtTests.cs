@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using JLN.Controls.Misc;
 using NUnit.Framework;
 
@@ -55,6 +56,15 @@ namespace JLN.Controls.Tests
             var ints = new ObservableCollection<int> { 1, 2, 1 };
             ints.InvokeClear();
             CollectionAssert.AreEqual(new int[] { }, ints);
+        }
+
+        [Test]
+        public async Task InvokeAsyncSimpleTest()
+        {
+            var ints = new ObservableCollection<int>();
+            var dispatcher = Dispatcher.CurrentDispatcher;
+            await dispatcher.InvokeAsync(() => ints.Add(1));
+            Assert.AreEqual(1, ints.Single());
         }
     }
 }

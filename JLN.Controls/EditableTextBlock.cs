@@ -15,14 +15,17 @@ namespace JLN.Controls
 
         public EditableTextBlock()
         {
+            Background = null;
+            BorderThickness = new Thickness(0);
+            Padding = new Thickness(-2, 0, -2, 0);
 
         }
 
         public static readonly DependencyProperty SelectAllTextOnFocusProperty = DependencyProperty.Register("SelectAllTextOnFocus", typeof(bool), typeof(EditableTextBlock), new PropertyMetadata(true, SelectAllTextChangedCallback));
         private static void SelectAllTextChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
-            var editableTextBlock = (EditableTextBlock) sender;
-            if ((bool) args.NewValue)
+            var editableTextBlock = (EditableTextBlock)sender;
+            if ((bool)args.NewValue)
             {
                 editableTextBlock.AddHandler(PreviewMouseLeftButtonDownEvent, editableTextBlock._mouseButtonEventHandler, true);
                 editableTextBlock.AddHandler(GotKeyboardFocusEvent, editableTextBlock._routedEventHandler, true);
@@ -42,7 +45,6 @@ namespace JLN.Controls
             get { return (bool)GetValue(SelectAllTextOnFocusProperty); }
             set { SetValue(SelectAllTextOnFocusProperty, value); }
         }
-
 
         private readonly MouseButtonEventHandler _mouseButtonEventHandler = SelectivelyIgnoreMouseButton;
         /// <summary>
