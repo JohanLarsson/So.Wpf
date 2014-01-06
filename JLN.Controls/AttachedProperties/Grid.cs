@@ -13,34 +13,15 @@ namespace JLN.Controls.AttachedProperties
     /// </summary>
     public static class Grid
     {
-        public static IEnumerable<GridLength> Parse(string text)
+        private static readonly GridLengthConverter Converter = new GridLengthConverter();
+        private static readonly char[] SplitSeparators = { ' ', ';' };
+
+        internal static IEnumerable<GridLength> ToGridLengths(this object newValue)
         {
-            if (text.Contains("#"))
-            {
-                var parts = text.Split(new[] { '#' }, StringSplitOptions.RemoveEmptyEntries);
-                var count = int.Parse(parts[1].Trim());
-                return Enumerable.Repeat(ParseGridLength(parts[0]), count);
-            }
-            else
-            {
-                return new[] { ParseGridLength(text) };
-            }
+            string[] strings =((string)newValue).Split(SplitSeparators);
+            return strings.Select(Converter.ConvertFromString).Cast<GridLength>();
         }
-        public static GridLength ParseGridLength(string text)
-        {
-            text = text.Trim();
-            if (text.ToLower() == "auto")
-                return GridLength.Auto;
-            if (text.Contains("*"))
-            {
-                var startCount = text.ToCharArray().Count(c => c == '*');
-                var pureNumber = text.Replace("*", "");
-                var ratio = string.IsNullOrWhiteSpace(pureNumber) ? 1 : double.Parse(pureNumber);
-                return new GridLength(startCount * ratio, GridUnitType.Star);
-            }
-            var pixelsCount = double.Parse(text);
-            return new GridLength(pixelsCount, GridUnitType.Pixel);
-        }
+
         public static string GetColumns(DependencyObject obj)
         {
             return (string)obj.GetValue(ColumnsProperty);
@@ -59,12 +40,11 @@ namespace JLN.Controls.AttachedProperties
                 return;
             var grid = (System.Windows.Controls.Grid)d;
             grid.ColumnDefinitions.Clear();
-            e.NewValue
-                .ToString()
-                .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
-                .SelectMany(Parse)
-                .Select(l => new ColumnDefinition { Width = l })
-                .ToList().ForEach(grid.ColumnDefinitions.Add);
+            foreach (var cd in e.NewValue.ToGridLengths()
+                                         .Select(x => new ColumnDefinition { Width = x }))
+            {
+                grid.ColumnDefinitions.Add(cd);
+            }
         }
 
         public static string GetRows(DependencyObject obj)
@@ -85,11 +65,11 @@ namespace JLN.Controls.AttachedProperties
                 return;
             var grid = (System.Windows.Controls.Grid)d;
             grid.RowDefinitions.Clear();
-            e.NewValue.ToString()
-                 .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
-                 .SelectMany(Parse)
-                 .Select(l => new RowDefinition { Height = l })
-                 .ToList().ForEach(grid.RowDefinitions.Add);
+            foreach (var rd in e.NewValue.ToGridLengths()
+                                         .Select(x => new RowDefinition() { Height = x }))
+            {
+                grid.RowDefinitions.Add(rd);
+            }
         }
         public static string GetCell(DependencyObject obj)
         {
@@ -103,12 +83,14 @@ namespace JLN.Controls.AttachedProperties
         public static readonly DependencyProperty CellProperty =
             DependencyProperty.RegisterAttached("Cell", typeof(string), typeof(UIElement),
                 new FrameworkPropertyMetadata("0 0", FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure, CellUpdated));
+
+
         public static void CellUpdated(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (string.Equals(e.OldValue, e.NewValue))
                 return;
             var element = (UIElement)d;
-            var rowAndColumn = ((string)e.NewValue).Split(new char[] { ' ', ';' });
+            var rowAndColumn = ((string)e.NewValue).Split(SplitSeparators);
             var row = int.Parse(rowAndColumn[0]);
             var column = int.Parse(rowAndColumn[1]);
             System.Windows.Controls.Grid.SetRow(element, row);

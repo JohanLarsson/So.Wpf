@@ -29,18 +29,18 @@ namespace JLN.Controls
         }
         private static void SelectAllTextChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
-            var editableTextBlock = (EditableTextBlock)sender;
+            var etb = (EditableTextBlock)sender;
             if ((bool)args.NewValue)
             {
-                editableTextBlock.AddHandler(PreviewMouseLeftButtonDownEvent, editableTextBlock._mouseButtonEventHandler, true);
-                editableTextBlock.AddHandler(GotKeyboardFocusEvent, editableTextBlock._routedEventHandler, true);
-                editableTextBlock.AddHandler(MouseDoubleClickEvent, editableTextBlock._routedEventHandler, true);
+                etb.AddHandler(PreviewMouseLeftButtonDownEvent, etb._mouseButtonEventHandler, true);
+                etb.AddHandler(GotKeyboardFocusEvent, etb._routedEventHandler, true);
+                etb.AddHandler(MouseDoubleClickEvent, etb._routedEventHandler, true);
             }
             else
             {
-                editableTextBlock.RemoveHandler(PreviewMouseLeftButtonDownEvent, editableTextBlock._mouseButtonEventHandler);
-                editableTextBlock.RemoveHandler(GotKeyboardFocusEvent, editableTextBlock._routedEventHandler);
-                editableTextBlock.RemoveHandler(MouseDoubleClickEvent, editableTextBlock._routedEventHandler);
+                etb.RemoveHandler(PreviewMouseLeftButtonDownEvent, etb._mouseButtonEventHandler);
+                etb.RemoveHandler(GotKeyboardFocusEvent, etb._routedEventHandler);
+                etb.RemoveHandler(MouseDoubleClickEvent, etb._routedEventHandler);
             }
         }
 

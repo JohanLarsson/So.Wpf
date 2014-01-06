@@ -83,7 +83,9 @@
 
 
             </TabItem>
-            
+            <TabItem Header="DoubleBox">
+                <controls:DoubleBox Text="{Binding DummyDouble}" FontSize="48"/>
+            </TabItem>
             <TabItem Header="Gridviewcolumnwidth">
                 <ListView>
                     <ListView.View>
@@ -109,8 +111,8 @@
                 </ListView>
             </TabItem>
             <TabItem Header="Grid" >
-                <Grid attachedProperties:Grid.Rows="50;50;*;*"
-                      attachedProperties:Grid.Columns="50;50;*">
+                <Grid attachedProperties:Grid.Rows="50 50 * *"
+                      attachedProperties:Grid.Columns="50 50 *">
                     <Rectangle attachedProperties:Grid.Cell="0 1" Fill="Blue"/>
                     <Rectangle attachedProperties:Grid.Cell="1 1" Fill="Red"/>
                 </Grid>

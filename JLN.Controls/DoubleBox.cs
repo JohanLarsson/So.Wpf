@@ -17,5 +17,14 @@ namespace JLN.Controls
         {
             throw new NotImplementedException();
         }
+
+        internal void Update(bool increase)
+        {
+            double d;
+            if(!double.TryParse(Text,out d))
+                return;
+            int i =(int) (d);
+
+        }
     }
 }

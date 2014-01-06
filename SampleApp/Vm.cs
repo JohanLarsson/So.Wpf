@@ -15,18 +15,18 @@ namespace SampleApp
         private readonly BrowserVm _browserVm = new BrowserVm();
         private List<string> _scrollItems = Enumerable.Range(0,50).Select(x=>"Item " + x).ToList();
         private string _dummyText ="Sample text";
+        private double _dummyDouble =3.141592;
 
         public Browser.BrowserVm BrowserVm
         {
             get { return _browserVm; }
         }
-
+        public event PropertyChangedEventHandler PropertyChanged;
         public List<string> ScrollItems
         {
             get { return _scrollItems; }
             set { _scrollItems = value; }
         }
-
         public string DummyText
         {
             get { return _dummyText; }
@@ -38,7 +38,16 @@ namespace SampleApp
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public double DummyDouble
+        {
+            get { return _dummyDouble; }
+            set
+            {
+                if (value.Equals(_dummyDouble)) return;
+                _dummyDouble = value;
+                OnPropertyChanged();
+            }
+        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
