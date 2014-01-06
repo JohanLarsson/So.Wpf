@@ -19,30 +19,52 @@ namespace JLN.Controls
             throw new NotImplementedException();
         }
 
-        internal void Update(bool increase)
+        internal void Update(bool increase, CultureInfo culture)
         {
             double d;
-            if(!double.TryParse(Text,out d))
+            if (!double.TryParse(Text, NumberStyles.Float, culture.NumberFormat, out d))
                 return;
-            var decimalIndex = Text.IndexOf(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator, System.StringComparison.Ordinal);
+            var decimalIndex = Text.IndexOf(culture.NumberFormat.NumberDecimalSeparator, System.StringComparison.Ordinal);
             if (decimalIndex < 0)
                 decimalIndex = Text.Length;
-            var caretIndex =CaretIndex;
+            var caretIndex = CaretIndex;
             double digit;
-            if (caretIndex >= decimalIndex)
+            if (caretIndex <= decimalIndex)
             {
-                digit = (caretIndex - decimalIndex - 1);
-
+                digit = (decimalIndex - caretIndex);
             }
-            else if (caretIndex == (decimalIndex + 1))
+            //else if (caretIndex == (decimalIndex + 1))
+            //{
+            //    digit = 0;
+            //}
+            else
             {
-                digit = 0;
+                digit = (decimalIndex-caretIndex+1);
+            }
+            int sign = increase ? 1 : -1;
+            var oldLength = Text.Length;
+            var newValue = d + sign * Math.Pow(10, digit);
+            var digits = oldLength - decimalIndex - 1;
+            Text = newValue.ToString("f" + (digits < 0 ? 0 : digits), culture);
+            if (Math.Sign(newValue) * d < 0)
+            {
+                if (newValue < d)
+                    caretIndex++;
+                else
+                    caretIndex--;
             }
             else
             {
-                digit = (caretIndex - decimalIndex);
+                if (oldLength < Text.Length)
+                {
+                    caretIndex++;
+                }
+                else if (Text.Length > oldLength)
+                {
+                    caretIndex--;
+                }
             }
-            Text = (d + Math.Pow(10,digit)).ToString();
+            CaretIndex = caretIndex;
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -10,11 +12,13 @@ namespace JLN.Controls.Tests
 {
     class OcExtTests
     {
-        [Test, Explicit("Deadlocks")]
+        [Test]
         public async Task InvokeAsyncTest()
         {
             var ints = new ObservableCollection<int>();
-            await ints.InvokeAsync(() => ints.Add(3));
+            var dispatcherOperation = ints.InvokeAsync(() => ints.Add(3));
+            Dispatcher.CurrentDispatcher.DoEvents();
+            await dispatcherOperation;
             Assert.AreEqual(3, ints.Single());
         }
 
@@ -56,15 +60,6 @@ namespace JLN.Controls.Tests
             var ints = new ObservableCollection<int> { 1, 2, 1 };
             ints.InvokeClear();
             CollectionAssert.AreEqual(new int[] { }, ints);
-        }
-
-        [Test]
-        public async Task InvokeAsyncSimpleTest()
-        {
-            var ints = new ObservableCollection<int>();
-            var dispatcher = Dispatcher.CurrentDispatcher;
-            await dispatcher.InvokeAsync(() => ints.Add(1));
-            Assert.AreEqual(1, ints.Single());
         }
     }
 }

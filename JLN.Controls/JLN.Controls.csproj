@@ -57,6 +57,7 @@
     <Compile Include="AttachedProperties\Grid.cs" />
     <Compile Include="Behaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="CellTemplateDataGrid.cs" />
+    <Compile Include="DispatcherUtil.cs" />
     <Compile Include="Misc\OcExt.cs" />
     <Compile Include="Misc\ChildPropertyChangedEventArgs.cs" />
     <Compile Include="Misc\DependencyObjectExt.cs" />

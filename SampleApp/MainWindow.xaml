@@ -7,7 +7,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sampleApp="clr-namespace:SampleApp"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
-        xmlns:attachedProperties="clr-namespace:JLN.Controls.AttachedProperties;assembly=JLN.Controls"
+        xmlns:ap="clr-namespace:JLN.Controls.AttachedProperties;assembly=JLN.Controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" d:DataContext="{d:DesignInstance sampleApp:Vm,IsDesignTimeCreatable=True }">
     <Grid>
@@ -84,20 +84,23 @@
 
             </TabItem>
             <TabItem Header="DoubleBox">
-                <controls:DoubleBox Text="{Binding DummyDouble}" FontSize="48"/>
+                <StackPanel>
+                    <controls:DoubleBox x:Name="DoubleBox" Text="{Binding DummyDouble}" FontSize="48" SelectionChanged="DoubleBox_OnSelectionChanged"/>
+                    <controls:DoubleBox x:Name="CaretPos" FontSize="48"/>
+                </StackPanel>
             </TabItem>
             <TabItem Header="Gridviewcolumnwidth">
                 <ListView>
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Day" attachedProperties:GridViewColumn.ColumnWidth="5*">
+                            <GridViewColumn Header="Day" ap:GridViewColumn.ColumnWidth="5*">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate DataType="{x:Type system:DateTime}">
                                         <TextBlock Text="{Binding DayOfWeek}"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="Date" attachedProperties:GridViewColumn.ColumnWidth="*">
+                            <GridViewColumn Header="Date" ap:GridViewColumn.ColumnWidth="*">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate DataType="{x:Type system:DateTime}">
                                         <TextBlock Text="{Binding Date}"/>
@@ -111,11 +114,23 @@
                 </ListView>
             </TabItem>
             <TabItem Header="Grid" >
-                <Grid attachedProperties:Grid.Rows="50 50 * *"
-                      attachedProperties:Grid.Columns="50 50 *">
-                    <Rectangle attachedProperties:Grid.Cell="0 1" Fill="Blue"/>
-                    <Rectangle attachedProperties:Grid.Cell="1 1" Fill="Red"/>
+                <Grid ap:Grid.Rows="* *"
+                      ap:Grid.Columns="* *">
+                    <Grid ap:Grid.Cell="0 0" 
+                          ap:Grid.Rows="* *"
+                          ap:Grid.Columns="* *" 
+                          Background="Goldenrod">
+                            <Rectangle ap:Grid.Cell="0 0" Fill="Blue"/>
+                            <Rectangle ap:Grid.Cell="1 1" Fill="Red"/>
+                    </Grid>
+                    <Grid ap:Grid.Cell="1 0" 
+                          ap:Grid.Rows="* *"
+                          ap:Grid.Columns="* *" Background="Gainsboro">
+                        <Rectangle ap:Grid.Cell="0 0" Fill="Blue"/>
+                        <Rectangle ap:Grid.Cell="1 1" Fill="Red"/>
+                    </Grid>
                 </Grid>
+
             </TabItem>
         </TabControl>
     </Grid>
