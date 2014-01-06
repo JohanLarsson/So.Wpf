@@ -18,10 +18,15 @@ namespace JLN.Controls
             Background = null;
             BorderThickness = new Thickness(0);
             Padding = new Thickness(-2, 0, -2, 0);
-
         }
 
         public static readonly DependencyProperty SelectAllTextOnFocusProperty = DependencyProperty.Register("SelectAllTextOnFocus", typeof(bool), typeof(EditableTextBlock), new PropertyMetadata(true, SelectAllTextChangedCallback));
+        [Description("Text: string"), Category("Common Properties")]
+        public bool SelectAllTextOnFocus
+        {
+            get { return (bool)GetValue(SelectAllTextOnFocusProperty); }
+            set { SetValue(SelectAllTextOnFocusProperty, value); }
+        }
         private static void SelectAllTextChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
             var editableTextBlock = (EditableTextBlock)sender;
@@ -37,13 +42,6 @@ namespace JLN.Controls
                 editableTextBlock.RemoveHandler(GotKeyboardFocusEvent, editableTextBlock._routedEventHandler);
                 editableTextBlock.RemoveHandler(MouseDoubleClickEvent, editableTextBlock._routedEventHandler);
             }
-        }
-
-        [Description("Text: string"), Category("Common Properties")]
-        public bool SelectAllTextOnFocus
-        {
-            get { return (bool)GetValue(SelectAllTextOnFocusProperty); }
-            set { SetValue(SelectAllTextOnFocusProperty, value); }
         }
 
         private readonly MouseButtonEventHandler _mouseButtonEventHandler = SelectivelyIgnoreMouseButton;

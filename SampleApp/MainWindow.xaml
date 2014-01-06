@@ -68,14 +68,14 @@
                 <StackPanel>
                     <GroupBox Header="Vanilla TextBlock">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Standard TextBlock: " Background="Peru" Height="50"/>
-                            <TextBlock Text="{Binding DummyText}" Background="Pink"/>
+                            <TextBlock Text="Standard TextBlock: "/>
+                            <TextBlock Text="{Binding DummyText}"/>
                         </StackPanel>
                     </GroupBox>
                     <GroupBox Header="Editable TextBlock">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Editable TextBlock: " Background="Peru" Height="50"/>
-                            <controls:EditableTextBlock Text="{Binding DummyText}" Background="Pink"/>
+                            <TextBlock Text="Editable TextBlock: "/>
+                            <controls:EditableTextBlock Text="{Binding DummyText}"/>
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>
@@ -83,6 +83,7 @@
 
 
             </TabItem>
+            
             <TabItem Header="Gridviewcolumnwidth">
                 <ListView>
                     <ListView.View>
