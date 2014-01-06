@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace JLN.Controls.AttachedProperties
 {
@@ -40,9 +41,11 @@ namespace JLN.Controls.AttachedProperties
         /// <param name="e">Event data that is issued by any event that tracks changes to the effective value of this property.</param>
         private static void OnWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            var column = d as System.Windows.Controls.GridViewColumn;
+
             //throw new NotImplementedException("message");
             
-            //var column = d as System.Windows.Controls.GridViewColumn;
+            //
             //var gridView = column.LogicalAncestors().OfType<GridView>().First();
             //var panel = gridView.LogicalAncestors().OfType<Panel>().First();
             //column.

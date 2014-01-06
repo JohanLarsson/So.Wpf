@@ -66,14 +66,18 @@
             </TabItem>
             <TabItem Header="EditableTextBlock">
                 <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="TextBlocK "/>
-                        <TextBlock Text="{Binding DummyText}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="EditableTextBlock "/>
-                        <controls:EditableTextBlock Text="{Binding DummyText}"/>
-                    </StackPanel>
+                    <GroupBox Header="Vanilla TextBlock">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Standard TextBlock: "/>
+                            <TextBlock Text="{Binding DummyText}"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Editable TextBlock">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="EditableTextBlock: "/>
+                            <controls:EditableTextBlock Text="{Binding DummyText}"/>
+                        </StackPanel>
+                    </GroupBox>
                 </StackPanel>
 
 
@@ -104,9 +108,9 @@
                 </ListView>
             </TabItem>
             <TabItem Header="Grid" >
-                <Grid attachedProperties:Grid.Rows="50;50;*"
+                <Grid attachedProperties:Grid.Rows="50;50;*;*"
                       attachedProperties:Grid.Columns="50;50;*">
-                    <Rectangle attachedProperties:Grid.Cell="0 0" Fill="Blue"/>
+                    <Rectangle attachedProperties:Grid.Cell="0 1" Fill="Blue"/>
                     <Rectangle attachedProperties:Grid.Cell="1 1" Fill="Red"/>
                 </Grid>
             </TabItem>

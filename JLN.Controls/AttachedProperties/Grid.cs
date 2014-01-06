@@ -52,8 +52,8 @@ namespace JLN.Controls.AttachedProperties
         // Using a DependencyProperty as the backing store for Columns.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ColumnsProperty =
             DependencyProperty.RegisterAttached("Columns", typeof(string), typeof(System.Windows.Controls.Grid),
-                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure, Columns_PropertyChangedCallback));
-        public static void Columns_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure, ColumnsUpdated));
+        public static void ColumnsUpdated(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (Equals(e.NewValue, e.OldValue))
                 return;
@@ -78,14 +78,13 @@ namespace JLN.Controls.AttachedProperties
         // Using a DependencyProperty as the backing store for Rows.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RowsProperty =
             DependencyProperty.RegisterAttached("Rows", typeof(string), typeof(System.Windows.Controls.Grid),
-                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure, Rows_PropertyChangedCallback));
-        public static void Rows_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure, RowsUpdated));
+        public static void RowsUpdated(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (Equals(e.NewValue, e.OldValue))
                 return;
             var grid = (System.Windows.Controls.Grid)d;
-
-            grid.ColumnDefinitions.Clear();
+            grid.RowDefinitions.Clear();
             e.NewValue.ToString()
                  .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
                  .SelectMany(Parse)
@@ -103,8 +102,8 @@ namespace JLN.Controls.AttachedProperties
 
         public static readonly DependencyProperty CellProperty =
             DependencyProperty.RegisterAttached("Cell", typeof(string), typeof(UIElement),
-                new FrameworkPropertyMetadata("0 0", FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure, Cell_PropertyChangedCallback));
-        public static void Cell_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+                new FrameworkPropertyMetadata("0 0", FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure, CellUpdated));
+        public static void CellUpdated(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (string.Equals(e.OldValue, e.NewValue))
                 return;
@@ -116,5 +115,4 @@ namespace JLN.Controls.AttachedProperties
             System.Windows.Controls.Grid.SetColumn(element, column);
         }
     }
-
 }

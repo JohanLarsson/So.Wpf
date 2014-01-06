@@ -173,7 +173,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="TextBoxAsEditableTextBlockStyle" TargetType="{x:Type controls:EditableTextBlock}">
+    <Style x:Key="TextBoxAsEditableTextBlockStyle" TargetType="{x:Type controls:EditableTextBlock}" BasedOn="{StaticResource {x:Type TextBox}}">
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="BorderBrush" Value="{x:Null}"/>
         <Setter Property="BorderThickness" Value="0"/>

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JLN.Controls.Misc;
 using NUnit.Framework;
 
 namespace JLN.Controls.Tests
@@ -21,7 +22,7 @@ namespace JLN.Controls.Tests
         {
             var ints = new ObservableCollection<int> { 1, 2, 3 };
             await ints.AddRangeAsync(Enumerable.Range(4, 6)); //Hangs
-            CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 6, 7, 8 }, ints);
+            CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 6 }, ints);
         }
 
         [Test]

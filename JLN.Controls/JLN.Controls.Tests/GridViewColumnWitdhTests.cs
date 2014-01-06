@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using NUnit.Framework;
 using GridViewColumn = JLN.Controls.AttachedProperties.GridViewColumn;
 
@@ -15,6 +16,11 @@ namespace JLN.Controls.Tests
         [Test, RequiresSTA]
         public void OneStarSizedTest()
         {
+            var binding = new Binding
+            {
+                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(ListBoxItem), 1),
+                Path = new PropertyPath("Tag"),
+            };
             var listView = new ListView();
             listView.Width = 200;
             var gridView = new GridView();

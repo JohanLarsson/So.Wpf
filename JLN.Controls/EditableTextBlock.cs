@@ -10,7 +10,7 @@ namespace JLN.Controls
     {
         static EditableTextBlock()
         {
-            //DefaultStyleKeyProperty.OverrideMetadata(typeof(EditableTextBlock), new FrameworkPropertyMetadata(typeof(EditableTextBlock)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(EditableTextBlock), new FrameworkPropertyMetadata(typeof(EditableTextBlock)));
         }
 
         public EditableTextBlock()
@@ -19,8 +19,6 @@ namespace JLN.Controls
         }
 
         public static readonly DependencyProperty SelectAllTextOnFocusProperty = DependencyProperty.Register("SelectAllTextOnFocus", typeof(bool), typeof(EditableTextBlock), new PropertyMetadata(true, SelectAllTextChangedCallback));
-
-
         private static void SelectAllTextChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
             var editableTextBlock = (EditableTextBlock) sender;
