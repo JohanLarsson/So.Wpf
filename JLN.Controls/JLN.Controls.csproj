@@ -54,20 +54,21 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttachedProperties\Grid.cs" />
     <Compile Include="Behaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="CellTemplateDataGrid.cs" />
-    <Compile Include="OcExt.cs" />
-    <Compile Include="ChildPropertyChangedEventArgs.cs" />
-    <Compile Include="DependencyObjectExt.cs" />
-    <Compile Include="GridViewColumnWidth.cs" />
-    <Compile Include="ManualRelayCommand.cs" />
-    <Compile Include="MultiplyConverter.cs" />
-    <Compile Include="OcNpcListener.cs" />
+    <Compile Include="Misc\OcExt.cs" />
+    <Compile Include="Misc\ChildPropertyChangedEventArgs.cs" />
+    <Compile Include="Misc\DependencyObjectExt.cs" />
+    <Compile Include="AttachedProperties\GridViewColumn.cs" />
+    <Compile Include="Misc\ManualRelayCommand.cs" />
+    <Compile Include="Converters\MultiplyConverter.cs" />
+    <Compile Include="Misc\OcNpcListener.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="ReflectionHelper.cs" />
-    <Compile Include="RelayCommand.cs" />
-    <Compile Include="RelayCommandBase.cs" />
-    <Compile Include="ScrollSynchronizer.cs" />
+    <Compile Include="Misc\ReflectionHelper.cs" />
+    <Compile Include="Misc\RelayCommand.cs" />
+    <Compile Include="Misc\RelayCommandBase.cs" />
+    <Compile Include="AttachedProperties\ScrollSynchronizer.cs" />
     <Compile Include="DoubleBox.cs" />
     <Compile Include="EditableTextBlock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -84,7 +85,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="TreeListView.cs" />
-    <Compile Include="TreeListViewConverter.cs" />
+    <Compile Include="Converters\TreeListViewConverter.cs" />
     <Compile Include="TreeListViewExpander.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -21,7 +21,7 @@ namespace JLN.Controls.Tests
             listView.Width = 200;
             var gridView = new GridView();
             listView.View = gridView;
-            var gridViewColumn = new GridViewColumn();
+            var gridViewColumn = new System.Windows.Controls.GridViewColumn();
             gridView.Columns.Add(gridViewColumn);
             listView.EndInit();
             var parent = LogicalTreeHelper.GetParent(gridView);

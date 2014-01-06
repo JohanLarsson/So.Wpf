@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using MS.Internal.PresentationFramework;
 
-namespace JLN.Controls.Tests
+namespace JLN.Controls.AttachedProperties
 {
     /// <summary>
     /// http://samondotnet.blogspot.se/2012/03/wpf-grid-layout-simplified-using-rows.html
     /// </summary>
     public static class Grid
     {
-        #region helper methods
         public static IEnumerable<GridLength> Parse(string text)
         {
             if (text.Contains("#"))
@@ -40,8 +41,6 @@ namespace JLN.Controls.Tests
             var pixelsCount = double.Parse(text);
             return new GridLength(pixelsCount, GridUnitType.Pixel);
         }
-        #endregion
-        #region GridColumnsLayout
         public static string GetColumns(DependencyObject obj)
         {
             return (string)obj.GetValue(ColumnsProperty);
@@ -56,24 +55,18 @@ namespace JLN.Controls.Tests
                 new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure, Columns_PropertyChangedCallback));
         public static void Columns_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-            var oldValue = e.OldValue as string;
-            var newValue = e.NewValue as string;
-            if (oldValue == null || newValue == null)
+            if (Equals(e.NewValue, e.OldValue))
                 return;
             var grid = (System.Windows.Controls.Grid)d;
-            if (oldValue != newValue)
-            {
-                grid.ColumnDefinitions.Clear();
-                newValue
-                    .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
-                    .SelectMany(Parse)
-                    .Select(l => new ColumnDefinition { Width = l })
-                    .ToList().ForEach(grid.ColumnDefinitions.Add);
-            }
+            grid.ColumnDefinitions.Clear();
+            e.NewValue
+                .ToString()
+                .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                .SelectMany(Parse)
+                .Select(l => new ColumnDefinition { Width = l })
+                .ToList().ForEach(grid.ColumnDefinitions.Add);
         }
-        #endregion
-        #region Rows
+
         public static string GetRows(DependencyObject obj)
         {
             return (string)obj.GetValue(RowsProperty);
@@ -88,23 +81,17 @@ namespace JLN.Controls.Tests
                 new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure, Rows_PropertyChangedCallback));
         public static void Rows_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var oldValue = e.OldValue as string;
-            var newValue = e.NewValue as string;
-            if (oldValue == null || newValue == null)
+            if (Equals(e.NewValue, e.OldValue))
                 return;
             var grid = (System.Windows.Controls.Grid)d;
-            if (oldValue != newValue)
-            {
-                grid.ColumnDefinitions.Clear();
-                newValue
-                    .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
-                    .SelectMany(Parse)
-                    .Select(l => new RowDefinition { Height = l })
-                    .ToList().ForEach(grid.RowDefinitions.Add);
-            }
+
+            grid.ColumnDefinitions.Clear();
+            e.NewValue.ToString()
+                 .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                 .SelectMany(Parse)
+                 .Select(l => new RowDefinition { Height = l })
+                 .ToList().ForEach(grid.RowDefinitions.Add);
         }
-        #endregion
-        #region Cell
         public static string GetCell(DependencyObject obj)
         {
             return (string)obj.GetValue(CellProperty);
@@ -113,27 +100,21 @@ namespace JLN.Controls.Tests
         {
             obj.SetValue(CellProperty, value);
         }
-        // Using a DependencyProperty as the backing store for Cell.  This enables animation, styling, binding, etc...
+
         public static readonly DependencyProperty CellProperty =
             DependencyProperty.RegisterAttached("Cell", typeof(string), typeof(UIElement),
-                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure, Cell_PropertyChangedCallback));
+                new FrameworkPropertyMetadata("0 0", FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure, Cell_PropertyChangedCallback));
         public static void Cell_PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var element = d as UIElement;
-            var oldValue = e.OldValue as string;
-            var newValue = e.NewValue as string;
-            if (oldValue == null || newValue == null)
+            if (string.Equals(e.OldValue, e.NewValue))
                 return;
- 
-            if (oldValue != newValue)
-            {
-                var rowAndColumn = newValue.Split(new char[] { ' ', ';' });
-                var row = int.Parse(rowAndColumn[0]);
-                var column = int.Parse(rowAndColumn[1]);
-                System.Windows.Controls.Grid.SetRow(element, row);
-                System.Windows.Controls.Grid.SetColumn(element, column);
-            }
+            var element = (UIElement)d;
+            var rowAndColumn = ((string)e.NewValue).Split(new char[] { ' ', ';' });
+            var row = int.Parse(rowAndColumn[0]);
+            var column = int.Parse(rowAndColumn[1]);
+            System.Windows.Controls.Grid.SetRow(element, row);
+            System.Windows.Controls.Grid.SetColumn(element, column);
         }
-        #endregion
     }
+
 }

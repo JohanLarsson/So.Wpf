@@ -2,17 +2,15 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interactivity;
-using System.Windows.Media;
 
-namespace JLN.Controls
+namespace JLN.Controls.AttachedProperties
 {
-    public class GridViewColumnWidth : DependencyObject
+    public class GridViewColumn : DependencyObject
     {
         public static readonly DependencyProperty ColumnWidthProperty =
-            DependencyProperty.RegisterAttached("ColumnWidth", typeof(GridLength), typeof(GridViewColumnWidth), new PropertyMetadata(new GridLength(1, GridUnitType.Star),OnWidthChanged));
+            DependencyProperty.RegisterAttached("ColumnWidth", typeof(GridLength), typeof(GridViewColumn), new PropertyMetadata(new GridLength(1, GridUnitType.Star),OnWidthChanged));
 
-        private static readonly Dictionary<GridView, Dictionary<GridViewColumn, GridLength>> GridViews = new Dictionary<GridView, Dictionary<GridViewColumn, GridLength>>();
+        private static readonly Dictionary<GridView, Dictionary<System.Windows.Controls.GridViewColumn, GridLength>> GridViews = new Dictionary<GridView, Dictionary<System.Windows.Controls.GridViewColumn, GridLength>>();
 
 
         /// <summary>
@@ -42,9 +40,11 @@ namespace JLN.Controls
         /// <param name="e">Event data that is issued by any event that tracks changes to the effective value of this property.</param>
         private static void OnWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var column = d as GridViewColumn;
-            var gridView = column.LogicalAncestors().OfType<GridView>().First();
-            var panel = gridView.LogicalAncestors().OfType<Panel>().First();
+            //throw new NotImplementedException("message");
+            
+            //var column = d as System.Windows.Controls.GridViewColumn;
+            //var gridView = column.LogicalAncestors().OfType<GridView>().First();
+            //var panel = gridView.LogicalAncestors().OfType<Panel>().First();
             //column.
             //if (column != null)
             //{

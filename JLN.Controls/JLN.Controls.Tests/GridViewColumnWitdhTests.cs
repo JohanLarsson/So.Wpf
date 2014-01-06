@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using NUnit.Framework;
+using GridViewColumn = JLN.Controls.AttachedProperties.GridViewColumn;
 
 namespace JLN.Controls.Tests
 {
@@ -17,9 +18,9 @@ namespace JLN.Controls.Tests
             var listView = new ListView();
             listView.Width = 200;
             var gridView = new GridView();
-            gridView.Columns.Add(new GridViewColumn { Width = 50 });
-            var gridViewColumn = new GridViewColumn();
-            GridViewColumnWidth.SetColumnWidth(gridViewColumn,new GridLength(2,GridUnitType.Star));
+            gridView.Columns.Add(new System.Windows.Controls.GridViewColumn { Width = 50 });
+            var gridViewColumn = new System.Windows.Controls.GridViewColumn();
+            GridViewColumn.SetColumnWidth(gridViewColumn,new GridLength(2,GridUnitType.Star));
             gridView.Columns.Add(gridViewColumn);
             listView.View = gridView;
             Assert.AreEqual(150,gridViewColumn.ActualWidth);

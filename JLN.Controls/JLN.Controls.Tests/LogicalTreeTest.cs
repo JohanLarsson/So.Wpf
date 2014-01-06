@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using NUnit.Framework;
+using Grid = JLN.Controls.AttachedProperties.Grid;
 
 namespace JLN.Controls.Tests
 {
@@ -16,7 +17,7 @@ namespace JLN.Controls.Tests
         [Test, RequiresSTA]
         public void VisualTreeParentTest()
         {
-            var grid = new Grid();
+            var grid = new System.Windows.Controls.Grid();
             var button = new Button();
             grid.Children.Add(button);
             var parent = VisualTreeHelper.GetParent(button);
@@ -26,7 +27,7 @@ namespace JLN.Controls.Tests
         [Test, RequiresSTA]
         public void LogicalTreeTest()
         {
-            var grid = new Grid();
+            var grid = new System.Windows.Controls.Grid();
             var button = new Button();
             grid.Children.Add(button);
             var parent = LogicalTreeHelper.GetParent(button);
@@ -37,7 +38,7 @@ namespace JLN.Controls.Tests
         public void LogicalTreeTest2()
         {
             var gridView = new GridView();
-            var gridViewColumn = new GridViewColumn();
+            var gridViewColumn = new System.Windows.Controls.GridViewColumn();
             gridView.Columns.Add(gridViewColumn);
             var parent = LogicalTreeHelper.GetParent(gridViewColumn);
             Assert.AreEqual(gridView, parent); // Fail
