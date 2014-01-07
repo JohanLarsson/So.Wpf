@@ -70,7 +70,7 @@
     <Compile Include="Misc\RelayCommand.cs" />
     <Compile Include="Misc\RelayCommandBase.cs" />
     <Compile Include="AttachedProperties\ScrollSynchronizer.cs" />
-    <Compile Include="DoubleBox.cs" />
+    <Compile Include="NumericBox.cs" />
     <Compile Include="EditableTextBlock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

@@ -83,9 +83,9 @@
 
 
             </TabItem>
-            <TabItem Header="DoubleBox">
+            <TabItem Header="NumericBox">
                 <StackPanel>
-                    <controls:DoubleBox x:Name="DoubleBox" Text="{Binding DummyDouble}" FontSize="48"/>
+                    <controls:NumericBox x:Name="DoubleBox" Text="{Binding DummyDouble}" FontSize="48"/>
                     <CheckBox Content="UpdateWithMouseWheel" IsChecked="{Binding ElementName=DoubleBox, Path=UpdateWithMouseWheel}"/>
                 </StackPanel>
             </TabItem>

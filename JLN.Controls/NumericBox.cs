@@ -8,9 +8,9 @@ using System.Windows.Interop;
 
 namespace JLN.Controls
 {
-    public class DoubleBox : TextBox
+    public class NumericBox : TextBox
     {
-        public DoubleBox()
+        public NumericBox()
         {
             this.AddHandler(MouseWheelEvent, new MouseWheelEventHandler(OnMouseWheel));
         }
@@ -72,7 +72,7 @@ namespace JLN.Controls
         }
 
         public static readonly DependencyProperty UpdateWithMouseWheelProperty =
-            DependencyProperty.Register("UpdateWithMouseWheel", typeof (bool), typeof (DoubleBox), new PropertyMetadata(false));
+            DependencyProperty.Register("UpdateWithMouseWheel", typeof (bool), typeof (NumericBox), new PropertyMetadata(false));
 
         public bool UpdateWithMouseWheel
         {

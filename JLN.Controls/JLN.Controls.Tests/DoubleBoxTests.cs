@@ -26,7 +26,7 @@ namespace JLN.Controls.Tests
 
         public void Update(string text, int caretIndex, bool increase, string expectedText, int expectedCaretIndex)
         {
-            var doubleBox = new DoubleBox
+            var doubleBox = new NumericBox
             {
                 Text = text,
                 CaretIndex = caretIndex
