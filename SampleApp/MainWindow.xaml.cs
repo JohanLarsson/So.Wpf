@@ -25,10 +25,5 @@ namespace SampleApp
             InitializeComponent();
             DataContext = new Vm();
         }
-
-        private void DoubleBox_OnSelectionChanged(object sender, RoutedEventArgs e)
-        {
-            CaretPos.Text = DoubleBox.CaretIndex.ToString();
-        }
     }
 }
