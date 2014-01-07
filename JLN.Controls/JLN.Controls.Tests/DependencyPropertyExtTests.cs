@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using JLN.Controls.Misc;
 using NUnit.Framework;
 
 namespace JLN.Controls.Tests

@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using JLN.Controls.Misc;
 
 namespace JLN.Controls.AttachedProperties
 {
@@ -10,9 +14,6 @@ namespace JLN.Controls.AttachedProperties
     {
         public static readonly DependencyProperty ColumnWidthProperty =
             DependencyProperty.RegisterAttached("ColumnWidth", typeof(GridLength), typeof(GridViewColumn), new PropertyMetadata(new GridLength(1, GridUnitType.Star),OnWidthChanged));
-
-        private static readonly Dictionary<GridView, Dictionary<System.Windows.Controls.GridViewColumn, GridLength>> GridViews = new Dictionary<GridView, Dictionary<System.Windows.Controls.GridViewColumn, GridLength>>();
-
 
         /// <summary>
         /// Sets the value of the attached property ScrollGroup.
@@ -41,52 +42,35 @@ namespace JLN.Controls.AttachedProperties
         /// <param name="e">Event data that is issued by any event that tracks changes to the effective value of this property.</param>
         private static void OnWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var column = d as System.Windows.Controls.GridViewColumn;
+            var column = (System.Windows.Controls.GridViewColumn)d;
+            var binding = new Binding
+            {
+                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Selector), 1),
+                Converter = new GridViewColumnWidthConverter(),
+                ConverterParameter = GetColumnWidth(d)
+            };
+            BindingOperations.SetBinding(column,System.Windows.Controls.GridViewColumn.WidthProperty, binding);
+        }
+    }
 
-            //throw new NotImplementedException("message");
-            
-            //
-            //var gridView = column.LogicalAncestors().OfType<GridView>().First();
-            //var panel = gridView.LogicalAncestors().OfType<Panel>().First();
-            //column.
-            //if (column != null)
-            //{
-            //    if (!((GridLength)e.NewValue).IsStar)
-            //    {
-            //        // Remove scrollviewer
-            //        if (GridViews.ContainsKey(column))
-            //        {
-            //            column.ScrollChanged -= new ScrollChangedEventHandler(ScrollViewer_ScrollChanged);
-            //            GridViews.Remove(column);
-            //        }
-            //    }
+    public class GridViewColumnWidthConverter : IValueConverter
+    {
+        public object Convert(object value, Type type, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return null;
+            ListView lw = (ListView)value;
+            GridView gw =(GridView) lw.View;
+            var converter = new GridLengthConverter();
+            //var gl =(GridLength) converter.ConvertFromString((string)parameter);
+            double sum = gw.Columns.Select(x => x.ActualWidth).Sum();
+            return lw.ActualWidth - sum;
+        }
 
-            //    if (!string.IsNullOrEmpty((string)e.NewValue))
-            //    {
-            //        // If group already exists, set scrollposition of new scrollviewer to the scrollposition of the group
-            //        if (HorizontalScrollOffsets.Keys.Contains((string)e.NewValue))
-            //        {
-            //            column.ScrollToHorizontalOffset(HorizontalScrollOffsets[(string)e.NewValue]);
-            //        }
-            //        else
-            //        {
-            //            HorizontalScrollOffsets.Add((string)e.NewValue, column.HorizontalOffset);
-            //        }
-
-            //        if (VerticalScrollOffsets.Keys.Contains((string)e.NewValue))
-            //        {
-            //            column.ScrollToVerticalOffset(VerticalScrollOffsets[(string)e.NewValue]);
-            //        }
-            //        else
-            //        {
-            //            VerticalScrollOffsets.Add((string)e.NewValue, column.VerticalOffset);
-            //        }
-
-            //        // Add scrollviewer
-            //        GridViews.Add(column, (string)e.NewValue);
-            //        column.ScrollChanged += new ScrollChangedEventHandler(ScrollViewer_ScrollChanged);
-            //    }
-            //}
+        public object ConvertBack(object o, Type type, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException();
         }
     }
 }
+

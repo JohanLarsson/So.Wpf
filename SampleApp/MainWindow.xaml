@@ -66,6 +66,7 @@
             </TabItem>
             <TabItem Header="EditableTextBlock">
                 <StackPanel>
+                    <Button>Lose focus here</Button>
                     <GroupBox Header="Vanilla TextBlock">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Standard TextBlock: "/>
@@ -73,10 +74,26 @@
                         </StackPanel>
                     </GroupBox>
                     <GroupBox Header="Editable TextBlock">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Editable TextBlock: "/>
-                            <controls:EditableTextBlock Text="{Binding DummyText}"/>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Editable TextBlock: "/>
+                                <controls:EditableTextBlock x:Name="EditableTextBlock" Text="{Binding DummyText}"/>
+
+                            </StackPanel>
+                            <CheckBox Content="SelectAllOnFocus" 
+                                      IsChecked="{Binding ElementName=EditableTextBlock, Path=SelectAllTextOnFocus}"/>
+                            <Grid ap:Grid.Rows="Auto Auto Auto Auto" 
+                                  ap:Grid.Columns="auto 5 *">
+                                <TextBlock ap:Grid.Cell="0 0" Text="IsFocused"/>
+                                <TextBlock ap:Grid.Cell="0 2" Text="{Binding ElementName=EditableTextBlock,Path=IsFocused,Mode=OneWay}"/>
+                                <TextBlock ap:Grid.Cell="1 0" Text="Focusable"/>
+                                <TextBlock ap:Grid.Cell="1 2" Text="{Binding ElementName=EditableTextBlock,Path=Focusable,Mode=OneWay}"/>
+                                <TextBlock ap:Grid.Cell="2 0" Text="IsReadOnly"/>
+                                <TextBlock ap:Grid.Cell="2 2" Text="{Binding ElementName=EditableTextBlock,Path=IsReadOnly,Mode=OneWay}"/>
+                            </Grid>
+
                         </StackPanel>
+
                     </GroupBox>
                 </StackPanel>
 
@@ -85,7 +102,7 @@
             </TabItem>
             <TabItem Header="NumericBox">
                 <StackPanel>
-                    <controls:NumericBox x:Name="DoubleBox" Text="{Binding DummyDouble}" FontSize="48"/>
+                    <controls:NumericBox x:Name="DoubleBox" Text="{Binding DummyDouble, UpdateSourceTrigger=PropertyChanged}" FontSize="48"/>
                     <CheckBox Content="UpdateWithMouseWheel" IsChecked="{Binding ElementName=DoubleBox, Path=UpdateWithMouseWheel}"/>
                 </StackPanel>
             </TabItem>
@@ -93,20 +110,11 @@
                 <ListView>
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Day" ap:GridViewColumn.ColumnWidth="5*">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate DataType="{x:Type system:DateTime}">
-                                        <TextBlock Text="{Binding DayOfWeek}"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Date" ap:GridViewColumn.ColumnWidth="*">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate DataType="{x:Type system:DateTime}">
-                                        <TextBlock Text="{Binding Date}"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
+                            <GridViewColumn Header="Day"
+                                            CellTemplate="{StaticResource DayOfWeekTemplate}"/>
+                            <GridViewColumn Header="Date" 
+                                            ap:GridViewColumn.ColumnWidth="2*"
+                                            CellTemplate="{StaticResource DateTemplate}"/>
                         </GridView>
                     </ListView.View>
                     <system:DateTime>2014-01-01</system:DateTime>

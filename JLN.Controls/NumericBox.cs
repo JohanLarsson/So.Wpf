@@ -12,7 +12,7 @@ namespace JLN.Controls
     {
         public NumericBox()
         {
-            this.AddHandler(MouseWheelEvent, new MouseWheelEventHandler(OnMouseWheel));
+            AddHandler(MouseWheelEvent, new MouseWheelEventHandler(OnMouseWheel));
         }
 
         private void OnMouseWheel(object sender, MouseWheelEventArgs e)
@@ -79,5 +79,7 @@ namespace JLN.Controls
             get { return (bool) GetValue(UpdateWithMouseWheelProperty); }
             set { SetValue(UpdateWithMouseWheelProperty, value); }
         }
+
+
     }
 }
