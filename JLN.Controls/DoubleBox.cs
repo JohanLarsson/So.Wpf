@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Interop;
 
 namespace JLN.Controls
@@ -11,14 +12,17 @@ namespace JLN.Controls
     {
         public DoubleBox()
         {
-            this.AddHandler(MouseWheelEvent, new RoutedEventHandler(OnMouseWheel));
+            this.AddHandler(MouseWheelEvent, new MouseWheelEventHandler(OnMouseWheel));
         }
 
-        private void OnMouseWheel(object sender, RoutedEventArgs routedEventArgs)
+        private void OnMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            throw new NotImplementedException();
+            if(!IsKeyboardFocused)
+                return;
+            if(!UpdateWithMouseWheel)
+                return;
+            Update(e.Delta>0, CultureInfo.InvariantCulture);
         }
-
         internal void Update(bool increase, CultureInfo culture)
         {
             double d;
@@ -65,6 +69,15 @@ namespace JLN.Controls
                 }
             }
             CaretIndex = caretIndex;
+        }
+
+        public static readonly DependencyProperty UpdateWithMouseWheelProperty =
+            DependencyProperty.Register("UpdateWithMouseWheel", typeof (bool), typeof (DoubleBox), new PropertyMetadata(false));
+
+        public bool UpdateWithMouseWheel
+        {
+            get { return (bool) GetValue(UpdateWithMouseWheelProperty); }
+            set { SetValue(UpdateWithMouseWheelProperty, value); }
         }
     }
 }
