@@ -16,7 +16,9 @@ namespace JLN.Controls
 
         private void OnMouseWheel(object sender, RoutedEventArgs routedEventArgs)
         {
-            throw new NotImplementedException();
+            if (!IsKeyboardFocused)
+                return;
+            
         }
 
         internal void Update(bool increase, CultureInfo culture)

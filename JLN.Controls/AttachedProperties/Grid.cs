@@ -15,7 +15,7 @@ namespace JLN.Controls.AttachedProperties
     {
         private static readonly GridLengthConverter Converter = new GridLengthConverter();
         private static readonly char[] SplitSeparators = { ' ', ';' };
-        internal static IEnumerable<GridLength> ToGridLengths(this object newValue)
+        internal static IEnumerable<GridLength> ToGridLengths(object newValue)
         {
             if (newValue == null)
                 return Enumerable.Empty<GridLength>();
@@ -40,8 +40,7 @@ namespace JLN.Controls.AttachedProperties
                 return;
             var grid = (System.Windows.Controls.Grid)d;
             grid.ColumnDefinitions.Clear();
-            foreach (var cd in e.NewValue.ToGridLengths()
-                                         .Select(x => new ColumnDefinition { Width = x }))
+            foreach (var cd in ToGridLengths(e.NewValue).Select(x => new ColumnDefinition { Width = x }))
             {
                 grid.ColumnDefinitions.Add(cd);
             }
@@ -64,8 +63,7 @@ namespace JLN.Controls.AttachedProperties
                 return;
             var grid = (System.Windows.Controls.Grid)d;
             grid.RowDefinitions.Clear();
-            foreach (var rd in e.NewValue.ToGridLengths()
-                                         .Select(x => new RowDefinition() { Height = x }))
+            foreach (var rd in ToGridLengths(e.NewValue).Select(x => new RowDefinition() { Height = x }))
             {
                 grid.RowDefinitions.Add(rd);
             }
