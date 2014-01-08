@@ -66,19 +66,18 @@
             </TabItem>
             <TabItem Header="EditableTextBlock">
                 <StackPanel>
-                    <Button>Lose focus here</Button>
                     <GroupBox Header="Vanilla TextBlock">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Standard TextBlock: "/>
                             <TextBlock Text="{Binding DummyText}"/>
                         </StackPanel>
                     </GroupBox>
+                    <Button>Lose focus here</Button>
                     <GroupBox Header="Editable TextBlock">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Editable TextBlock: "/>
                                 <controls:EditableTextBlock x:Name="EditableTextBlock" Text="{Binding DummyText}"/>
-
                             </StackPanel>
                             <CheckBox Content="SelectAllOnFocus" 
                                       IsChecked="{Binding ElementName=EditableTextBlock, Path=SelectAllTextOnFocus}"/>
@@ -93,12 +92,8 @@
                             </Grid>
 
                         </StackPanel>
-
                     </GroupBox>
                 </StackPanel>
-
-
-
             </TabItem>
             <TabItem Header="NumericBox">
                 <StackPanel>
@@ -106,22 +101,34 @@
                     <CheckBox Content="UpdateWithMouseWheel" IsChecked="{Binding ElementName=DoubleBox, Path=UpdateWithMouseWheel}"/>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Gridviewcolumnwidth">
-                <ListView>
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Day"
-                                            CellTemplate="{StaticResource DayOfWeekTemplate}"/>
-                            <GridViewColumn Header="Date" 
+            <TabItem Header="GridViewColumn.Width">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Row="0">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Day"
                                             ap:GridViewColumn.ColumnWidth="2*"
+                                            CellTemplate="{StaticResource DayOfWeekTemplate}"/>
+                                <GridViewColumn Header="Date" 
+                                            ap:GridViewColumn.ColumnWidth="*"
                                             CellTemplate="{StaticResource DateTemplate}"/>
-                        </GridView>
-                    </ListView.View>
-                    <system:DateTime>2014-01-01</system:DateTime>
-                    <system:DateTime>2014-01-02</system:DateTime>
-                </ListView>
+                            </GridView>
+                        </ListView.View>
+                        <system:DateTime>2014-01-01</system:DateTime>
+                        <system:DateTime>2014-01-02</system:DateTime>
+                    </ListView>
+                    <DataGrid Grid.Row="1">
+                        <system:DateTime>2014-01-01</system:DateTime>
+                        <system:DateTime>2014-01-02</system:DateTime>
+                    </DataGrid>
+                </Grid>
+
             </TabItem>
-            <TabItem Header="Grid" >
+            <TabItem Header="Grid.Rows" >
                 <Grid ap:Grid.Rows="* *"
                       ap:Grid.Columns="* *">
                     <Grid ap:Grid.Cell="0 0" 

@@ -8,15 +8,10 @@ namespace JLN.Controls
 {
     public class EditableTextBlock : TextBox
     {
-        static EditableTextBlock()
-        {
-            //DefaultStyleKeyProperty.OverrideMetadata(typeof(EditableTextBlock), new FrameworkPropertyMetadata(typeof(EditableTextBlock)));
-        }
-
         public EditableTextBlock()
         {
             SetTextBlockStyle();
-            AddHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(TriStateFocus));
+            AddHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(ToggleTriStateFocus));
             AddHandler(LostFocusEvent, new RoutedEventHandler((sender, args) => SetTextBlockStyle()));
         }
 
@@ -45,10 +40,14 @@ namespace JLN.Controls
             set { SetValue(SelectAllTextOnFocusProperty, value); }
         }
 
-        private void TriStateFocus(object sender, MouseButtonEventArgs e)
+        private void ToggleTriStateFocus(object sender, MouseButtonEventArgs e)
         {
             if (!SelectAllTextOnFocus)
-                return;
+            {
+                Focusable = true;
+                Focus();
+                SetTextBoxStyle();
+            }
             if (!Focusable)
             {
                 Focusable = true;
