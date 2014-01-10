@@ -135,8 +135,8 @@
                           ap:Grid.Rows="* *"
                           ap:Grid.Columns="* *" 
                           Background="Goldenrod">
-                            <Rectangle ap:Grid.Cell="0 0" Fill="Blue"/>
-                            <Rectangle ap:Grid.Cell="1 1" Fill="Red"/>
+                        <Rectangle ap:Grid.Cell="0 0" Fill="Blue"/>
+                        <Rectangle ap:Grid.Cell="1 1" Fill="Red"/>
                     </Grid>
                     <Grid ap:Grid.Cell="1 0" 
                           ap:Grid.Rows="* *"
@@ -146,6 +146,60 @@
                     </Grid>
                 </Grid>
 
+            </TabItem>
+            <TabItem Header="Canvas">
+                <Grid ap:Grid.Rows="Auto *"
+                      ap:Grid.Columns="* *">
+                    <GroupBox ap:Grid.Cell="0 0" Header="X">
+                        <Grid ap:Grid.Rows="Auto Auto Auto" ap:Grid.Columns="Auto *">
+                            <TextBlock ap:Grid.Cell="0 0" Text="XPos"/>
+                            <controls:NumericBox ap:Grid.Cell="0 1" Text="{Binding X, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock ap:Grid.Cell="1 0" Text="XSize"/>
+                            <controls:NumericBox ap:Grid.Cell="1 1" Text="{Binding XSize, UpdateSourceTrigger=PropertyChanged}"/>
+                            <ComboBox  Grid.Row="2" Grid.ColumnSpan="2"
+                              ItemsSource="{Binding XRelatives}" 
+                              SelectedItem="{Binding XpositionedRelative}"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox ap:Grid.Cell="0 1" Header="Y">
+                        <Grid ap:Grid.Rows="Auto Auto Auto" ap:Grid.Columns="Auto *">
+                            <TextBlock ap:Grid.Cell="0 0" Text="YPos"/>
+                            <controls:NumericBox ap:Grid.Cell="0 1" Text="{Binding Y, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock ap:Grid.Cell="1 0" Text="YSize"/>
+                            <controls:NumericBox ap:Grid.Cell="1 1" Text="{Binding YSize, UpdateSourceTrigger=PropertyChanged}"/>
+                            <ComboBox Grid.Row="2" Grid.ColumnSpan="2"
+                              ItemsSource="{Binding YRelatives}" 
+                              SelectedItem="{Binding YpositionedRelative}"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <Canvas x:Name="Canvas" Grid.ColumnSpan="2" Grid.Row="1">
+                        <Grid Name="Crosshair" RenderTransformOrigin="0.5, 0.5" 
+                              Width="{Binding ElementName=Canvas, Path=ActualWidth}" 
+                              Height="{Binding ElementName=Canvas, Path=ActualHeight}">
+                            <Line Name="Vertical"
+                                  X1="{Binding Path=X}" 
+                                  X2="{Binding Path=X}"
+                                  Y1="0" 
+                                  Y2="{Binding ElementName=Canvas, Path=ActualHeight}" 
+                                  Stroke="Black"/>
+                            <Line Name="Horizontal"
+                                  X1="0"
+                                  X2="{Binding ElementName=Canvas, Path=ActualWidth}"
+                                  Y1="{Binding Path=Y}" 
+                                  Y2="{Binding Path=Y}" 
+                                  Stroke="Black"/>
+                            <Grid.RenderTransform>
+                                <ScaleTransform ScaleY="-1" ScaleX="1"/>
+                            </Grid.RenderTransform>
+                        </Grid>
+                        <Ellipse Height="{Binding YSize}" Width="{Binding XSize}" Fill="DodgerBlue" 
+                             ap:Canvas.X="{Binding X}"
+                             ap:Canvas.XpositionRelativeTo="{Binding XpositionedRelative}"
+                             ap:Canvas.Y="{Binding Y}" 
+                             ap:Canvas.YpositionRelativeTo="{Binding YpositionedRelative}"/>
+                    </Canvas>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>
