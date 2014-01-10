@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using NUnit.Framework;
-using So.Wpf.Misc;
-
-namespace So.Wpf.Tests
+﻿namespace So.Wpf.Tests
 {
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+    using NUnit.Framework;
+    using Misc;
     class DependencyPropertyExtTests
     {
         [Test, RequiresSTA]

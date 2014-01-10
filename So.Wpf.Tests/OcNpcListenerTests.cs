@@ -80,7 +80,7 @@ namespace So.Wpf.Tests
             var fakeInpc = new FakeInpc();
             var oc = new ObservableCollection<FakeInpc>();
             var events = new List<FakeInpc>();
-            var listener = OcNpcListener.Create(oc);//, (sender, args) => events.Add((FakeInpc)sender));
+            var listener = OcNpcListener.Create(oc);
             listener.PropertyChanged += (sender, args) => events.Add((FakeInpc)((ChildPropertyChangedEventArgs)args).Child);
             Assert.IsFalse(fakeInpc.HasHandler);
             oc.Add(fakeInpc);
@@ -133,7 +133,7 @@ namespace So.Wpf.Tests
             var fakeInpc2 = new FakeInpc();
             var oc = new ObservableCollection<FakeInpc>();
             var events = new List<FakeInpc>();
-            var listener = OcNpcListener.Create(oc);//, (sender, args) => events.Add((FakeInpc)sender));
+            var listener = OcNpcListener.Create(oc);
             listener.PropertyChanged += (sender, args) => events.Add((FakeInpc)((ChildPropertyChangedEventArgs)args).Child);
             Assert.IsFalse(fakeInpc1.HasHandler);
             oc.Add(fakeInpc1);

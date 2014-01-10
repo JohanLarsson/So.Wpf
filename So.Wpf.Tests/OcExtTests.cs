@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Security.Permissions;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using So.Wpf.Misc;

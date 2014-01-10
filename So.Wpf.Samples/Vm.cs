@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using So.Wpf.AttachedProperties;
 using So.Wpf.Samples.Annotations;
 using So.Wpf.Samples.Browser;

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using NUnit.Framework;
 using So.Wpf.Controls;
 
@@ -32,7 +27,7 @@ namespace So.Wpf.Tests
                 Text = text,
                 CaretIndex = caretIndex
             };
-            Assert.AreEqual(caretIndex,doubleBox.CaretIndex);
+            Assert.AreEqual(caretIndex, doubleBox.CaretIndex);
             doubleBox.Update(increase, CultureInfo.InvariantCulture);
             Assert.AreEqual(expectedText, doubleBox.Text);
             Assert.AreEqual(expectedCaretIndex, doubleBox.CaretIndex);
