@@ -1,8 +1,8 @@
-﻿using System.Security.Permissions;
-using System.Windows.Threading;
-
-namespace So.Wpf.Misc
+﻿namespace So.Wpf.Misc
 {
+    using System.Security.Permissions;
+    using System.Windows.Threading;
+
     /// <summary>
     /// http://kentb.blogspot.se/2008/04/dispatcher-frames.html
     /// </summary>
@@ -12,8 +12,10 @@ namespace So.Wpf.Misc
         public static void DoEvents(this Dispatcher dispatcher)
         {
             var frame = new DispatcherFrame();
-            dispatcher.BeginInvoke(DispatcherPriority.Background,
-                new DispatcherOperationCallback(ExitFrame), frame);
+            dispatcher.BeginInvoke(
+                DispatcherPriority.Background,
+                new DispatcherOperationCallback(ExitFrame),
+                frame);
             Dispatcher.PushFrame(frame);
         }
 

@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-
-namespace So.Wpf.Controls
+﻿namespace So.Wpf.Controls
 {
+    using System.Windows;
+    using System.Windows.Controls;
+
     /// <summary>
     /// Represents a control that displays hierarchical data in a tree structure
     /// that has items that can expand and collapse.
@@ -10,9 +10,21 @@ namespace So.Wpf.Controls
     /// </summary>
     public class TreeListView : TreeView
     {
+        public static readonly DependencyProperty ColumnsProperty = DependencyProperty.Register(
+            "Columns",
+            typeof(GridViewColumnCollection),
+            typeof(TreeListView),
+            new UIPropertyMetadata(null));
+
+        public static readonly DependencyProperty AllowsColumnReorderProperty = DependencyProperty.Register(
+            "AllowsColumnReorder",
+            typeof(bool),
+            typeof(TreeListView),
+            new UIPropertyMetadata(null));
+
         static TreeListView()
         {
-            //Override the default style and the default control template
+            // Override the default style and the default control template
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TreeListView), new FrameworkPropertyMetadata(typeof(TreeListView)));
         }
 
@@ -24,7 +36,6 @@ namespace So.Wpf.Controls
             Columns = new GridViewColumnCollection();
         }
 
-        #region Properties
         /// <summary>
         /// Gets or sets the collection of System.Windows.Controls.GridViewColumn 
         /// objects that is defined for this TreeListView.
@@ -33,7 +44,7 @@ namespace So.Wpf.Controls
         {
             get { return (GridViewColumnCollection)GetValue(ColumnsProperty); }
             set { SetValue(ColumnsProperty, value); }
-        }        
+        }
 
         /// <summary>
         /// Gets or sets whether columns in a TreeListView can be
@@ -44,18 +55,5 @@ namespace So.Wpf.Controls
             get { return (bool)GetValue(AllowsColumnReorderProperty); }
             set { SetValue(AllowsColumnReorderProperty, value); }
         }
-        #endregion
-
-        #region Static Dependency Properties
-        // Using a DependencyProperty as the backing store for AllowsColumnReorder.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty AllowsColumnReorderProperty =
-            DependencyProperty.Register("AllowsColumnReorder", typeof(bool), typeof(TreeListView), new UIPropertyMetadata(null));
-
-        // Using a DependencyProperty as the backing store for Columns.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ColumnsProperty =
-            DependencyProperty.Register("Columns", typeof(GridViewColumnCollection),
-            typeof(TreeListView),
-            new UIPropertyMetadata(null));
-        #endregion
     }
 }

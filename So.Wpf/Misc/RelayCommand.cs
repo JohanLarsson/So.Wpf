@@ -1,8 +1,7 @@
-﻿using System;
-using System.Windows.Input;
-
-namespace So.Wpf.Misc
+﻿namespace So.Wpf.Misc
 {
+    using System;
+    using System.Windows.Input;
     public class RelayCommand : RelayCommandBase
     {
         public RelayCommand(Action<object> action, Predicate<object> condition) : base(action, condition)

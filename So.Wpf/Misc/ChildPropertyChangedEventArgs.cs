@@ -1,7 +1,6 @@
-﻿using System.ComponentModel;
-
-namespace So.Wpf.Misc
+﻿namespace So.Wpf.Misc
 {
+    using System.ComponentModel;
     public class ChildPropertyChangedEventArgs : PropertyChangedEventArgs
     {
         public ChildPropertyChangedEventArgs(object child, string propertyName)
@@ -16,11 +15,11 @@ namespace So.Wpf.Misc
             Child = sender;
         }
 
-        //public ChildPropertyChangedEventArgs(EventPattern<PropertyChangedEventArgs> e)
-        //    : base(e.EventArgs.PropertyName)
-        //{
-        //    Child = e.Sender;
-        //}
+        ////public ChildPropertyChangedEventArgs(EventPattern<PropertyChangedEventArgs> e)
+        ////    : base(e.EventArgs.PropertyName)
+        ////{
+        ////    Child = e.Sender;
+        ////}
 
         public object Child { get; private set; }
     }

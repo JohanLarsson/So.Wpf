@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Threading;
-
-namespace So.Wpf.Misc
+﻿namespace So.Wpf.Misc
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Windows;
+    using System.Windows.Threading;
     public static class OcExt
     {
         public static void InvokeAdd<T>(this ObservableCollection<T> collection, T newItem)
         {
-            collection.Invoke(()=>collection.Add(newItem));
+            collection.Invoke(() => collection.Add(newItem));
         }
         public static void InvokeAddRange<T>(this ObservableCollection<T> collection, IEnumerable<T> newItems)
         {

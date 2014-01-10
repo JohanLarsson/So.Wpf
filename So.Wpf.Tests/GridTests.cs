@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using NUnit.Framework;
-
-namespace So.Wpf.Tests
+﻿namespace So.Wpf.Tests
 {
-    class GridTests
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+    using NUnit.Framework;
+    public class GridTests
     {
         [Test, RequiresSTA]
         public void ColumnsTest()

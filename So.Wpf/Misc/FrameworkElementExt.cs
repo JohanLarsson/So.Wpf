@@ -1,7 +1,6 @@
-﻿using System.Windows;
-
-namespace So.Wpf.Misc
+﻿namespace So.Wpf.Misc
 {
+    using System.Windows;
     public static class FrameworkElementExt
     {
         public static void Initialize(this FrameworkElement element)

@@ -156,9 +156,9 @@
                             <controls:NumericBox ap:Grid.Cell="0 1" 
                                                  Text="{Binding X, UpdateSourceTrigger=PropertyChanged}" 
                                                  UpdateWithMouseWheel="True"/>
-                            <TextBlock ap:Grid.Cell="1 0" Text="XSize"/>
+                            <TextBlock ap:Grid.Cell="1 0" Text="SizeX"/>
                             <controls:NumericBox ap:Grid.Cell="1 1" 
-                                                 Text="{Binding XSize, UpdateSourceTrigger=PropertyChanged}" 
+                                                 Text="{Binding SizeX, UpdateSourceTrigger=PropertyChanged}" 
                                                  UpdateWithMouseWheel="True"/>
                             <ComboBox  Grid.Row="2" Grid.ColumnSpan="2"
                               ItemsSource="{Binding XRelatives}" 
@@ -171,9 +171,9 @@
                             <controls:NumericBox ap:Grid.Cell="0 1" 
                                                  Text="{Binding Y, UpdateSourceTrigger=PropertyChanged}" 
                                                  UpdateWithMouseWheel="True"/>
-                            <TextBlock ap:Grid.Cell="1 0" Text="YSize"/>
+                            <TextBlock ap:Grid.Cell="1 0" Text="SizeY"/>
                             <controls:NumericBox ap:Grid.Cell="1 1" 
-                                                 Text="{Binding YSize, UpdateSourceTrigger=PropertyChanged}" 
+                                                 Text="{Binding SizeY, UpdateSourceTrigger=PropertyChanged}" 
                                                  UpdateWithMouseWheel="True"/>
                             <ComboBox Grid.Row="2" Grid.ColumnSpan="2"
                               ItemsSource="{Binding YRelatives}" 
@@ -201,7 +201,7 @@
                                 <ScaleTransform ScaleY="-1" ScaleX="1"/>
                             </Grid.RenderTransform>
                         </Grid>
-                        <Ellipse Height="{Binding YSize}" Width="{Binding XSize}" Fill="DodgerBlue" 
+                        <Ellipse Height="{Binding SizeY}" Width="{Binding SizeX}" Fill="DodgerBlue" 
                              ap:Canvas.X="{Binding X}"
                              ap:Canvas.XpositionRelativeTo="{Binding XpositionedRelative}"
                              ap:Canvas.Y="{Binding Y}" 

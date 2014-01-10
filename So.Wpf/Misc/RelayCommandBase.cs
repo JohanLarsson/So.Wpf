@@ -1,8 +1,7 @@
-﻿using System;
-using System.Windows.Input;
-
-namespace So.Wpf.Misc
+﻿namespace So.Wpf.Misc
 {
+    using System;
+    using System.Windows.Input;
     public abstract class RelayCommandBase : ICommand
     {
         private readonly Action<object> _action;
@@ -20,16 +19,14 @@ namespace So.Wpf.Misc
             _condition = (o) => true;
         }
 
+        public abstract event EventHandler CanExecuteChanged;
         public bool CanExecute(object parameter)
         {
             return _condition(parameter);
         }
-
         public void Execute(object parameter)
         {
             _action(parameter);
         }
-
-        public abstract event EventHandler CanExecuteChanged;
     }
 }

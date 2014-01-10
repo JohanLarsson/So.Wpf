@@ -1,12 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
-
-namespace So.Wpf.Misc
+﻿namespace So.Wpf.Misc
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
+    using System.ComponentModel;
+    using System.Linq;
+    public static class OcNpcListener
+    {
+        public static OcNpcListener<T> Create<T>(ObservableCollection<T> collection, string propertyName = "") where T : INotifyPropertyChanged
+        {
+            return new OcNpcListener<T>(collection, propertyName);
+        }
+
+        public static OcNpcListener<T> ToListener<T>(this ObservableCollection<T> collection, string propertyName = "") where T : INotifyPropertyChanged
+        {
+            return new OcNpcListener<T>(collection, propertyName);
+        }
+    }
     public class OcNpcListener<T> : INotifyPropertyChanged where T : INotifyPropertyChanged
     {
         private readonly ObservableCollection<T> _collection;
@@ -18,6 +29,16 @@ namespace So.Wpf.Misc
             _propertyName = propertyName ?? "";
             AddRange(collection);
             CollectionChangedEventManager.AddHandler(collection, CollectionChanged);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void ChildPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new ChildPropertyChangedEventArgs(sender, e));
+            }
         }
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -78,13 +99,6 @@ namespace So.Wpf.Misc
             }
             AddRange(_collection);
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void ChildPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-                handler(this, new ChildPropertyChangedEventArgs(sender, e));
-        }
         private class ObjectIdentityComparer : IEqualityComparer<T>
         {
             public bool Equals(T x, T y)
@@ -95,14 +109,6 @@ namespace So.Wpf.Misc
             {
                 return System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(obj);
             }
-        }
-    }
-
-    public static class OcNpcListener
-    {
-        public static OcNpcListener<T> Create<T>(ObservableCollection<T> collection, string propertyName = "") where T : INotifyPropertyChanged
-        {
-            return new OcNpcListener<T>(collection, propertyName);
         }
     }
 

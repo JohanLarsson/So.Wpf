@@ -1,23 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-
-namespace So.Wpf.AttachedProperties
+﻿namespace So.Wpf.AttachedProperties
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.Specialized;
+    using System.ComponentModel;
+    using System.Globalization;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Controls.Primitives;
+    using System.Windows.Data;
     public static class GridViewColumn
     {
-        private static readonly GridLength _defaultValue = new GridLength(0, GridUnitType.Auto);
-        private static readonly Dictionary<System.Windows.Controls.GridViewColumn, GridVieColumnWidthInfo> _columns = new Dictionary<System.Windows.Controls.GridViewColumn, GridVieColumnWidthInfo>();
+        public static readonly DependencyProperty ColumnWidthProperty = DependencyProperty.RegisterAttached(
+            "ColumnWidth",
+            typeof(GridLength),
+            typeof(GridViewColumn),
+            new PropertyMetadata(DefaultValue, OnWidthChanged));
 
-        public static readonly DependencyProperty ColumnWidthProperty =
-            DependencyProperty.RegisterAttached("ColumnWidth", typeof(GridLength), typeof(GridViewColumn), new PropertyMetadata(_defaultValue, OnWidthChanged));
+        private static readonly GridLength DefaultValue = new GridLength(0, GridUnitType.Auto);
+        private static readonly Dictionary<System.Windows.Controls.GridViewColumn, GridVieColumnWidthInfo> Columns = new Dictionary<System.Windows.Controls.GridViewColumn, GridVieColumnWidthInfo>();
 
         /// <summary>
         /// Sets the value of the attached property ScrollGroup.
@@ -46,17 +48,21 @@ namespace So.Wpf.AttachedProperties
         /// <param name="e">Event data that is issued by any event that tracks changes to the effective value of this property.</param>
         private static void OnWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if(!((GridLength)e.NewValue).IsStar)
+            if (!((GridLength)e.NewValue).IsStar)
+            {
                 throw new ArgumentException("ColumnWidth must be starsize");
+            }
             var column = (System.Windows.Controls.GridViewColumn)d;
-            if (_columns.ContainsKey(column))
+            if (Columns.ContainsKey(column))
+            {
                 return;
+            }
             var info = new GridVieColumnWidthInfo()
             {
                 Column = column,
                 Width = GetColumnWidth(d)
             };
-            _columns.Add(column,info);
+            Columns.Add(column, info);
             var binding = new Binding
             {
                 RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(Selector), 1),
@@ -75,7 +81,10 @@ namespace So.Wpf.AttachedProperties
 
             public Selector Parent
             {
-                get { return _parent; }
+                get
+                {
+                    return _parent;
+                }
                 set
                 {
                     _parent = value;
@@ -86,13 +95,16 @@ namespace So.Wpf.AttachedProperties
 
             public GridViewColumnCollection Columns
             {
-                get { return _columns1; }
+                get
+                {
+                    return _columns1;
+                }
                 set
                 {
                     _columns1 = value;
                     foreach (var col in _columns1)
                     {
-                        PropertyChangedEventManager.AddHandler(col, (sender, args) => Update(),"ActualWidth");
+                        PropertyChangedEventManager.AddHandler(col, (sender, args) => Update(), "ActualWidth");
                     }
                     CollectionChangedEventManager.AddHandler(_columns1, Handler);
                 }
@@ -123,12 +135,12 @@ namespace So.Wpf.AttachedProperties
 
             private void Update()
             {
-                var notSet = Columns.Where(x => GetColumnWidth(x) == _defaultValue);
+                var notSet = Columns.Where(x => GetColumnWidth(x) == DefaultValue);
                 var sum = notSet.Select(x => x.ActualWidth).Sum();
                 var starSized = Columns.Where(x => GetColumnWidth(x).IsStar);
                 var totalStarWidth = Parent.ActualWidth - sum;
-                var totalStarValue = _columns.Where(x=>starSized.Contains( x.Key)).Sum(x=>x.Value.Width.Value);
-                Column.Width =(Width.Value/totalStarValue) *totalStarWidth; 
+                var totalStarValue = GridViewColumn.Columns.Where(x => starSized.Contains(x.Key)).Sum(x => x.Value.Width.Value);
+                Column.Width = (Width.Value / totalStarValue) * totalStarWidth;
             }
         }
         private class GetAncestorConverter : IValueConverter
@@ -149,4 +161,3 @@ namespace So.Wpf.AttachedProperties
         }
     }
 }
-

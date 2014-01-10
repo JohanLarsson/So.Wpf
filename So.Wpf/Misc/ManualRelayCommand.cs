@@ -1,8 +1,7 @@
-﻿using System;
-using System.Windows;
-
-namespace So.Wpf.Misc
+﻿namespace So.Wpf.Misc
 {
+    using System;
+    using System.Windows;
     public class ManualRelayCommand : RelayCommandBase
     {
         public ManualRelayCommand(Action<object> action, Predicate<object> condition)
@@ -14,7 +13,6 @@ namespace So.Wpf.Misc
             : base(action)
         {
         }
-
 
         public override event EventHandler CanExecuteChanged;
 

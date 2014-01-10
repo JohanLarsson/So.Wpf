@@ -1,7 +1,6 @@
-﻿using System.IO;
-
-namespace So.Wpf.Samples.Browser
+﻿namespace So.Wpf.Samples.Browser
 {
+    using System.IO;
     public class DummyFile
     {
         public DummyFile(FileInfo fileInfo)
@@ -19,6 +18,12 @@ namespace So.Wpf.Samples.Browser
             }
         }
 
-        public string Type { get { return "File"; } }
+        public string Type
+        {
+            get
+            {
+                return "File";
+            }
+        }
     }
 }

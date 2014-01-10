@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-
-namespace So.Wpf.Samples.Browser
+﻿namespace So.Wpf.Samples.Browser
 {
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
     public class BrowserVm
     {
         public BrowserVm()
@@ -12,8 +11,20 @@ namespace So.Wpf.Samples.Browser
         }
         public ObservableCollection<DummyFolder> RootFolder { get; private set; }
 
-        public string Type { get { return "Root"; } }
+        public string Type
+        {
+            get
+            {
+                return "Root";
+            }
+        }
 
-        public string Name { get { return RootFolder.First().Name; } }
+        public string Name
+        {
+            get
+            {
+                return RootFolder.First().Name;
+            }
+        }
     }
 }

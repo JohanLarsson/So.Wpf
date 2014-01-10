@@ -1,24 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-
-namespace So.Wpf.AttachedProperties
+﻿namespace So.Wpf.AttachedProperties
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows;
+
     public static class Canvas
     {
-        public static readonly DependencyProperty XProperty =
-            DependencyProperty.RegisterAttached("X", typeof(double), typeof(Canvas), new PropertyMetadata(default(double), OnXchanged));
+        public static readonly DependencyProperty XProperty = DependencyProperty.RegisterAttached(
+            "X",
+            typeof(double),
+            typeof(Canvas),
+            new PropertyMetadata(default(double), OnXchanged));
 
-        public static readonly DependencyProperty XpositionRelativeToProperty =
-            DependencyProperty.RegisterAttached("XpositionRelativeTo", typeof(XpositionedRelativeTo), typeof(Canvas),
-                new PropertyMetadata(default(XpositionedRelativeTo), XpositionRelativeToChanged));
+        public static readonly DependencyProperty XpositionRelativeToProperty = DependencyProperty.RegisterAttached(
+            "XpositionRelativeTo",
+            typeof(XpositionedRelativeTo),
+            typeof(Canvas),
+            new PropertyMetadata(default(XpositionedRelativeTo), XpositionRelativeToChanged));
+
+        public static readonly DependencyProperty YProperty = DependencyProperty.RegisterAttached(
+            "Y",
+            typeof(double),
+            typeof(Canvas),
+            new PropertyMetadata(default(double), OnYchanged));
+
+        public static readonly DependencyProperty YpositionRelativeToProperty = DependencyProperty.RegisterAttached(
+            "YpositionRelativeTo",
+            typeof(YpositionedRelativeTo),
+            typeof(Canvas),
+            new PropertyMetadata(default(YpositionedRelativeTo), YpositionRelativeToChanged));
 
         private static readonly HashSet<FrameworkElement> AttachedTo = new HashSet<FrameworkElement>();
-        private static void OnXchanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-        {
-            if (IsChanged(e))
-                UpdateX((FrameworkElement)o);
-        }
         public static void SetX(FrameworkElement element, double value)
         {
             element.SetValue(XProperty, value);
@@ -26,13 +38,6 @@ namespace So.Wpf.AttachedProperties
         public static double GetX(FrameworkElement element)
         {
             return (double)element.GetValue(XProperty);
-        }
-
-
-        private static void XpositionRelativeToChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-        {
-            if (IsChanged(e))
-                UpdateX((FrameworkElement)o);
         }
         public static void SetXpositionRelativeTo(FrameworkElement element, XpositionedRelativeTo value)
         {
@@ -42,14 +47,6 @@ namespace So.Wpf.AttachedProperties
         {
             return (XpositionedRelativeTo)element.GetValue(XpositionRelativeToProperty);
         }
-
-        public static readonly DependencyProperty YProperty =
-    DependencyProperty.RegisterAttached("Y", typeof(double), typeof(Canvas), new PropertyMetadata(default(double), OnYchanged));
-        private static void OnYchanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-        {
-            if (IsChanged(e))
-                UpdateY((FrameworkElement)o);
-        }
         public static void SetY(FrameworkElement element, double value)
         {
             element.SetValue(YProperty, value);
@@ -57,14 +54,6 @@ namespace So.Wpf.AttachedProperties
         public static double GetY(FrameworkElement element)
         {
             return (double)element.GetValue(YProperty);
-        }
-
-        public static readonly DependencyProperty YpositionRelativeToProperty =
-            DependencyProperty.RegisterAttached("YpositionRelativeTo", typeof(YpositionedRelativeTo), typeof(Canvas), new PropertyMetadata(default(YpositionedRelativeTo), YpositionRelativeToChanged));
-        private static void YpositionRelativeToChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-        {
-            if (IsChanged(e))
-                UpdateY((FrameworkElement)o);
         }
         public static void SetYpositionRelativeTo(FrameworkElement element, YpositionedRelativeTo value)
         {
@@ -74,12 +63,44 @@ namespace So.Wpf.AttachedProperties
         {
             return (YpositionedRelativeTo)element.GetValue(YpositionRelativeToProperty);
         }
+        private static void OnXchanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            if (IsChanged(e))
+            {
+                UpdateX((FrameworkElement)o);
+            }
+        }
+        private static void XpositionRelativeToChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            if (IsChanged(e))
+            {
+                UpdateX((FrameworkElement)o);
+            }
+        }
+        private static void OnYchanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            if (IsChanged(e))
+            {
+                UpdateY((FrameworkElement)o);
+            }
+        }
+        private static void YpositionRelativeToChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            if (IsChanged(e))
+            {
+                UpdateY((FrameworkElement)o);
+            }
+        }
         private static void OnSizeChanged(object o, SizeChangedEventArgs args)
         {
             if (args.WidthChanged)
+            {
                 UpdateX((FrameworkElement)o);
+            }
             if (args.HeightChanged)
+            {
                 UpdateY((FrameworkElement)o);
+            }
         }
         private static void UpdateX(FrameworkElement fe)
         {
@@ -134,18 +155,5 @@ namespace So.Wpf.AttachedProperties
         {
             return e.NewValue != e.OldValue;
         }
-    }
-
-    public enum XpositionedRelativeTo
-    {
-        Center,
-        LeftEdge,
-        RightEdge
-    }
-    public enum YpositionedRelativeTo
-    {
-        Center,
-        TopEdge,
-        BottomEdge
     }
 }

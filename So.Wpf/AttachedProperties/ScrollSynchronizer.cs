@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-
-namespace So.Wpf.AttachedProperties
+﻿namespace So.Wpf.AttachedProperties
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+
     /// <summary>
     /// http://www.codeproject.com/Articles/39244/Scroll-Synchronization
     /// </summary>

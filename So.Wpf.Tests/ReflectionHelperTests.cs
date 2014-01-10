@@ -1,11 +1,12 @@
-﻿using System;
-using NUnit.Framework;
-using So.Wpf.Misc;
-
-namespace So.Wpf.Tests
+﻿namespace So.Wpf.Tests
 {
-    class ReflectionHelperTests
+    using System;
+    using Misc;
+    using NUnit.Framework;
+    public class ReflectionHelperTests
     {
+        public int FakeProperty { get; set; }
+
         [Test]
         public void Level0PropertyTest()
         {
@@ -28,11 +29,9 @@ namespace So.Wpf.Tests
             string propertyName = ReflectionHelper.GetPropertyName(() => fake.Time.Date);
             Assert.AreEqual("Date", propertyName);
         }
-
-        class FakeClass
+        public class FakeClass
         {
             public DateTime Time { get; set; }
         }
-        public int FakeProperty { get; set; }
     }
 }

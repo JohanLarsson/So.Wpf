@@ -1,13 +1,12 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Threading;
-using So.Wpf.Misc;
-using NUnit.Framework;
-
-namespace So.Wpf.Tests
+﻿namespace So.Wpf.Tests
 {
-    class OcExtTests
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Windows.Threading;
+    using Misc;
+    using NUnit.Framework;
+    public class OcExtTests
     {
         [Test]
         public async Task InvokeAsyncTest()
@@ -23,7 +22,7 @@ namespace So.Wpf.Tests
         public async Task AddRangeAsyncTest()
         {
             var ints = new ObservableCollection<int> { 1, 2, 3 };
-            await ints.AddRangeAsync(Enumerable.Range(4, 6)); //Hangs
+            await ints.AddRangeAsync(Enumerable.Range(4, 6)); // Hangs
             CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5, 6 }, ints);
         }
 

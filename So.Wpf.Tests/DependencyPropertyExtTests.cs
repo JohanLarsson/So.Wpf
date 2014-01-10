@@ -3,9 +3,9 @@
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
-    using NUnit.Framework;
     using Misc;
-    class DependencyPropertyExtTests
+    using NUnit.Framework;
+    public class DependencyPropertyExtTests
     {
         [Test, RequiresSTA]
         public void AncestorsTest()

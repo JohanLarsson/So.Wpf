@@ -56,6 +56,8 @@
   <ItemGroup>
     <Compile Include="AttachedProperties\Canvas.cs" />
     <Compile Include="AttachedProperties\Grid.cs" />
+    <Compile Include="AttachedProperties\XpositionedRelativeTo.cs" />
+    <Compile Include="AttachedProperties\YpositionedRelativeTo.cs" />
     <Compile Include="Behaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="Controls\CellTemplateDataGrid.cs" />
     <Compile Include="Misc\DispatcherUtil.cs" />
@@ -67,7 +69,9 @@
     <Compile Include="Misc\ManualRelayCommand.cs" />
     <Compile Include="Converters\MultiplyConverter.cs" />
     <Compile Include="Misc\OcNpcListener.cs" />
-    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Properties\Annotations.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Misc\ReflectionHelper.cs" />
     <Compile Include="Misc\RelayCommand.cs" />
     <Compile Include="Misc\RelayCommandBase.cs" />
@@ -76,6 +80,7 @@
     <Compile Include="Controls\EditableTextBlock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

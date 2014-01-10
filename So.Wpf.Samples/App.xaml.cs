@@ -1,7 +1,7 @@
-﻿using System.Windows;
-
-namespace So.Wpf.Samples
+﻿namespace So.Wpf.Samples
 {
+    using System.Windows;
+
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Globalization;
-using System.Windows.Data;
-
-namespace So.Wpf.Converters
+﻿namespace So.Wpf.Converters
 {
+    using System;
+    using System.Globalization;
+    using System.Windows.Data;
     public class MultiplyConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

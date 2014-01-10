@@ -1,39 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using So.Wpf.AttachedProperties;
-using So.Wpf.Samples.Annotations;
-using So.Wpf.Samples.Browser;
-
-namespace So.Wpf.Samples
+﻿namespace So.Wpf.Samples
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using Annotations;
+    using AttachedProperties;
+    using Browser;
     public class Vm : INotifyPropertyChanged
     {
         private readonly BrowserVm _browserVm = new BrowserVm();
-        private List<string> _scrollItems = Enumerable.Range(0,50).Select(x=>"Item " + x).ToList();
-        private string _dummyText ="Sample text";
-        private double _dummyDouble =3.141592;
+        private List<string> _scrollItems = Enumerable.Range(0, 50).Select(x => "Item " + x).ToList();
+        private string _dummyText = "Sample text";
+        private double _dummyDouble = 3.141592;
         private XpositionedRelativeTo _xpositionedRelative;
         private YpositionedRelativeTo _ypositionedRelative;
         private double _y;
         private double _x;
-        private double _ySize;
-        private double _xSize;
+        private double _sizeY;
+        private double _sizeX;
 
         public Vm()
         {
             Y = 100;
             X = 100;
-            YSize = 100;
-            XSize = 100;
+            SizeY = 100;
+            SizeX = 100;
         }
-        public Browser.BrowserVm BrowserVm
+        public event PropertyChangedEventHandler PropertyChanged;
+        public BrowserVm BrowserVm
         {
             get { return _browserVm; }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
         public List<string> ScrollItems
         {
             get { return _scrollItems; }
@@ -41,10 +40,16 @@ namespace So.Wpf.Samples
         }
         public string DummyText
         {
-            get { return _dummyText; }
+            get
+            {
+                return _dummyText;
+            }
             set
             {
-                if (value == _dummyText) return;
+                if (value == _dummyText)
+                {
+                    return;
+                }
                 _dummyText = value;
                 OnPropertyChanged();
             }
@@ -52,10 +57,16 @@ namespace So.Wpf.Samples
 
         public XpositionedRelativeTo XpositionedRelative
         {
-            get { return _xpositionedRelative; }
+            get
+            {
+                return _xpositionedRelative;
+            }
             set
             {
-                if (value == _xpositionedRelative) return;
+                if (value == _xpositionedRelative)
+                {
+                    return;
+                }
                 _xpositionedRelative = value;
                 OnPropertyChanged();
             }
@@ -65,16 +76,22 @@ namespace So.Wpf.Samples
         {
             get
             {
-                return Enum.GetValues(typeof (XpositionedRelativeTo)).Cast<XpositionedRelativeTo>();
+                return Enum.GetValues(typeof(XpositionedRelativeTo)).Cast<XpositionedRelativeTo>();
             }
         }
 
         public YpositionedRelativeTo YpositionedRelative
         {
-            get { return _ypositionedRelative; }
+            get
+            {
+                return _ypositionedRelative;
+            }
             set
             {
-                if (value == _ypositionedRelative) return;
+                if (value == _ypositionedRelative)
+                {
+                    return;
+                }
                 _ypositionedRelative = value;
                 OnPropertyChanged();
             }
@@ -89,10 +106,16 @@ namespace So.Wpf.Samples
         }
         public double DummyDouble
         {
-            get { return _dummyDouble; }
+            get
+            {
+                return _dummyDouble;
+            }
             set
             {
-                if (value.Equals(_dummyDouble)) return;
+                if (value.Equals(_dummyDouble))
+                {
+                    return;
+                }
                 _dummyDouble = value;
                 OnPropertyChanged();
             }
@@ -100,10 +123,16 @@ namespace So.Wpf.Samples
 
         public double Y
         {
-            get { return _y; }
+            get
+            {
+                return _y;
+            }
             set
             {
-                if (value.Equals(_y)) return;
+                if (value.Equals(_y))
+                {
+                    return;
+                }
                 _y = value;
                 OnPropertyChanged();
             }
@@ -111,33 +140,51 @@ namespace So.Wpf.Samples
 
         public double X
         {
-            get { return _x; }
+            get
+            {
+                return _x;
+            }
             set
             {
-                if (value.Equals(_x)) return;
+                if (value.Equals(_x))
+                {
+                    return;
+                }
                 _x = value;
                 OnPropertyChanged();
             }
         }
 
-        public double YSize
+        public double SizeY
         {
-            get { return _ySize; }
+            get
+            {
+                return _sizeY;
+            }
             set
             {
-                if (value.Equals(_ySize)) return;
-                _ySize = value;
+                if (value.Equals(_sizeY))
+                {
+                    return;
+                }
+                _sizeY = value;
                 OnPropertyChanged();
             }
         }
 
-        public double XSize
+        public double SizeX
         {
-            get { return _xSize; }
+            get
+            {
+                return _sizeX;
+            }
             set
             {
-                if (value.Equals(_xSize)) return;
-                _xSize = value;
+                if (value.Equals(_sizeX))
+                {
+                    return;
+                }
+                _sizeX = value;
                 OnPropertyChanged();
             }
         }
@@ -146,7 +193,10 @@ namespace So.Wpf.Samples
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

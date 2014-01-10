@@ -1,10 +1,9 @@
-﻿using System.Globalization;
-using NUnit.Framework;
-using So.Wpf.Controls;
-
-namespace So.Wpf.Tests
+﻿namespace So.Wpf.Tests
 {
-    class DoubleBoxTests
+    using System.Globalization;
+    using NUnit.Framework;
+    using So.Wpf.Controls;
+    public class DoubleBoxTests
     {
         [RequiresSTA]
         [TestCase("100", 3, true, "101", 3)]
