@@ -1,7 +1,7 @@
 ﻿using System.Security.Permissions;
 using System.Windows.Threading;
 
-namespace So.Wpf
+namespace So.Wpf.Misc
 {
     /// <summary>
     /// http://kentb.blogspot.se/2008/04/dispatcher-frames.html

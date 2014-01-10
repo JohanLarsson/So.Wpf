@@ -3,13 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:sampleApp="clr-namespace:So.Wpf.Samples"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
-        xmlns:controls="clr-namespace:So.Controls;assembly=So.Controls"
         xmlns:browser="clr-namespace:So.Wpf.Samples.Browser"
-        xmlns:ap="clr-namespace:So.Controls.AttachedProperties;assembly=So.Controls"
+        xmlns:controls="clr-namespace:So.Wpf.Controls;assembly=So.Wpf"
+        xmlns:ap="clr-namespace:So.Wpf.AttachedProperties;assembly=So.Wpf"
+        xmlns:samples="clr-namespace:So.Wpf.Samples"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" d:DataContext="{d:DesignInstance sampleApp:Vm,IsDesignTimeCreatable=True }">
+        Title="MainWindow" Height="350" Width="525" d:DataContext="{d:DesignInstance samples:Vm,IsDesignTimeCreatable=True }">
     <Grid>
         <TabControl>
             <TabItem Header="TreeListView">
@@ -52,7 +52,7 @@
             <TabItem Header="ScrollSynchronizer">
                 <TabItem.Resources>
                     <Style TargetType="ScrollViewer">
-                        <Setter Property="controls:ScrollSynchronizer.ScrollGroup" Value="Group1" />
+                        <Setter Property="ap:ScrollSynchronizer.ScrollGroup" Value="Group1" />
                     </Style>
                 </TabItem.Resources>
                 <Grid>

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace So.Wpf
+namespace So.Wpf.Controls
 {
     /// <summary>
     /// Represents a control that displays hierarchical data in a tree structure
