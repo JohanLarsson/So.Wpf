@@ -1,4 +1,5 @@
-﻿using System.Windows.Shapes;
+﻿using System;
+using System.Windows.Shapes;
 
 namespace So.Wpf.Tests
 {
@@ -30,17 +31,40 @@ namespace So.Wpf.Tests
             Grid.SetColumn(rectangle, 1);
         }
 
-        [Test, RequiresSTA]
-        public void CellTest()
+        [TestCase("* *", "* *", "0 0", 0, 0)]
+        [TestCase("* *", "* *", "1 1", 1, 1)]
+        [TestCase("*;*;*", "*;*;*", "0 0", 0, 0)]
+        [TestCase("*;*;*", "*;*;*", "0 1", 0, 1)]
+        [TestCase("*;*;*", "*;*;*", "0 2", 0, 2)]
+        [TestCase("*;*;*", "*;*;*", "0 3", 0, 0, ExpectedException = typeof(ArgumentOutOfRangeException))]
+        [TestCase("*;*;*", "*;*;*", "0 0", 0, 0)]
+        [TestCase("*;*;*", "*;*;*", "1 0", 1, 0)]
+        [TestCase("*;*;*", "*;*;*", "2 0", 2, 0)]
+        [TestCase("*;*;*", "*;*;*", "3 0", 0, 0, ExpectedException = typeof(ArgumentOutOfRangeException))]
+        public void CellTest(string rows, string columns, string cell, int row, int col)
         {
             var grid = new Grid();
-            AttachedProperties.Grid.SetColumns(grid, "*;*;*");
-            AttachedProperties.Grid.SetRows(grid, "*;*;*");
+            AttachedProperties.Grid.SetColumns(grid, rows);
+            AttachedProperties.Grid.SetRows(grid, columns);
             var rectangle = new Rectangle();
             grid.Children.Add(rectangle);
-            AttachedProperties.Grid.SetCell(rectangle, "0 1");
-            Assert.AreEqual(0, Grid.GetRow(rectangle));
-            Assert.AreEqual(1, Grid.GetColumn(rectangle));
+            AttachedProperties.Grid.SetCell(rectangle, cell);
+            Assert.AreEqual(row, Grid.GetRow(rectangle));
+            Assert.AreEqual(col, Grid.GetColumn(rectangle));
+        }
+
+        [Test]
+        public void TwoCellsTest()
+        {
+            var grid = new Grid();
+            AttachedProperties.Grid.SetColumns(grid, "* *");
+            AttachedProperties.Grid.SetRows(grid, "* *");
+            var r1 = new Rectangle();
+            var r2 = new Rectangle();
+            grid.Children.Add(r1);
+            grid.Children.Add(r2);
+            AttachedProperties.Grid.SetCell(r1, "0 0");
+            AttachedProperties.Grid.SetCell(r2, "1 1");
         }
 
         private static readonly object[] GridLengthCases =

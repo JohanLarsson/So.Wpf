@@ -13,15 +13,6 @@
     <Grid>
         <TabControl>
             <TabItem Header="TreeListView">
-                <TabItem.Resources>
-                    <HierarchicalDataTemplate DataType="{x:Type browser:DummyFolder}"
-                                              ItemsSource="{Binding Children}">
-                        <TextBlock Text="{Binding Name}" />
-                    </HierarchicalDataTemplate>
-                    <DataTemplate DataType="{x:Type browser:DummyFile}">
-                        <TextBlock Text="{Binding Name}" />
-                    </DataTemplate>
-                </TabItem.Resources>
                 <controls:TreeListView AllowsColumnReorder="True" ItemsSource="{Binding BrowserVm.RootFolder}">
                     <!--Create an item template to specify the ItemsSource-->
                     <controls:TreeListView.Columns>
@@ -90,7 +81,6 @@
                                 <TextBlock ap:Grid.Cell="2 0" Text="IsReadOnly"/>
                                 <TextBlock ap:Grid.Cell="2 2" Text="{Binding ElementName=EditableTextBlock,Path=IsReadOnly,Mode=OneWay}"/>
                             </Grid>
-
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>

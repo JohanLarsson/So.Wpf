@@ -1,4 +1,6 @@
-﻿namespace So.Wpf.AttachedProperties
+﻿using System;
+
+namespace So.Wpf.AttachedProperties
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -13,13 +15,16 @@
         /// <summary>
         /// Identifies the attached property ScrollGroup
         /// </summary>
-        public static readonly DependencyProperty ScrollGroupProperty =
-            DependencyProperty.RegisterAttached("ScrollGroup", typeof(string), typeof(ScrollSynchronizer), new PropertyMetadata(new PropertyChangedCallback(OnScrollGroupChanged)));
+        public static readonly DependencyProperty ScrollGroupProperty = DependencyProperty.RegisterAttached(
+            "ScrollGroup",
+            typeof(string),
+            typeof(ScrollSynchronizer),
+            new PropertyMetadata("ScrollGroup1", OnScrollGroupChanged));
 
         /// <summary>
         /// List of all registered scroll viewers.
         /// </summary>
-        private static readonly Dictionary<ScrollViewer, string> ScrollViewers = new Dictionary<ScrollViewer, string>();
+        private static readonly Dictionary<string, HashSet<ScrollViewer>> ScrollViewers = new Dictionary<string, HashSet<ScrollViewer>>();
 
         /// <summary>
         /// Contains the latest horizontal scroll offset for each scroll group.
@@ -59,44 +64,53 @@
         private static void OnScrollGroupChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var scrollViewer = d as ScrollViewer;
-            if (scrollViewer != null)
+            if (scrollViewer == null)
             {
-                if (!string.IsNullOrEmpty((string)e.OldValue))
+                return;
+            }
+            if (!string.IsNullOrEmpty((string)e.OldValue))
+            {
+                // Remove scrollviewer
+                HashSet<ScrollViewer> scrollViewers;
+                if (ScrollViewers.TryGetValue((string)e.NewValue, out scrollViewers))
                 {
-                    // Remove scrollviewer
-                    if (ScrollViewers.ContainsKey(scrollViewer))
-                    {
-                        scrollViewer.ScrollChanged -= new ScrollChangedEventHandler(ScrollViewer_ScrollChanged);
-                        ScrollViewers.Remove(scrollViewer);
-                    }
-                }
-
-                if (!string.IsNullOrEmpty((string)e.NewValue))
-                {
-                    // If group already exists, set scrollposition of new scrollviewer to the scrollposition of the group
-                    if (HorizontalScrollOffsets.Keys.Contains((string)e.NewValue))
-                    {
-                        scrollViewer.ScrollToHorizontalOffset(HorizontalScrollOffsets[(string)e.NewValue]);
-                    }
-                    else
-                    {
-                        HorizontalScrollOffsets.Add((string)e.NewValue, scrollViewer.HorizontalOffset);
-                    }
-
-                    if (VerticalScrollOffsets.Keys.Contains((string)e.NewValue))
-                    {
-                        scrollViewer.ScrollToVerticalOffset(VerticalScrollOffsets[(string)e.NewValue]);
-                    }
-                    else
-                    {
-                        VerticalScrollOffsets.Add((string)e.NewValue, scrollViewer.VerticalOffset);
-                    }
-
-                    // Add scrollviewer
-                    ScrollViewers.Add(scrollViewer, (string)e.NewValue);
-                    scrollViewer.ScrollChanged += new ScrollChangedEventHandler(ScrollViewer_ScrollChanged);
+                    scrollViewer.ScrollChanged -= ScrollViewer_ScrollChanged;
+                    scrollViewers.Remove(scrollViewer);
                 }
             }
+
+            if (!string.IsNullOrEmpty((string)e.NewValue))
+            {
+                HashSet<ScrollViewer> groupScrollViewers;
+                if (ScrollViewers.TryGetValue((string)e.NewValue, out groupScrollViewers))
+                {
+                    if (!groupScrollViewers.Any())
+                    {
+                        AddFirst((string)e.NewValue, scrollViewer);
+                        scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
+                        return;
+                    }
+                    if (groupScrollViewers.Add(scrollViewer))
+                    {
+                        scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
+                        // If group already exists, set scrollposition of new scrollviewer to the scrollposition of the group
+                        scrollViewer.ScrollToHorizontalOffset(HorizontalScrollOffsets[(string)e.NewValue]);
+                        scrollViewer.ScrollToVerticalOffset(VerticalScrollOffsets[(string)e.NewValue]);
+                    }
+                }
+                else
+                {
+                    AddFirst((string)e.NewValue, scrollViewer);
+                    scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
+                }
+            }
+        }
+
+        private static void AddFirst(string groupName, ScrollViewer scrollViewer)
+        {
+            ScrollViewers.Add(groupName, new HashSet<ScrollViewer> { scrollViewer });
+            HorizontalScrollOffsets.Add(groupName, scrollViewer.HorizontalOffset);
+            VerticalScrollOffsets.Add(groupName, scrollViewer.VerticalOffset);
         }
 
         /// <summary>
@@ -119,21 +133,14 @@
         /// <param name="changedScrollViewer">Sroll viewer, that specifies the current position of the group.</param>
         private static void Scroll(ScrollViewer changedScrollViewer)
         {
-            var group = ScrollViewers[changedScrollViewer];
+            var group = ScrollViewers.Single(x => x.Value.Contains(changedScrollViewer)).Key;
             VerticalScrollOffsets[group] = changedScrollViewer.VerticalOffset;
             HorizontalScrollOffsets[group] = changedScrollViewer.HorizontalOffset;
 
-            foreach (var scrollViewer in ScrollViewers.Where((s) => s.Value == group && s.Key != changedScrollViewer))
+            foreach (var scrollViewer in ScrollViewers[group].Where(x => !ReferenceEquals(x, changedScrollViewer)))
             {
-                if (scrollViewer.Key.VerticalOffset != changedScrollViewer.VerticalOffset)
-                {
-                    scrollViewer.Key.ScrollToVerticalOffset(changedScrollViewer.VerticalOffset);
-                }
-
-                if (scrollViewer.Key.HorizontalOffset != changedScrollViewer.HorizontalOffset)
-                {
-                    scrollViewer.Key.ScrollToHorizontalOffset(changedScrollViewer.HorizontalOffset);
-                }
+                scrollViewer.ScrollToVerticalOffset(changedScrollViewer.VerticalOffset);
+                scrollViewer.ScrollToHorizontalOffset(changedScrollViewer.HorizontalOffset);
             }
         }
     }

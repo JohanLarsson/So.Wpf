@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace So.Wpf.Misc
+﻿namespace So.Wpf.Misc
 {
+    using System;
     using System.Windows.Media;
     public static class ColorExt
     {
@@ -16,7 +15,7 @@ namespace So.Wpf.Misc
         {
             if (hue < 0 || hue > 1)
             {
-                throw new ArgumentOutOfRangeException("hue", hue,"Must be in the range 0-1");
+                throw new ArgumentOutOfRangeException("hue", hue, "Must be in the range 0-1");
             }
             if (saturation < 0 || saturation > 1)
             {
@@ -32,8 +31,8 @@ namespace So.Wpf.Misc
             r = luminance;   // default to gray
             g = luminance;
             b = luminance;
-            v = (luminance <= 0.5) 
-                ? (luminance * (1.0 + saturation)) 
+            v = (luminance <= 0.5)
+                ? (luminance * (1.0 + saturation))
                 : (luminance + saturation - (luminance * saturation));
             if (v > 0)
             {
