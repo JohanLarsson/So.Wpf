@@ -50,6 +50,7 @@
     <Compile Include="FakeInpc.cs" />
     <Compile Include="GridTests.cs" />
     <Compile Include="LogicalTreeTest.cs" />
+    <Compile Include="NumberToColorConverterTests.cs" />
     <Compile Include="OcExtTests.cs" />
     <Compile Include="DependencyPropertyExtTests.cs" />
     <Compile Include="GridViewColumnWitdhTests.cs" />

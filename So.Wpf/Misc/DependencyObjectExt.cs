@@ -50,6 +50,8 @@
                         parent = InheritanceContextProp.GetValue(child, null) as DependencyObject;
                     }
                 }
+                if(parent==null)
+                    yield break;
                 child = parent;
                 yield return parent;
             }

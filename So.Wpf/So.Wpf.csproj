@@ -60,6 +60,8 @@
     <Compile Include="AttachedProperties\YpositionedRelativeTo.cs" />
     <Compile Include="Behaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="Controls\CellTemplateDataGrid.cs" />
+    <Compile Include="Converters\NumberToColorConverter.cs" />
+    <Compile Include="Misc\ColorExt.cs" />
     <Compile Include="Misc\DispatcherUtil.cs" />
     <Compile Include="Misc\FrameworkElementExt.cs" />
     <Compile Include="Misc\OcExt.cs" />

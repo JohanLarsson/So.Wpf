@@ -15,7 +15,6 @@
         }
 
         public override event EventHandler CanExecuteChanged;
-
         public virtual void RaiseCanExecuteChanged()
         {
             var handler = CanExecuteChanged;

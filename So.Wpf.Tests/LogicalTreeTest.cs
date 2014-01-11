@@ -1,12 +1,11 @@
-﻿using System.Linq;
-using So.Wpf.Misc;
-
-namespace So.Wpf.Tests
+﻿namespace So.Wpf.Tests
 {
+    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
     using NUnit.Framework;
+    using Misc;
     public class DependencyObjectExtTests
     {
         [Test, RequiresSTA]
@@ -32,7 +31,7 @@ namespace So.Wpf.Tests
         }
 
         [Test, RequiresSTA]
-        public void AllAncestorsTest2()
+        public void AllAncestorsTest()
         {
             var gridView = new GridView();
             var gridViewColumn = new System.Windows.Controls.GridViewColumn();
