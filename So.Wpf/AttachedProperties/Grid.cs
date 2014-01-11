@@ -66,6 +66,15 @@
         {
             obj.SetValue(CellProperty, value);
         }
+        internal static IEnumerable<GridLength> ToGridLengths(string newValue)
+        {
+            if (string.IsNullOrEmpty(newValue))
+            {
+                return Enumerable.Empty<GridLength>();
+            }
+            string[] strings = newValue.Split(SplitSeparators, StringSplitOptions.RemoveEmptyEntries);
+            return strings.Select(Converter.ConvertFromString).Cast<GridLength>();
+        }
         private static void RowsUpdated(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             if (Equals(e.NewValue, e.OldValue))
@@ -116,15 +125,6 @@
             {
                 throw new ArgumentOutOfRangeException("e", column, string.Format("Grid.Colunn cannot be > Grid.ColumnDefinitions.Count ({0})", grid.ColumnDefinitions.Count));
             }
-        }
-        internal static IEnumerable<GridLength> ToGridLengths(string newValue)
-        {
-            if (string.IsNullOrEmpty(newValue))
-            {
-                return Enumerable.Empty<GridLength>();
-            }
-            string[] strings = newValue.Split(SplitSeparators, StringSplitOptions.RemoveEmptyEntries);
-            return strings.Select(Converter.ConvertFromString).Cast<GridLength>();
         }
     }
 }

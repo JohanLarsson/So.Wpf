@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Media;
-
-namespace So.Wpf.Tests
+﻿namespace So.Wpf.Tests
 {
     using System.Linq;
     using System.Windows;

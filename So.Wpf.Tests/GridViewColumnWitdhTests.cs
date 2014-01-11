@@ -11,7 +11,7 @@
         {
             var view = new GridView();
             var lw = new ListView();
-            var gvc = new System.Windows.Controls.GridViewColumn();
+            var gvc = new GridViewColumn();
             lw.View = view;
             var dependencyObjects = view.LogicalAncestors().ToArray();
         }

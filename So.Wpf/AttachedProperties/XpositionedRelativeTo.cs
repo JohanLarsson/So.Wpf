@@ -4,6 +4,7 @@
     {
         Center,
         LeftEdge,
-        RightEdge
+        RightEdge,
+        RenderTransformOrigin
     }
 }

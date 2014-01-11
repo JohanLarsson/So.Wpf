@@ -4,14 +4,15 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
-    using NUnit.Framework;
     using Misc;
+    using NUnit.Framework;
+
     public class DependencyObjectExtTests
     {
         [Test, RequiresSTA]
         public void VisualAncestorsTest()
         {
-            var grid = new System.Windows.Controls.Grid();
+            var grid = new Grid();
             var button = new Button();
             grid.Children.Add(button);
             var parent = VisualTreeHelper.GetParent(button);
@@ -22,7 +23,7 @@
         [Test, RequiresSTA]
         public void LogicalAncestorsTest()
         {
-            var grid = new System.Windows.Controls.Grid();
+            var grid = new Grid();
             var button = new Button();
             grid.Children.Add(button);
             var parent = LogicalTreeHelper.GetParent(button);
@@ -34,7 +35,7 @@
         public void AllAncestorsTest()
         {
             var gridView = new GridView();
-            var gridViewColumn = new System.Windows.Controls.GridViewColumn();
+            var gridViewColumn = new GridViewColumn();
             gridView.Columns.Add(gridViewColumn);
             Assert.AreEqual(gridView, gridViewColumn.AllAncestors().First()); 
         }

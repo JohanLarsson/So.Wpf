@@ -1,8 +1,8 @@
 ﻿namespace So.Wpf.Tests
 {
     using System.Globalization;
+    using Controls;
     using NUnit.Framework;
-    using So.Wpf.Controls;
     public class DoubleBoxTests
     {
         [RequiresSTA]

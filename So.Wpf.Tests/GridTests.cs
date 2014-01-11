@@ -1,22 +1,30 @@
-﻿using System;
-using System.Windows.Shapes;
-
-namespace So.Wpf.Tests
+﻿namespace So.Wpf.Tests
 {
-    using System.Collections.Generic;
+    using System;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Shapes;
     using NUnit.Framework;
     [RequiresSTA]
     public class GridTests
     {
+        private static readonly object[] GridLengthCases =
+        {
+            new object[] { "*", new[] { new GridLength(1, GridUnitType.Star) } },
+            new object[] { "* *", new[] { new GridLength(1, GridUnitType.Star), new GridLength(1, GridUnitType.Star) } },
+            new object[] { "*;* *", new[] { new GridLength(1, GridUnitType.Star), new GridLength(1, GridUnitType.Star), new GridLength(1, GridUnitType.Star) } },
+            new object[] { "Auto *", new[] { new GridLength(1, GridUnitType.Auto), new GridLength(1, GridUnitType.Star) } },
+            new object[] { "5 4*", new[] { new GridLength(5, GridUnitType.Pixel), new GridLength(4, GridUnitType.Star) } }
+        };
+
         [Test]
         public void RowsTest()
         {
             var grid = new Grid();
             AttachedProperties.Grid.SetRows(grid, "*;*;*");
-            //Assert.AreEqual(new GridLength(1, GridUnitType.Star), grid.ColumnDefinitions.Single().Width);
+
+            // Assert.AreEqual(new GridLength(1, GridUnitType.Star), grid.ColumnDefinitions.Single().Width);
             CollectionAssert.AreEqual(grid.RowDefinitions.Select(x => x.Height), new[] { new GridLength(1, GridUnitType.Star), new GridLength(1, GridUnitType.Star), new GridLength(1, GridUnitType.Star) });
         }
 
@@ -66,15 +74,6 @@ namespace So.Wpf.Tests
             AttachedProperties.Grid.SetCell(r1, "0 0");
             AttachedProperties.Grid.SetCell(r2, "1 1");
         }
-
-        private static readonly object[] GridLengthCases =
-        {
-            new object[] {"*", new[] {new GridLength(1, GridUnitType.Star)}},
-            new object[] {"* *", new[] {new GridLength(1, GridUnitType.Star), new GridLength(1, GridUnitType.Star)}},
-            new object[] {"*;* *", new[] {new GridLength(1, GridUnitType.Star), new GridLength(1, GridUnitType.Star), new GridLength(1, GridUnitType.Star)}},
-            new object[] {"Auto *", new[] {new GridLength(1, GridUnitType.Auto), new GridLength(1, GridUnitType.Star)}},
-            new object[] {"5 4*", new[] {new GridLength(5, GridUnitType.Pixel), new GridLength(4, GridUnitType.Star)}},
-        };
 
         [Test, TestCaseSource("GridLengthCases")]
         public void ParseGridLengthsTest(string s, GridLength[] expected)

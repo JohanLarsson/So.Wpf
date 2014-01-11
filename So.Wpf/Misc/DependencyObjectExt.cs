@@ -1,7 +1,9 @@
 ﻿namespace So.Wpf.Misc
 {
+    using System;
     using System.Collections.Generic;
     using System.Reflection;
+    using System.Runtime.CompilerServices;
     using System.Windows;
     using System.Windows.Media;
     public static class DependencyObjectExt
@@ -24,6 +26,7 @@
                 yield return dependencyObject;
             }
         }
+
         /// <summary>
         /// Uses reflection and internal InheritanceContext, potentially fragile
         /// http://stackoverflow.com/a/20988314/1069200
@@ -51,10 +54,26 @@
                     }
                 }
                 if (parent == null)
+                {
                     yield break;
+                }
                 child = parent;
                 yield return parent;
             }
+        }
+
+        public static void AddCallBack<T>(this T source, DependencyProperty property, PropertyChangedCallback callback) where T : DependencyObject
+        {
+            PropertyMetadata propertyMetadata = property.GetMetadata(source.GetType());
+            propertyMetadata.PropertyChangedCallback += callback;
+            UIElement.RenderTransformOriginProperty.OverrideMetadata(source.GetType(), propertyMetadata);
+        }
+
+        public static void RemoveCallBack<T>(this T source, DependencyProperty property, PropertyChangedCallback callback) where T : DependencyObject
+        {
+            PropertyMetadata propertyMetadata = property.GetMetadata(source.GetType());
+            propertyMetadata.PropertyChangedCallback -= callback;
+            UIElement.RenderTransformOriginProperty.OverrideMetadata(source.GetType(), propertyMetadata);
         }
     }
 }

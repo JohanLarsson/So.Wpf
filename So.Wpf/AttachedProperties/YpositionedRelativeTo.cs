@@ -4,6 +4,7 @@
     {
         Center,
         TopEdge,
-        BottomEdge
+        BottomEdge,
+        RenderTransformOrigin
     }
 }

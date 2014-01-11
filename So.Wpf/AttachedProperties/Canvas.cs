@@ -2,7 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Windows;
+    using Misc;
 
     public static class Canvas
     {
@@ -16,7 +18,7 @@
             "XpositionRelativeTo",
             typeof(XpositionedRelativeTo),
             typeof(Canvas),
-            new PropertyMetadata(default(XpositionedRelativeTo), XpositionRelativeToChanged));
+            new PropertyMetadata(XpositionedRelativeTo.LeftEdge, XpositionRelativeToChanged));
 
         public static readonly DependencyProperty YProperty = DependencyProperty.RegisterAttached(
             "Y",
@@ -28,7 +30,7 @@
             "YpositionRelativeTo",
             typeof(YpositionedRelativeTo),
             typeof(Canvas),
-            new PropertyMetadata(default(YpositionedRelativeTo), YpositionRelativeToChanged));
+            new PropertyMetadata(YpositionedRelativeTo.BottomEdge, YpositionRelativeToChanged));
 
         private static readonly HashSet<FrameworkElement> AttachedTo = new HashSet<FrameworkElement>();
         public static void SetX(FrameworkElement element, double value)
@@ -72,9 +74,17 @@
         }
         private static void XpositionRelativeToChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            if (IsChanged(e))
+            if (e.IsChanged())
             {
-                UpdateX((FrameworkElement)o);
+                if (((XpositionedRelativeTo)e.NewValue) == XpositionedRelativeTo.RenderTransformOrigin)
+                {
+                    o.AddCallBack(UIElement.RenderTransformOriginProperty, UpdateX);
+                }
+                if (((XpositionedRelativeTo)e.OldValue) == XpositionedRelativeTo.RenderTransformOrigin)
+                {
+                    o.RemoveCallBack(UIElement.RenderTransformOriginProperty, UpdateX);
+                }
+                UpdateX(o, e);
             }
         }
         private static void OnYchanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -86,9 +96,17 @@
         }
         private static void YpositionRelativeToChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            if (IsChanged(e))
+            if (e.IsChanged())
             {
-                UpdateY((FrameworkElement)o);
+                if (((YpositionedRelativeTo)e.NewValue) == YpositionedRelativeTo.RenderTransformOrigin)
+                {
+                    o.AddCallBack(UIElement.RenderTransformOriginProperty, UpdateY);
+                }
+                if (((YpositionedRelativeTo)e.OldValue) == YpositionedRelativeTo.RenderTransformOrigin)
+                {
+                    o.RemoveCallBack(UIElement.RenderTransformOriginProperty, UpdateY);
+                }
+                UpdateY(o, e);
             }
         }
         private static void OnSizeChanged(object o, SizeChangedEventArgs args)
@@ -102,8 +120,13 @@
                 UpdateY((FrameworkElement)o);
             }
         }
-        private static void UpdateX(FrameworkElement fe)
+        private static void UpdateX(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
+            if (!e.IsChanged())
+                return;
+            var fe = o as FrameworkElement;
+            if (fe == null)
+                return;
             if (!AttachedTo.Contains(fe))
             {
                 fe.AddHandler(FrameworkElement.SizeChangedEvent, new SizeChangedEventHandler(OnSizeChanged));
@@ -122,13 +145,21 @@
                 case XpositionedRelativeTo.RightEdge:
                     x -= fe.ActualWidth;
                     break;
+                case XpositionedRelativeTo.RenderTransformOrigin:
+                    x -= fe.RenderTransformOrigin.X * fe.ActualWidth;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
             System.Windows.Controls.Canvas.SetLeft(fe, x);
         }
-        private static void UpdateY(FrameworkElement fe)
+        private static void UpdateY(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
+            if (!e.IsChanged())
+                return;
+            var fe = o as FrameworkElement;
+            if (fe == null)
+                return;
             if (!AttachedTo.Contains(fe))
             {
                 fe.AddHandler(FrameworkElement.SizeChangedEvent, new SizeChangedEventHandler(OnSizeChanged));
@@ -146,14 +177,14 @@
                 case YpositionedRelativeTo.TopEdge:
                     y -= fe.ActualHeight;
                     break;
+                case YpositionedRelativeTo.RenderTransformOrigin:
+                    y -= fe.RenderTransformOrigin.Y * fe.ActualHeight;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
             System.Windows.Controls.Canvas.SetBottom(fe, y);
         }
-        private static bool IsChanged(DependencyPropertyChangedEventArgs e)
-        {
-            return e.NewValue != e.OldValue;
-        }
+
     }
 }

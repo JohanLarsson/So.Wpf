@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace So.Wpf.AttachedProperties
+﻿namespace So.Wpf.AttachedProperties
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -93,6 +91,7 @@ namespace So.Wpf.AttachedProperties
                     if (groupScrollViewers.Add(scrollViewer))
                     {
                         scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
+
                         // If group already exists, set scrollposition of new scrollviewer to the scrollposition of the group
                         scrollViewer.ScrollToHorizontalOffset(HorizontalScrollOffsets[(string)e.NewValue]);
                         scrollViewer.ScrollToVerticalOffset(VerticalScrollOffsets[(string)e.NewValue]);

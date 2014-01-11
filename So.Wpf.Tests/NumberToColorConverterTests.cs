@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace So.Wpf.Tests
+﻿namespace So.Wpf.Tests
 {
+    using System;
     using Misc;
     using NUnit.Framework;
     public class ColorExtTests
