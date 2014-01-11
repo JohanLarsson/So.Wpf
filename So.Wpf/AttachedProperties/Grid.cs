@@ -40,28 +40,8 @@
                 CellUpdated));
 
         private static readonly GridLengthConverter Converter = new GridLengthConverter();
+
         private static readonly char[] SplitSeparators = { ' ', ';' };
-        public static string GetColumns(System.Windows.Controls.Grid grid)
-        {
-            return (string)grid.GetValue(ColumnsProperty);
-        }
-        public static void SetColumns(System.Windows.Controls.Grid grid, string value)
-        {
-            grid.SetValue(ColumnsProperty, value);
-        }
-        public static void ColumnsUpdated(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (Equals(e.NewValue, e.OldValue))
-            {
-                return;
-            }
-            var grid = (System.Windows.Controls.Grid)d;
-            grid.ColumnDefinitions.Clear();
-            foreach (var cd in ToGridLengths(e.NewValue).Select(x => new ColumnDefinition { Width = x }))
-            {
-                grid.ColumnDefinitions.Add(cd);
-            }
-        }
         public static string GetRows(System.Windows.Controls.Grid grid)
         {
             return (string)grid.GetValue(RowsProperty);
@@ -70,18 +50,13 @@
         {
             grid.SetValue(RowsProperty, value);
         }
-        public static void RowsUpdated(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public static string GetColumns(System.Windows.Controls.Grid grid)
         {
-            if (Equals(e.NewValue, e.OldValue))
-            {
-                return;
-            }
-            var grid = (System.Windows.Controls.Grid)d;
-            grid.RowDefinitions.Clear();
-            foreach (var rd in ToGridLengths(e.NewValue).Select(x => new RowDefinition() { Height = x }))
-            {
-                grid.RowDefinitions.Add(rd);
-            }
+            return (string)grid.GetValue(ColumnsProperty);
+        }
+        public static void SetColumns(System.Windows.Controls.Grid grid, string value)
+        {
+            grid.SetValue(ColumnsProperty, value);
         }
         public static string GetCell(UIElement obj)
         {
@@ -91,7 +66,33 @@
         {
             obj.SetValue(CellProperty, value);
         }
-        public static void CellUpdated(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void RowsUpdated(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (Equals(e.NewValue, e.OldValue))
+            {
+                return;
+            }
+            var grid = (System.Windows.Controls.Grid)d;
+            grid.RowDefinitions.Clear();
+            foreach (var rd in ToGridLengths((string) e.NewValue).Select(x => new RowDefinition() { Height = x }))
+            {
+                grid.RowDefinitions.Add(rd);
+            }
+        }
+        private static void ColumnsUpdated(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (Equals(e.NewValue, e.OldValue))
+            {
+                return;
+            }
+            var grid = (System.Windows.Controls.Grid)d;
+            grid.ColumnDefinitions.Clear();
+            foreach (var cd in ToGridLengths((string) e.NewValue).Select(x => new ColumnDefinition { Width = x }))
+            {
+                grid.ColumnDefinitions.Add(cd);
+            }
+        }
+        private static void CellUpdated(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (string.Equals(e.OldValue, e.NewValue))
             {
@@ -115,13 +116,13 @@
             System.Windows.Controls.Grid.SetRow(element, row);
             System.Windows.Controls.Grid.SetColumn(element, column);
         }
-        internal static IEnumerable<GridLength> ToGridLengths(object newValue)
+        internal static IEnumerable<GridLength> ToGridLengths(string newValue)
         {
-            if (newValue == null)
+            if (string.IsNullOrEmpty(newValue))
             {
                 return Enumerable.Empty<GridLength>();
             }
-            string[] strings = ((string)newValue).Split(SplitSeparators);
+            string[] strings = newValue.Split(SplitSeparators,StringSplitOptions.RemoveEmptyEntries);
             return strings.Select(Converter.ConvertFromString).Cast<GridLength>();
         }
     }

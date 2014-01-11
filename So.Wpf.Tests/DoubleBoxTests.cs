@@ -18,7 +18,6 @@
         [TestCase("1.1", 1, true, "2.1", 1)]
         [TestCase("1.1", 2, true, "2.1", 2)]
         [TestCase("1.1", 3, false, "1.0", 3)]
-
         public void Update(string text, int caretIndex, bool increase, string expectedText, int expectedCaretIndex)
         {
             var doubleBox = new NumericBox
