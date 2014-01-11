@@ -67,11 +67,11 @@
         }
         private static void XpositionRelativeToChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            if (((XpositionedRelativeTo)e.NewValue) == XpositionedRelativeTo.RenderTransformOrigin)
+            if (e.IsAttachingValueEqualTo(XpositionedRelativeTo.RenderTransformOrigin))
             {
                 o.AddCallBack(UIElement.RenderTransformOriginProperty, UpdateX);
             }
-            if (((XpositionedRelativeTo)e.OldValue) == XpositionedRelativeTo.RenderTransformOrigin)
+            if (e.IsDetatchingValueEqualTo(XpositionedRelativeTo.RenderTransformOrigin))
             {
                 o.RemoveCallBack(UIElement.RenderTransformOriginProperty, UpdateX);
             }
@@ -79,28 +79,25 @@
         }
         private static void YpositionRelativeToChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            if (e.IsChanged())
+            if (e.IsAttachingValueEqualTo(YpositionedRelativeTo.RenderTransformOrigin))
             {
-                if (((YpositionedRelativeTo)e.NewValue) == YpositionedRelativeTo.RenderTransformOrigin)
-                {
-                    o.AddCallBack(UIElement.RenderTransformOriginProperty, UpdateY);
-                }
-                if (((YpositionedRelativeTo)e.OldValue) == YpositionedRelativeTo.RenderTransformOrigin)
-                {
-                    o.RemoveCallBack(UIElement.RenderTransformOriginProperty, UpdateY);
-                }
-                UpdateY(o, e);
+                o.AddCallBack(UIElement.RenderTransformOriginProperty, UpdateY);
             }
+            if (e.IsDetatchingValueEqualTo(YpositionedRelativeTo.RenderTransformOrigin))
+            {
+                o.RemoveCallBack(UIElement.RenderTransformOriginProperty, UpdateY);
+            }
+            UpdateY(o, e);
         }
         private static void OnSizeChanged(object o, SizeChangedEventArgs args)
         {
             if (args.WidthChanged)
             {
-                UpdateX((FrameworkElement)o,args);
+                UpdateX((FrameworkElement)o);
             }
             if (args.HeightChanged)
             {
-                UpdateY((FrameworkElement)o, args);
+                UpdateY((FrameworkElement)o);
             }
         }
         private static void UpdateX(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -115,7 +112,10 @@
                 fe.AddHandler(FrameworkElement.SizeChangedEvent, new SizeChangedEventHandler(OnSizeChanged));
                 AttachedTo.Add(fe);
             }
-
+            UpdateX(fe);
+        }
+        private static void UpdateX(FrameworkElement fe)
+        {
             double x = GetX(fe);
             XpositionedRelativeTo relativeTo = GetXpositionRelativeTo(fe);
             switch (relativeTo)
@@ -148,6 +148,10 @@
                 fe.AddHandler(FrameworkElement.SizeChangedEvent, new SizeChangedEventHandler(OnSizeChanged));
                 AttachedTo.Add(fe);
             }
+            UpdateY(fe);
+        }
+        private static void UpdateY(FrameworkElement fe)
+        {
             double y = GetY(fe);
             YpositionedRelativeTo relativeTo = GetYpositionRelativeTo(fe);
             switch (relativeTo)
@@ -168,6 +172,5 @@
             }
             System.Windows.Controls.Canvas.SetBottom(fe, y);
         }
-
     }
 }

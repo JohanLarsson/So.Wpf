@@ -64,16 +64,18 @@
 
         public static void AddCallBack<T>(this T source, DependencyProperty property, PropertyChangedCallback callback) where T : DependencyObject
         {
-            PropertyMetadata propertyMetadata = property.GetMetadata(source.GetType());
-            propertyMetadata.PropertyChangedCallback += callback;
-            UIElement.RenderTransformOriginProperty.OverrideMetadata(source.GetType(), propertyMetadata);
+            throw new NotImplementedException("Got to figure out how to do this in a weak way");
+            ////PropertyMetadata propertyMetadata = property.GetMetadata(source.GetType());
+            ////propertyMetadata.PropertyChangedCallback += callback;
+            ////UIElement.RenderTransformOriginProperty.OverrideMetadata(source.GetType(),);
         }
 
         public static void RemoveCallBack<T>(this T source, DependencyProperty property, PropertyChangedCallback callback) where T : DependencyObject
         {
-            PropertyMetadata propertyMetadata = property.GetMetadata(source.GetType());
-            propertyMetadata.PropertyChangedCallback -= callback;
-            UIElement.RenderTransformOriginProperty.OverrideMetadata(source.GetType(), propertyMetadata);
+            throw new NotImplementedException("Got to figure out how to do this in a weak way");
+            ////PropertyMetadata propertyMetadata = property.GetMetadata(source.GetType());
+            ////propertyMetadata.PropertyChangedCallback -= callback;
+            ////UIElement.RenderTransformOriginProperty.OverrideMetadata(source.GetType(), new PropertyMetadata(callback));
         }
     }
 }

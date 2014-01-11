@@ -14,13 +14,25 @@
         {
         }
 
-        public override event EventHandler CanExecuteChanged;
+        public override event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                CanExecuteChangedEventManager.AddHandler(this, value);
+            }
+            remove
+            {
+                CanExecuteChangedEventManager.RemoveHandler(this, value);
+            }
+        }
+
+        private event EventHandler InternalCanExecuteChanged;
         public virtual void RaiseCanExecuteChanged()
         {
-            var handler = CanExecuteChanged;
+            EventHandler handler = InternalCanExecuteChanged;
             if (handler != null)
             {
-                Application.Current.Dispatcher.InvokeAsync(() => handler(this, EventArgs.Empty));
+                handler(this, EventArgs.Empty);
             }
         }
     }

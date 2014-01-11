@@ -51,6 +51,7 @@
     <Compile Include="FakeInpc.cs" />
     <Compile Include="GridTests.cs" />
     <Compile Include="LogicalTreeTest.cs" />
+    <Compile Include="ManualRelayCommandTests.cs" />
     <Compile Include="NumberToColorConverterTests.cs" />
     <Compile Include="OcExtTests.cs" />
     <Compile Include="DependencyPropertyExtTests.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Prototypes\WeakReferenceTests.cs" />
     <Compile Include="ReflectionHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>

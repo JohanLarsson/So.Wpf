@@ -20,7 +20,7 @@ namespace So.Wpf.Misc
         }
         public static bool IsAttachingValueEqualTo<T>(this DependencyPropertyChangedEventArgs e, T value)
         {
-            if (e.OldValue == null)
+            if (!e.IsChanged())
             {
                 return false;
             }
@@ -36,7 +36,7 @@ namespace So.Wpf.Misc
         }
         public static bool IsDetatchingValueEqualTo<T>(this DependencyPropertyChangedEventArgs e, T value)
         {
-            if (e.NewValue == null)
+            if (!e.IsChanged())
             {
                 return false;
             }
