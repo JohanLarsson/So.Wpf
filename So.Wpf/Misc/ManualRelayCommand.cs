@@ -18,21 +18,54 @@
         {
             add
             {
-                CanExecuteChangedEventManager.AddHandler(this, value);
+                InternalCanExecuteChangedEventManager.AddHandler(this, value);
             }
             remove
             {
-                CanExecuteChangedEventManager.RemoveHandler(this, value);
+                InternalCanExecuteChangedEventManager.RemoveHandler(this, value);
             }
         }
-
         private event EventHandler InternalCanExecuteChanged;
-        public virtual void RaiseCanExecuteChanged()
+        public void RaiseCanExecuteChanged()
         {
             EventHandler handler = InternalCanExecuteChanged;
             if (handler != null)
             {
-                handler(this, EventArgs.Empty);
+                handler(this, new EventArgs());
+            }
+        }
+        private class InternalCanExecuteChangedEventManager : WeakEventManager
+        {
+            static InternalCanExecuteChangedEventManager()
+            {
+                SetCurrentManager(typeof(InternalCanExecuteChangedEventManager), new InternalCanExecuteChangedEventManager());
+            }
+            private static InternalCanExecuteChangedEventManager CurrentManager
+            {
+                get
+                {
+                    return (InternalCanExecuteChangedEventManager)GetCurrentManager(typeof(InternalCanExecuteChangedEventManager));
+                }
+            }
+            internal static void AddHandler(ManualRelayCommand source, EventHandler handler)
+            {
+                CurrentManager.ProtectedAddHandler(source, handler);
+            }
+            internal static void RemoveHandler(ManualRelayCommand source, EventHandler handler)
+            {
+                CurrentManager.ProtectedRemoveHandler(source, handler);
+            }
+            //protected override ListenerList NewListenerList()
+            //{
+            //    return new ListenerList();
+            //}
+            protected override void StartListening(object source)
+            {
+                ((ManualRelayCommand)source).InternalCanExecuteChanged += DeliverEvent;
+            }
+            protected override void StopListening(object source)
+            {
+                ((ManualRelayCommand)source).InternalCanExecuteChanged -= DeliverEvent;
             }
         }
     }

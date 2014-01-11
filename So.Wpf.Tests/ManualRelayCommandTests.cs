@@ -31,6 +31,19 @@ namespace So.Wpf.Tests
             GC.Collect();
             Assert.IsFalse(wr.IsAlive);
         }
+
+        [Test]
+        public void TwoCommandsTest()
+        {
+            var command1 = new ManualRelayCommand(o => { });
+            var subscriber1 = new CommandSubscriber(command1);
+            var command2 = new ManualRelayCommand(o => { });
+            var subscriber2 = new CommandSubscriber(command2);
+            command1.RaiseCanExecuteChanged();
+            command2.RaiseCanExecuteChanged();
+            Assert.AreEqual(1, subscriber1.Count);
+            Assert.AreEqual(1, subscriber2.Count);
+        }
     }
 
     public class CommandSubscriber
