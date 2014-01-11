@@ -12,7 +12,7 @@
             "X",
             typeof(double),
             typeof(Canvas),
-            new PropertyMetadata(default(double), OnXchanged));
+            new PropertyMetadata(default(double), UpdateX));
 
         public static readonly DependencyProperty XpositionRelativeToProperty = DependencyProperty.RegisterAttached(
             "XpositionRelativeTo",
@@ -24,7 +24,7 @@
             "Y",
             typeof(double),
             typeof(Canvas),
-            new PropertyMetadata(default(double), OnYchanged));
+            new PropertyMetadata(default(double), UpdateY));
 
         public static readonly DependencyProperty YpositionRelativeToProperty = DependencyProperty.RegisterAttached(
             "YpositionRelativeTo",
@@ -65,34 +65,17 @@
         {
             return (YpositionedRelativeTo)element.GetValue(YpositionRelativeToProperty);
         }
-        private static void OnXchanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-        {
-            if (IsChanged(e))
-            {
-                UpdateX((FrameworkElement)o);
-            }
-        }
         private static void XpositionRelativeToChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            if (e.IsChanged())
+            if (((XpositionedRelativeTo)e.NewValue) == XpositionedRelativeTo.RenderTransformOrigin)
             {
-                if (((XpositionedRelativeTo)e.NewValue) == XpositionedRelativeTo.RenderTransformOrigin)
-                {
-                    o.AddCallBack(UIElement.RenderTransformOriginProperty, UpdateX);
-                }
-                if (((XpositionedRelativeTo)e.OldValue) == XpositionedRelativeTo.RenderTransformOrigin)
-                {
-                    o.RemoveCallBack(UIElement.RenderTransformOriginProperty, UpdateX);
-                }
-                UpdateX(o, e);
+                o.AddCallBack(UIElement.RenderTransformOriginProperty, UpdateX);
             }
-        }
-        private static void OnYchanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-        {
-            if (IsChanged(e))
+            if (((XpositionedRelativeTo)e.OldValue) == XpositionedRelativeTo.RenderTransformOrigin)
             {
-                UpdateY((FrameworkElement)o);
+                o.RemoveCallBack(UIElement.RenderTransformOriginProperty, UpdateX);
             }
+            UpdateX(o, e);
         }
         private static void YpositionRelativeToChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
@@ -113,11 +96,11 @@
         {
             if (args.WidthChanged)
             {
-                UpdateX((FrameworkElement)o);
+                UpdateX((FrameworkElement)o,args);
             }
             if (args.HeightChanged)
             {
-                UpdateY((FrameworkElement)o);
+                UpdateY((FrameworkElement)o, args);
             }
         }
         private static void UpdateX(DependencyObject o, DependencyPropertyChangedEventArgs e)

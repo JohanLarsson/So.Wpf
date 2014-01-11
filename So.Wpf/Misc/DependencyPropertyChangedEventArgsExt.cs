@@ -16,11 +16,35 @@ namespace So.Wpf.Misc
         }
         public static bool IsAttaching(this DependencyPropertyChangedEventArgs e)
         {
-            return e.OldValue == null;
+            return e.OldValue == null && e.NewValue != null;
+        }
+        public static bool IsAttachingValueEqualTo<T>(this DependencyPropertyChangedEventArgs e, T value)
+        {
+            if (e.OldValue == null)
+            {
+                return false;
+            }
+            if (!(e.NewValue is T))
+            {
+                return false;
+            }
+            return Equals((T)e.NewValue, value);
         }
         public static bool IsDetatching(this DependencyPropertyChangedEventArgs e)
         {
-            return e.NewValue == null;
+            return e.NewValue == null && e.OldValue != null;
+        }
+        public static bool IsDetatchingValueEqualTo<T>(this DependencyPropertyChangedEventArgs e, T value)
+        {
+            if (e.NewValue == null)
+            {
+                return false;
+            }
+            if (!(e.OldValue is T))
+            {
+                return false;
+            }
+            return Equals((T)e.OldValue, value);
         }
     }
 }
