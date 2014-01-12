@@ -4,10 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
-        xmlns:browser="clr-namespace:So.Wpf.Samples.Browser"
         xmlns:controls="clr-namespace:So.Wpf.Controls;assembly=So.Wpf"
         xmlns:ap="clr-namespace:So.Wpf.AttachedProperties;assembly=So.Wpf"
         xmlns:samples="clr-namespace:So.Wpf.Samples"
+        xmlns:shapes="clr-namespace:So.Wpf.Shapes;assembly=So.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" d:DataContext="{d:DesignInstance samples:Vm,IsDesignTimeCreatable=True }">
     <Grid>
@@ -141,7 +141,7 @@
                 <Grid ap:Grid.Rows="Auto *"
                       ap:Grid.Columns="* *">
                     <GroupBox ap:Grid.Cell="0 0" Header="X">
-                        <Grid ap:Grid.Rows="Auto Auto Auto" ap:Grid.Columns="Auto *">
+                        <Grid ap:Grid.Rows="Auto Auto Auto Auto" ap:Grid.Columns="Auto *">
                             <TextBlock ap:Grid.Cell="0 0" Text="XPos"/>
                             <controls:NumericBox ap:Grid.Cell="0 1" 
                                                  Text="{Binding X, UpdateSourceTrigger=PropertyChanged}" 
@@ -153,10 +153,14 @@
                             <ComboBox  Grid.Row="2" Grid.ColumnSpan="2"
                               ItemsSource="{Binding XRelatives}" 
                               SelectedItem="{Binding XpositionedRelative}"/>
+                            <TextBlock ap:Grid.Cell="3 0" Text="RenderTransformOrigin.X"/>
+                            <controls:NumericBox ap:Grid.Cell="3 1" 
+                                                 Text="{Binding RenderTransformOriginX, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0:f2}'}" 
+                                                 UpdateWithMouseWheel="True"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox ap:Grid.Cell="0 1" Header="Y">
-                        <Grid ap:Grid.Rows="Auto Auto Auto" ap:Grid.Columns="Auto *">
+                        <Grid ap:Grid.Rows="Auto Auto Auto Auto" ap:Grid.Columns="Auto *">
                             <TextBlock ap:Grid.Cell="0 0" Text="YPos"/>
                             <controls:NumericBox ap:Grid.Cell="0 1" 
                                                  Text="{Binding Y, UpdateSourceTrigger=PropertyChanged}" 
@@ -168,6 +172,11 @@
                             <ComboBox Grid.Row="2" Grid.ColumnSpan="2"
                               ItemsSource="{Binding YRelatives}" 
                               SelectedItem="{Binding YpositionedRelative}"/>
+
+                            <TextBlock ap:Grid.Cell="3 0" Text="RenderTransformOrigin.Y"/>
+                            <controls:NumericBox ap:Grid.Cell="3 1" 
+                                                 Text="{Binding RenderTransformOriginY, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0:f2}'}" 
+                                                 UpdateWithMouseWheel="True"/>
                         </Grid>
                     </GroupBox>
 
@@ -195,7 +204,28 @@
                              ap:Canvas.X="{Binding X}"
                              ap:Canvas.XpositionRelativeTo="{Binding XpositionedRelative}"
                              ap:Canvas.Y="{Binding Y}" 
-                             ap:Canvas.YpositionRelativeTo="{Binding YpositionedRelative}"/>
+                             ap:Canvas.YpositionRelativeTo="{Binding YpositionedRelative}" 
+                             RenderTransformOrigin="{Binding RenderTransformOrigin}"/>
+                    </Canvas>
+                </Grid>
+            </TabItem>
+            <TabItem Header="CrossHair">
+                <Grid ap:Grid.Rows="Auto *"
+                      ap:Grid.Columns="* *">
+                    <GroupBox ap:Grid.Cell="0 0" Header="Pos">
+                        <Grid ap:Grid.Rows="Auto" ap:Grid.Columns="Auto Auto Auto *">
+                            <TextBlock ap:Grid.Cell="0 0" Text="XPos"/>
+                            <controls:NumericBox ap:Grid.Cell="0 1" 
+                                                 Text="{Binding X, UpdateSourceTrigger=PropertyChanged}" 
+                                                 UpdateWithMouseWheel="True"/>
+                            <TextBlock ap:Grid.Cell="0 2" Text="YPos"/>
+                            <controls:NumericBox ap:Grid.Cell="0 3" 
+                                                 Text="{Binding Y, UpdateSourceTrigger=PropertyChanged}" 
+                                                 UpdateWithMouseWheel="True" HorizontalAlignment="Left"/>
+                        </Grid>
+                    </GroupBox>
+                    <Canvas ap:Grid.Cell="1 0" Grid.ColumnSpan="4">
+                        <shapes:CrossHair X="{Binding X}" Y="{Binding Y}" Stroke="Black" StrokeThickness="1"/>
                     </Canvas>
                 </Grid>
             </TabItem>

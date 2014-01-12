@@ -60,10 +60,12 @@
     <Compile Include="AttachedProperties\YpositionedRelativeTo.cs" />
     <Compile Include="Behaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="Controls\CellTemplateDataGrid.cs" />
+    <Compile Include="Shapes\CrossHair.cs" />
     <Compile Include="Converters\NumberToColorConverter.cs" />
     <Compile Include="Misc\ColorExt.cs" />
     <Compile Include="Misc\DependencyPropertyChangedEventArgsExt.cs" />
     <Compile Include="Misc\DispatcherUtil.cs" />
+    <Compile Include="Misc\DpSubscriber.cs" />
     <Compile Include="Misc\FrameworkElementExt.cs" />
     <Compile Include="Misc\OcExt.cs" />
     <Compile Include="Misc\ChildPropertyChangedEventArgs.cs" />

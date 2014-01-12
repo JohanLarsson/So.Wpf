@@ -63,11 +63,10 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Prototypes\Class1.cs" />
     <Compile Include="Prototypes\DependencyPropertyChangedEventManager.cs" />
     <Compile Include="Prototypes\ObservableDependencyValue.cs" />
     <Compile Include="Prototypes\RootedPropertyPath.cs" />
-    <Compile Include="Prototypes\SubscribeToDependencyPropertyPrototype.cs" />
+    <Compile Include="DpSubscriberTests.cs" />
     <Compile Include="Prototypes\WeakReferenceTests.cs" />
     <Compile Include="ReflectionHelperTests.cs" />
   </ItemGroup>

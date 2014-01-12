@@ -32,6 +32,7 @@
             typeof(Canvas),
             new PropertyMetadata(YpositionedRelativeTo.BottomEdge, YpositionRelativeToChanged));
 
+        private static Dictionary<DependencyObject, DpSubscriber> _subscribers = new Dictionary<DependencyObject, DpSubscriber>();
         private static readonly HashSet<FrameworkElement> AttachedTo = new HashSet<FrameworkElement>();
         public static void SetX(FrameworkElement element, double value)
         {
@@ -67,28 +68,50 @@
         }
         private static void XpositionRelativeToChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            if (e.IsAttachingValueEqualTo(XpositionedRelativeTo.RenderTransformOrigin))
+            if (e.IsAttachingValueEqualTo(XpositionedRelativeTo.RenderTransformOrigin) &&
+                !_subscribers.ContainsKey(o))
             {
-                o.AddCallBack(UIElement.RenderTransformOriginProperty, UpdateX);
+                AddSubscriber(o);
             }
-            if (e.IsDetatchingValueEqualTo(XpositionedRelativeTo.RenderTransformOrigin))
+            if (e.IsDetatchingValueEqualTo(XpositionedRelativeTo.RenderTransformOrigin) &&
+                GetYpositionRelativeTo((FrameworkElement)o) != YpositionedRelativeTo.RenderTransformOrigin)
             {
-                o.RemoveCallBack(UIElement.RenderTransformOriginProperty, UpdateX);
+                RemoveSubscriber(o);
             }
             UpdateX(o, e);
         }
         private static void YpositionRelativeToChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            if (e.IsAttachingValueEqualTo(YpositionedRelativeTo.RenderTransformOrigin))
+            if (e.IsAttachingValueEqualTo(YpositionedRelativeTo.RenderTransformOrigin) &&
+                !_subscribers.ContainsKey(o))
             {
-                o.AddCallBack(UIElement.RenderTransformOriginProperty, UpdateY);
+                AddSubscriber(o);
             }
-            if (e.IsDetatchingValueEqualTo(YpositionedRelativeTo.RenderTransformOrigin))
+            if (e.IsDetatchingValueEqualTo(YpositionedRelativeTo.RenderTransformOrigin) &&
+                GetYpositionRelativeTo((FrameworkElement)o) != YpositionedRelativeTo.RenderTransformOrigin)
             {
-                o.RemoveCallBack(UIElement.RenderTransformOriginProperty, UpdateY);
+                RemoveSubscriber(o);
             }
             UpdateY(o, e);
         }
+        private static void RemoveSubscriber(DependencyObject o)
+        {
+            DpSubscriber dpSubscriber = _subscribers[o];
+            dpSubscriber.Dispose();
+            _subscribers.Remove(o);
+        }
+
+        private static void AddSubscriber(DependencyObject o)
+        {
+            DpSubscriber subscriber = o.Subscribe(UIElement.RenderTransformOriginProperty);
+            subscriber.ValueChanged += (sender, args) =>
+            {
+                UpdateX((FrameworkElement)o);
+                UpdateY((FrameworkElement)o);
+            };
+            _subscribers.Add(o, subscriber);
+        }
+
         private static void OnSizeChanged(object o, SizeChangedEventArgs args)
         {
             if (args.WidthChanged)

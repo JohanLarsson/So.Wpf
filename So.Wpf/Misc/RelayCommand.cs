@@ -7,7 +7,6 @@
         public RelayCommand(Action<object> action, Predicate<object> condition) : base(action, condition)
         {
         }
-
         public RelayCommand(Action<object> action) : base(action)
         {
         }

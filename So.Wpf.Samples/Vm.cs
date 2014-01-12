@@ -5,6 +5,7 @@
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
+    using System.Windows;
     using Annotations;
     using AttachedProperties;
     using Browser;
@@ -20,6 +21,7 @@
         private double _x;
         private double _sizeY;
         private double _sizeX;
+        private Point _renderTransformOrigin;
 
         public Vm()
         {
@@ -54,7 +56,6 @@
                 OnPropertyChanged();
             }
         }
-
         public XpositionedRelativeTo XpositionedRelative
         {
             get
@@ -71,7 +72,6 @@
                 OnPropertyChanged();
             }
         }
-
         public IEnumerable<XpositionedRelativeTo> XRelatives
         {
             get
@@ -79,7 +79,6 @@
                 return Enum.GetValues(typeof(XpositionedRelativeTo)).Cast<XpositionedRelativeTo>();
             }
         }
-
         public YpositionedRelativeTo YpositionedRelative
         {
             get
@@ -96,7 +95,6 @@
                 OnPropertyChanged();
             }
         }
-
         public IEnumerable<YpositionedRelativeTo> YRelatives
         {
             get
@@ -120,7 +118,6 @@
                 OnPropertyChanged();
             }
         }
-
         public double Y
         {
             get
@@ -137,7 +134,6 @@
                 OnPropertyChanged();
             }
         }
-
         public double X
         {
             get
@@ -154,7 +150,6 @@
                 OnPropertyChanged();
             }
         }
-
         public double SizeY
         {
             get
@@ -171,7 +166,6 @@
                 OnPropertyChanged();
             }
         }
-
         public double SizeX
         {
             get
@@ -185,6 +179,35 @@
                     return;
                 }
                 _sizeX = value;
+                OnPropertyChanged();
+            }
+        }
+        public double RenderTransformOriginX
+        {
+            get { return RenderTransformOrigin.X; }
+            set
+            {
+                RenderTransformOrigin = new Point(value,RenderTransformOrigin.Y);
+                OnPropertyChanged();
+            }
+        }
+        public double RenderTransformOriginY
+        {
+            get { return RenderTransformOrigin.Y; }
+            set
+            {
+                RenderTransformOrigin = new Point(RenderTransformOrigin.X, value);
+                OnPropertyChanged();
+            }
+        }
+        public Point RenderTransformOrigin
+        {
+            get { return _renderTransformOrigin; }
+            private set
+            {
+                if(Equals(_renderTransformOrigin,value))
+                    return;
+                _renderTransformOrigin = value;
                 OnPropertyChanged();
             }
         }

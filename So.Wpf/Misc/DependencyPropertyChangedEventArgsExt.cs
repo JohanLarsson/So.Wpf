@@ -14,11 +14,11 @@ namespace So.Wpf.Misc
         {
             return !Equals(e.NewValue, e.OldValue);
         }
-        public static bool IsAttaching(this DependencyPropertyChangedEventArgs e)
+        internal static bool IsAttaching(this DependencyPropertyChangedEventArgs e)
         {
             return e.OldValue == null && e.NewValue != null;
         }
-        public static bool IsAttachingValueEqualTo<T>(this DependencyPropertyChangedEventArgs e, T value)
+        internal static bool IsAttachingValueEqualTo<T>(this DependencyPropertyChangedEventArgs e, T value)
         {
             if (!e.IsChanged())
             {
@@ -30,11 +30,11 @@ namespace So.Wpf.Misc
             }
             return Equals((T)e.NewValue, value);
         }
-        public static bool IsDetatching(this DependencyPropertyChangedEventArgs e)
+        internal static bool IsDetatching(this DependencyPropertyChangedEventArgs e)
         {
             return e.NewValue == null && e.OldValue != null;
         }
-        public static bool IsDetatchingValueEqualTo<T>(this DependencyPropertyChangedEventArgs e, T value)
+        internal static bool IsDetatchingValueEqualTo<T>(this DependencyPropertyChangedEventArgs e, T value)
         {
             if (!e.IsChanged())
             {

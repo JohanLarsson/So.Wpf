@@ -26,7 +26,6 @@
                 yield return dependencyObject;
             }
         }
-
         /// <summary>
         /// Uses reflection and internal InheritanceContext, potentially fragile
         /// http://stackoverflow.com/a/20988314/1069200
@@ -61,7 +60,6 @@
                 yield return parent;
             }
         }
-
         public static void AddCallBack<T>(this T source, DependencyProperty property, PropertyChangedCallback callback) where T : DependencyObject
         {
             throw new NotImplementedException("Got to figure out how to do this in a weak way");
@@ -69,13 +67,16 @@
             ////propertyMetadata.PropertyChangedCallback += callback;
             ////UIElement.RenderTransformOriginProperty.OverrideMetadata(source.GetType(),);
         }
-
         public static void RemoveCallBack<T>(this T source, DependencyProperty property, PropertyChangedCallback callback) where T : DependencyObject
         {
             throw new NotImplementedException("Got to figure out how to do this in a weak way");
             ////PropertyMetadata propertyMetadata = property.GetMetadata(source.GetType());
             ////propertyMetadata.PropertyChangedCallback -= callback;
             ////UIElement.RenderTransformOriginProperty.OverrideMetadata(source.GetType(), new PropertyMetadata(callback));
+        }
+        public static DpSubscriber Subscribe(this DependencyObject source, DependencyProperty property)
+        {
+            return new DpSubscriber(source, property);
         }
     }
 }
