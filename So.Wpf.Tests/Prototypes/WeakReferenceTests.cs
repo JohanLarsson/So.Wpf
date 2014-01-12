@@ -7,9 +7,11 @@ using NUnit.Framework;
 
 namespace So.Wpf.Tests.Prototypes
 {
+    using System.ComponentModel;
+
     public class WeakReferenceTests
     {
-        [Test]
+        [Test, Explicit]
         public void IsAliveTest()
         {
             var classWithEvent = new ClassWithEvent();

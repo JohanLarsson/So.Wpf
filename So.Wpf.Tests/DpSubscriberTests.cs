@@ -1,13 +1,10 @@
-﻿using So.Wpf.Misc;
-
-namespace So.Wpf.Tests.Prototypes
+﻿namespace So.Wpf.Tests
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Data;
+    using Misc;
     using NUnit.Framework;
 
     [RequiresSTA]
@@ -17,10 +14,10 @@ namespace So.Wpf.Tests.Prototypes
         public void DpSubscriberTest()
         {
             var element = new FrameworkElement();
-            var class1 = new DpSubscriber(element, UIElement.RenderTransformOriginProperty);
+            var subscriber = new DpSubscriber(element, UIElement.RenderTransformOriginProperty);
             var objects= new List<object>();
             var points = new List<DependencyPropertyChangedEventArgs>();
-            class1.ValueChanged += (sender, point) =>
+            subscriber.ValueChanged += (sender, point) =>
             {
                 objects.Add( sender);
                 points.Add(point);
@@ -29,6 +26,11 @@ namespace So.Wpf.Tests.Prototypes
             element.RenderTransformOrigin = np;
             Assert.AreEqual(np, points.Single().NewValue);
             Assert.AreEqual(element, objects.Single());
+            var weakReference = new WeakReference(subscriber);
+            Assert.IsTrue(weakReference.IsAlive, "Assert is alive before GC");
+            subscriber = null;
+            GC.Collect();
+            Assert.IsFalse(weakReference.IsAlive, "Assert collected");
         }
     }
 }

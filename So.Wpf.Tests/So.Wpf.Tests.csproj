@@ -63,15 +63,32 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Prototypes\DependencyPropertyChangedEventManager.cs" />
-    <Compile Include="Prototypes\ObservableDependencyValue.cs" />
-    <Compile Include="Prototypes\RootedPropertyPath.cs" />
     <Compile Include="DpSubscriberTests.cs" />
+    <Compile Include="Prototypes\Script1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Script1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Prototypes\WeakEventManagerTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WeakEventManagerTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Prototypes\WeakEventManagerTemplateTests.cs" />
     <Compile Include="Prototypes\WeakReferenceTests.cs" />
     <Compile Include="ReflectionHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Prototypes\Script1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Script1.cs</LastGenOutput>
+      <LastOutputs>.\Script1.cs</LastOutputs>
+    </None>
+    <None Include="Prototypes\WeakEventManagerTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>WeakEventManagerTemplate.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\So.Wpf\So.Wpf.csproj">
@@ -80,6 +97,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

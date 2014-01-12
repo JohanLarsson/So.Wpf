@@ -9,6 +9,13 @@
     public class OcExtTests
     {
         [Test]
+        public async Task ThreadSafeAddTest()
+        {
+            var ints = new ObservableCollection<int>();
+            await Task.Run(() => ints.Add(1));
+            CollectionAssert.AreEqual(new[] { 1 }, ints);
+        }
+        [Test]
         public async Task InvokeAsyncTest()
         {
             var ints = new ObservableCollection<int>();

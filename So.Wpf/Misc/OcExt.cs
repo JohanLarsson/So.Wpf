@@ -4,9 +4,18 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Windows;
+    using System.Windows.Data;
     using System.Windows.Threading;
     public static class OcExt
     {
+        private static readonly object Lock = new object();
+        public static void ThreadSafeAdd<T>(this ObservableCollection<T> collection, T newItem, bool disableCollectionSynchronizationWhenDone =false)
+        {
+            BindingOperations.EnableCollectionSynchronization(collection, Lock);
+            collection.Add(newItem);
+            if(disableCollectionSynchronizationWhenDone)
+                BindingOperations.DisableCollectionSynchronization(collection);
+        }
         public static void InvokeAdd<T>(this ObservableCollection<T> collection, T newItem)
         {
             collection.Invoke(() => collection.Add(newItem));

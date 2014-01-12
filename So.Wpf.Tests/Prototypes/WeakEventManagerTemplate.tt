@@ -1,0 +1,82 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Windows" #>
+namespace <#=NamespaceName#>
+ {
+    using System;
+    using System.Windows;
+     public class <#=ClassName#> : WeakEventManager
+     {
+         private static <#=ClassName#> _currentManager;
+         static <#=ClassName#>()
+         {
+             SetCurrentManager(typeof(<#=ClassName#>), new <#=ClassName#>());
+         }
+         private <#=ClassName#>()
+         {
+         }
+         public static <#=ClassName#> CurrentManager
+         {
+             get
+             {
+                 return _currentManager ??
+                        (_currentManager = (<#=ClassName#>)GetCurrentManager(typeof(<#=ClassName#>)));
+             }
+         }
+         public static void AddHandler(<#=SourceType#> source, <#=EventHandlerType#> handler)
+         {
+             CurrentManager.ProtectedAddHandler(source, handler);
+         }
+         public static void RemoveHandler(<#=SourceType#> source, <#=EventHandlerType#> handler)
+         {
+             CurrentManager.ProtectedRemoveHandler(source, handler);
+         }
+         public static void AddListener(<#=SourceType#> source, IWeakEventListener listener)
+         {
+             CurrentManager.ProtectedAddListener(source, listener);
+         }
+         public static void RemoveListener(<#=SourceType#> source, IWeakEventListener listener)
+         {
+             CurrentManager.ProtectedRemoveListener(source, listener);
+         }
+         protected override void StartListening(object source)
+         {
+             ((<#=SourceType#>)source).<#=EventName#> += DeliverEvent;
+         }
+         protected override void StopListening(object source)
+         {
+             ((<#=SourceType#>)source).<#=EventName#> -= DeliverEvent;
+         }
+     }
+ }
+ <#+
+        public string NamespaceName { get; private set; }
+        public string ClassName { get; private set; }
+        public Type SourceType { get; private set; }
+        public string EventHandlerType { get; private set; }
+        public string EventName { get; private set; }
+
+        public string WriteCode(string nameSpaceName, string className, Type sourceType, Type eventHandlerType, string eventName)
+        {
+            NamespaceName = nameSpaceName;
+            ClassName = className;
+            SourceType = sourceType;
+            EventHandlerType = eventHandlerType.Name;
+            EventName = eventName;
+            GenerationEnvironment.Clear();
+            return TransformText();
+        }
+        public string WriteCode(string nameSpaceName, RoutedEvent routedEvent)
+        {
+            NamespaceName = nameSpaceName;
+            ClassName = routedEvent.Name + "EventManager";
+            SourceType = routedEvent.OwnerType;
+            EventHandlerType = routedEvent.HandlerType.Name;
+            EventName = routedEvent.Name;
+            GenerationEnvironment.Clear();
+            return TransformText();
+        }
+#>

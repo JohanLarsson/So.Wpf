@@ -116,15 +116,15 @@
             System.Windows.Controls.Grid.SetRow(element, row);
             System.Windows.Controls.Grid.SetColumn(element, column);
 
-            //var grid = (System.Windows.Controls.Grid)element.VisualAncestors().OfType<Panel>().First();
-            //if (row > 0 && row >= grid.RowDefinitions.Count)
-            //{
-            //    throw new ArgumentOutOfRangeException("e", row, string.Format("Grid.Row cannot be > Grid.RowDefinitions.Count ({0})", grid.RowDefinitions.Count));
-            //}
-            //if (column > 0 && column >= grid.ColumnDefinitions.Count)
-            //{
-            //    throw new ArgumentOutOfRangeException("e", column, string.Format("Grid.Colunn cannot be > Grid.ColumnDefinitions.Count ({0})", grid.ColumnDefinitions.Count));
-            //}
+            var grid = (System.Windows.Controls.Grid)element.VisualAncestors().OfType<Panel>().First();
+            if (row > 0 && row >= grid.RowDefinitions.Count)
+            {
+                throw new ArgumentOutOfRangeException("e", row, string.Format("Grid.Row cannot be > Grid.RowDefinitions.Count ({0})", grid.RowDefinitions.Count));
+            }
+            if (column > 0 && column >= grid.ColumnDefinitions.Count)
+            {
+                throw new ArgumentOutOfRangeException("e", column, string.Format("Grid.Colunn cannot be > Grid.ColumnDefinitions.Count ({0})", grid.ColumnDefinitions.Count));
+            }
         }
     }
 }

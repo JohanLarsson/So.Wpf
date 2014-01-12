@@ -60,6 +60,7 @@
     <Compile Include="AttachedProperties\YpositionedRelativeTo.cs" />
     <Compile Include="Behaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="Controls\CellTemplateDataGrid.cs" />
+    <Compile Include="Misc\SizeChangedEventManager.cs" />
     <Compile Include="Shapes\CrossHair.cs" />
     <Compile Include="Converters\NumberToColorConverter.cs" />
     <Compile Include="Misc\ColorExt.cs" />
