@@ -61,7 +61,6 @@
     <Compile Include="Behaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="Controls\CellTemplateDataGrid.cs" />
     <Compile Include="Converters\NumberToColorConverter.cs" />
-    <Compile Include="Misc\CanExecuteChangedEventManager.cs" />
     <Compile Include="Misc\ColorExt.cs" />
     <Compile Include="Misc\DependencyPropertyChangedEventArgsExt.cs" />
     <Compile Include="Misc\DispatcherUtil.cs" />

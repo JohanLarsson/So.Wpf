@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Navigation;
 using NUnit.Framework;
 using So.Wpf.Misc;
 
 namespace So.Wpf.Tests
 {
+    [RequiresSTA, Explicit("Can't test it whith dispatcher invoke")]
     public class ManualRelayCommandTests
     {
         /// <summary>

@@ -72,7 +72,7 @@
                 HashSet<ScrollViewer> scrollViewers;
                 if (ScrollViewers.TryGetValue((string)e.NewValue, out scrollViewers))
                 {
-                    scrollViewer.ScrollChanged -= ScrollViewer_ScrollChanged;
+                    WeakEventManager<ScrollViewer, ScrollChangedEventArgs>.RemoveHandler(scrollViewer, "ScrollChanged", ScrollViewer_ScrollChanged);
                     scrollViewers.Remove(scrollViewer);
                 }
             }
@@ -85,12 +85,12 @@
                     if (!groupScrollViewers.Any())
                     {
                         AddFirst((string)e.NewValue, scrollViewer);
-                        scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
+                        WeakEventManager<ScrollViewer, ScrollChangedEventArgs>.AddHandler(scrollViewer,"ScrollChanged" , ScrollViewer_ScrollChanged);
                         return;
                     }
                     if (groupScrollViewers.Add(scrollViewer))
                     {
-                        scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
+                        WeakEventManager<ScrollViewer, ScrollChangedEventArgs>.AddHandler(scrollViewer, "ScrollChanged", ScrollViewer_ScrollChanged);
 
                         // If group already exists, set scrollposition of new scrollviewer to the scrollposition of the group
                         scrollViewer.ScrollToHorizontalOffset(HorizontalScrollOffsets[(string)e.NewValue]);
@@ -100,7 +100,7 @@
                 else
                 {
                     AddFirst((string)e.NewValue, scrollViewer);
-                    scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
+                    WeakEventManager<ScrollViewer, ScrollChangedEventArgs>.AddHandler(scrollViewer, "ScrollChanged", ScrollViewer_ScrollChanged);
                 }
             }
         }

@@ -31,7 +31,7 @@
             EventHandler handler = InternalCanExecuteChanged;
             if (handler != null)
             {
-                handler(this, new EventArgs());
+                Application.Current.Dispatcher.Invoke(() => handler(this, new EventArgs()));
             }
         }
         private class InternalCanExecuteChangedEventManager : WeakEventManager
