@@ -61,6 +61,8 @@
     <Compile Include="Behaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="Controls\CellTemplateDataGrid.cs" />
     <Compile Include="Misc\SizeChangedEventManager.cs" />
+    <Compile Include="Shapes\Arc.cs" />
+    <Compile Include="Shapes\Arrow.cs" />
     <Compile Include="Shapes\CrossHair.cs" />
     <Compile Include="Converters\NumberToColorConverter.cs" />
     <Compile Include="Misc\ColorExt.cs" />
@@ -101,6 +103,7 @@
     <Compile Include="Controls\TreeListView.cs" />
     <Compile Include="Converters\TreeListViewConverter.cs" />
     <Compile Include="Controls\TreeListViewExpander.cs" />
+    <Compile Include="Shapes\RoundArrow.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
