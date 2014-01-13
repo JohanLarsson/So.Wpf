@@ -60,6 +60,9 @@
     <Compile Include="AttachedProperties\YpositionedRelativeTo.cs" />
     <Compile Include="Behaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="Controls\CellTemplateDataGrid.cs" />
+    <Compile Include="Effects\AngularGradientEffect.cs" />
+    <Compile Include="Effects\FadeToMonochrome.cs" />
+    <Compile Include="Misc\PackUriHelper.cs" />
     <Compile Include="Misc\SizeChangedEventManager.cs" />
     <Compile Include="Shapes\Arc.cs" />
     <Compile Include="Shapes\Arrow.cs" />
@@ -108,6 +111,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Effects\AngularGradientEffect.ps" />
+    <Resource Include="Effects\FadeToMonochrome.ps" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -120,6 +125,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Effects\AngularGradient.fx" />
+    <Content Include="Effects\FadeToMonochrome.fx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

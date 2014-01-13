@@ -8,6 +8,7 @@
         xmlns:ap="clr-namespace:So.Wpf.AttachedProperties;assembly=So.Wpf"
         xmlns:samples="clr-namespace:So.Wpf.Samples"
         xmlns:shapes="clr-namespace:So.Wpf.Shapes;assembly=So.Wpf"
+        xmlns:effects="clr-namespace:So.Wpf.Effects;assembly=So.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" d:DataContext="{d:DesignInstance samples:Vm,IsDesignTimeCreatable=True }">
     <Grid>
@@ -225,9 +226,29 @@
                         </Grid>
                     </GroupBox>
                     <Canvas ap:Grid.Cell="1 0" Grid.ColumnSpan="4">
-                        <shapes:CrossHair X="{Binding X}" Y="{Binding Y}" Stroke="Black" StrokeThickness="1"/>
+                        <!--<shapes:CrossHair X="{Binding X}" Y="{Binding Y}" Stroke="Black" StrokeThickness="1"/>-->
                     </Canvas>
                 </Grid>
+            </TabItem>
+            <TabItem Header="AngularGradientEffect">
+                <Grid>
+                    <Ellipse x:Name="ShaderEllipse" Fill="Transparent">
+                        <Ellipse.Effect>
+                            <effects:AngularGradientEffect PrimaryColor="Red" SecondaryColor="Transparent" CenterPoint="0.5,0.5"/>
+                        </Ellipse.Effect>
+                    </Ellipse>
+                </Grid>
+            </TabItem>
+            <TabItem Header="FadeToMonochrome">
+                <Grid>
+                    <Image Source="http://i.imgur.com/CN63KcN.jpg">
+                        <Image.Effect>
+                            <effects:FadeToMonochrome Strength="{Binding ElementName=MonochromeStrength, Path=Value}"/>
+                        </Image.Effect>
+                    </Image>
+                    <Slider x:Name="MonochromeStrength" Minimum="0" Maximum="1" VerticalAlignment="Bottom"/>
+                </Grid>
+
             </TabItem>
         </TabControl>
     </Grid>
