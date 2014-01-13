@@ -17,12 +17,12 @@ namespace So.Wpf.Tests.Prototypes
             var classWithEvent = new ClassWithEvent();
             var subscriber = new Subscriber(classWithEvent);
             classWithEvent.RaiseEvent();
-            Assert.AreEqual(1,subscriber.count);
+            Assert.AreEqual(1, subscriber.count);
             var weakReference = new WeakReference(subscriber);
-            Assert.IsTrue(weakReference.IsAlive,"Assert is alive before GC");
+            Assert.IsTrue(weakReference.IsAlive, "Assert is alive before GC");
             subscriber = null;
             GC.Collect();
-            Assert.IsFalse(weakReference.IsAlive,"Assert collected");
+            Assert.IsFalse(weakReference.IsAlive, "Assert collected");
         }
     }
 

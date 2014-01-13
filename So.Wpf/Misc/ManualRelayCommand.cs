@@ -55,10 +55,10 @@
             {
                 CurrentManager.ProtectedRemoveHandler(source, handler);
             }
-            //protected override ListenerList NewListenerList()
-            //{
-            //    return new ListenerList();
-            //}
+            ////protected override ListenerList NewListenerList()
+            ////{
+            ////    return new ListenerList();
+            ////}
             protected override void StartListening(object source)
             {
                 ((ManualRelayCommand)source).InternalCanExecuteChanged += DeliverEvent;

@@ -9,11 +9,11 @@
     public static class OcExt
     {
         private static readonly object Lock = new object();
-        public static void ThreadSafeAdd<T>(this ObservableCollection<T> collection, T newItem, bool disableCollectionSynchronizationWhenDone =false)
+        public static void ThreadSafeAdd<T>(this ObservableCollection<T> collection, T newItem, bool disableCollectionSynchronizationWhenDone = false)
         {
             BindingOperations.EnableCollectionSynchronization(collection, Lock);
             collection.Add(newItem);
-            if(disableCollectionSynchronizationWhenDone)
+            if (disableCollectionSynchronizationWhenDone)
                 BindingOperations.DisableCollectionSynchronization(collection);
         }
         public static void InvokeAdd<T>(this ObservableCollection<T> collection, T newItem)

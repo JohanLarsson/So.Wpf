@@ -7,8 +7,8 @@
     {
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
             "Value",
-            typeof (object),
-            typeof (DpSubscriber),
+            typeof(object),
+            typeof(DpSubscriber),
             new PropertyMetadata(null, Notify));
 
         private Binding _binding;
@@ -40,11 +40,11 @@
         }
         private static void Notify(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((DpSubscriber)d).OnValueChanged( e);
+            ((DpSubscriber)d).OnValueChanged(e);
         }
         public void Dispose()
         {
-            BindingOperations.ClearBinding(this,ValueProperty);
+            BindingOperations.ClearBinding(this, ValueProperty);
             _binding = null;
         }
     }

@@ -187,7 +187,7 @@
             get { return RenderTransformOrigin.X; }
             set
             {
-                RenderTransformOrigin = new Point(value,RenderTransformOrigin.Y);
+                RenderTransformOrigin = new Point(value, RenderTransformOrigin.Y);
                 OnPropertyChanged();
             }
         }
@@ -205,7 +205,7 @@
             get { return _renderTransformOrigin; }
             private set
             {
-                if(Equals(_renderTransformOrigin,value))
+                if (Equals(_renderTransformOrigin, value))
                     return;
                 _renderTransformOrigin = value;
                 OnPropertyChanged();

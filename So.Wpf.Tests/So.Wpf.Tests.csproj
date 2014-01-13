@@ -64,11 +64,6 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="DpSubscriberTests.cs" />
-    <Compile Include="Prototypes\Script1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Script1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Prototypes\WeakEventManagerTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -80,11 +75,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Prototypes\Script1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Script1.cs</LastGenOutput>
-      <LastOutputs>.\Script1.cs</LastOutputs>
-    </None>
     <None Include="Prototypes\WeakEventManagerTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>WeakEventManagerTemplate.cs</LastGenOutput>

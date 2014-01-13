@@ -85,7 +85,7 @@
                     if (!groupScrollViewers.Any())
                     {
                         AddFirst((string)e.NewValue, scrollViewer);
-                        WeakEventManager<ScrollViewer, ScrollChangedEventArgs>.AddHandler(scrollViewer,"ScrollChanged" , ScrollViewer_ScrollChanged);
+                        WeakEventManager<ScrollViewer, ScrollChangedEventArgs>.AddHandler(scrollViewer, "ScrollChanged", ScrollViewer_ScrollChanged);
                         return;
                     }
                     if (groupScrollViewers.Add(scrollViewer))
