@@ -240,7 +240,7 @@
             
             <TabItem Header="AngularGradientEffect">
                 <Grid>
-                    <Ellipse x:Name="ShaderEllipse" Stroke="Red" StrokeThickness="30">
+                    <Ellipse x:Name="ShaderEllipse" Stroke="Red" StrokeThickness="15">
                         <Ellipse.Effect>
                             <effects:AngularGradientEffect PrimaryColor="Red" SecondaryColor="Transparent"/>
                         </Ellipse.Effect>
