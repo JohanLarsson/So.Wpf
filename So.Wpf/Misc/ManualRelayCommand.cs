@@ -4,14 +4,17 @@
     using System.Windows;
     public class ManualRelayCommand : RelayCommandBase
     {
-        public ManualRelayCommand(Action<object> action, Predicate<object> condition)
+        private readonly bool _raiseCanExecuteOnDispatcher;
+        public ManualRelayCommand(Action<object> action, Predicate<object> condition, bool raiseCanExecuteOnDispatcher = true)
             : base(action, condition)
         {
+            _raiseCanExecuteOnDispatcher = raiseCanExecuteOnDispatcher;
         }
 
-        public ManualRelayCommand(Action<object> action)
+        public ManualRelayCommand(Action<object> action, bool raiseCanExecuteOnDispatcher = true)
             : base(action)
         {
+            _raiseCanExecuteOnDispatcher = raiseCanExecuteOnDispatcher;
         }
 
         public override event EventHandler CanExecuteChanged
@@ -31,7 +34,14 @@
             EventHandler handler = InternalCanExecuteChanged;
             if (handler != null)
             {
-                Application.Current.Dispatcher.Invoke(() => handler(this, new EventArgs()));
+                if (_raiseCanExecuteOnDispatcher)
+                {
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() => handler(this, new EventArgs())));
+                }
+                else
+                {
+                    handler(this, new EventArgs());
+                }
             }
         }
         private class InternalCanExecuteChangedEventManager : WeakEventManager

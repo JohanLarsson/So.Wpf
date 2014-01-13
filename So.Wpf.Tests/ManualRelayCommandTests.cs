@@ -14,7 +14,7 @@ namespace So.Wpf.Tests
         [Test]
         public void CheckWeakTest()
         {
-            var command = new ManualRelayCommand(o => { });
+            var command = new ManualRelayCommand(o => { }, false);
             var subscriber = new CommandSubscriber(command);
             WeakReference wr = new WeakReference(subscriber);
             Assert.IsTrue(wr.IsAlive);
@@ -28,9 +28,9 @@ namespace So.Wpf.Tests
         [Test]
         public void TwoCommandsTest()
         {
-            var command1 = new ManualRelayCommand(o => { });
+            var command1 = new ManualRelayCommand(o => { }, false);
             var subscriber1 = new CommandSubscriber(command1);
-            var command2 = new ManualRelayCommand(o => { });
+            var command2 = new ManualRelayCommand(o => { }, false);
             var subscriber2 = new CommandSubscriber(command2);
             command1.RaiseCanExecuteChanged();
             command2.RaiseCanExecuteChanged();
