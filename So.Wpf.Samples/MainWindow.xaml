@@ -239,12 +239,22 @@
             </TabItem>
             
             <TabItem Header="AngularGradientEffect">
-                <Grid>
-                    <Ellipse x:Name="ShaderEllipse" Stroke="Red" StrokeThickness="15">
+                <Grid ap:Grid.Rows="* Auto Auto" ap:Grid.Columns="Auto *">
+                    <Ellipse ap:Grid.Cell="0 0" 
+                             Grid.ColumnSpan="2" 
+                             Stroke="Red" 
+                             StrokeThickness="15">
                         <Ellipse.Effect>
-                            <effects:AngularGradientEffect PrimaryColor="Red" SecondaryColor="Transparent"/>
+                            <effects:AngularGradientEffect StartColor="Red" 
+                                                           EndColor="Transparent" 
+                                                           StartAngle="{Binding ElementName=StartAngle, Path=Value}"
+                                                           EndAngle="{Binding ElementName=EndAngle, Path=Value}"/>
                         </Ellipse.Effect>
                     </Ellipse>
+                    <Label ap:Grid.Cell="1 0" Content="StartAngle:"/>
+                    <Slider x:Name="StartAngle" ap:Grid.Cell="1 1" Minimum="0" Maximum="360"/>
+                    <Label ap:Grid.Cell="2 0" Content="StartAngle:"/>
+                    <Slider x:Name="EndAngle" ap:Grid.Cell="2 1" Minimum="0" Maximum="360" Value="360"/>
                 </Grid>
             </TabItem>
             

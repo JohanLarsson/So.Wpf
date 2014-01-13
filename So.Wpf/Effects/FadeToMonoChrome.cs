@@ -24,7 +24,7 @@ namespace So.Wpf.Effects
         public FadeToMonochrome()
         {
             PixelShader pixelShader = new PixelShader();
-            pixelShader.UriSource = PackUriHelper.CreatePartUri(new Uri("Effects/FadeToMonochrome.ps"));
+            pixelShader.UriSource = new Uri("/So.Wpf;component/Effects/FadeToMonochrome.ps", UriKind.Relative);
             this.PixelShader = pixelShader;
 
             this.UpdateShaderValue(InputProperty);

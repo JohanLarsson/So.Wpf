@@ -9,16 +9,45 @@ namespace So.Wpf.Effects
 
     public class AngularGradientEffect : ShaderEffect
     {
-        public static readonly DependencyProperty InputProperty = ShaderEffect.RegisterPixelShaderSamplerProperty("Input", typeof(AngularGradientEffect), 0);
-        public static readonly DependencyProperty CenterPointProperty = DependencyProperty.Register("CenterPoint", typeof(Point), typeof(AngularGradientEffect), new UIPropertyMetadata(new Point(0.5D, 0.5D), PixelShaderConstantCallback(0)));
-        public static readonly DependencyProperty StartColorProperty = DependencyProperty.Register("StartColor", typeof(Color), typeof(AngularGradientEffect), new UIPropertyMetadata(Color.FromArgb(255, 0, 0, 255), PixelShaderConstantCallback(1)));
-        public static readonly DependencyProperty EndColorProperty = DependencyProperty.Register("EndColor", typeof(Color), typeof(AngularGradientEffect), new UIPropertyMetadata(Color.FromArgb(255, 255, 0, 0), PixelShaderConstantCallback(2)));
-        public static readonly DependencyProperty StartAngleProperty = DependencyProperty.Register("StartAngle", typeof(double), typeof(AngularGradientEffect), new UIPropertyMetadata(((double)(0D)), PixelShaderConstantCallback(3)));
-        public static readonly DependencyProperty EndAngleProperty = DependencyProperty.Register("EndAngle", typeof(double), typeof(AngularGradientEffect), new UIPropertyMetadata(((double)(360D)), PixelShaderConstantCallback(4)));
+        public static readonly DependencyProperty InputProperty = ShaderEffect.RegisterPixelShaderSamplerProperty(
+            "Input", 
+            typeof(AngularGradientEffect),
+            0);
+
+        public static readonly DependencyProperty CenterPointProperty = DependencyProperty.Register(
+            "CenterPoint", 
+            typeof(Point), 
+            typeof(AngularGradientEffect),
+            new UIPropertyMetadata(new Point(0.5D, 0.5D), PixelShaderConstantCallback(0)));
+
+        public static readonly DependencyProperty StartColorProperty = DependencyProperty.Register(
+            "StartColor",
+            typeof(Color),
+            typeof(AngularGradientEffect), 
+            new UIPropertyMetadata(Color.FromArgb(255, 0, 0, 255), PixelShaderConstantCallback(1)));
+
+        public static readonly DependencyProperty EndColorProperty = DependencyProperty.Register(
+            "EndColor", 
+            typeof(Color), 
+            typeof(AngularGradientEffect), 
+            new UIPropertyMetadata(Color.FromArgb(255, 255, 0, 0), PixelShaderConstantCallback(2)));
+
+        public static readonly DependencyProperty StartAngleProperty = DependencyProperty.Register(
+            "StartAngle",
+            typeof(double),
+            typeof(AngularGradientEffect),
+            new UIPropertyMetadata(((double)(0D)), PixelShaderConstantCallback(3)));
+
+        public static readonly DependencyProperty EndAngleProperty = DependencyProperty.Register(
+            "EndAngle", 
+            typeof(double),
+            typeof(AngularGradientEffect),
+            new UIPropertyMetadata(((double)(360D)), PixelShaderConstantCallback(4)));
+
         public AngularGradientEffect()
         {
             PixelShader pixelShader = new PixelShader();
-            pixelShader.UriSource = PackUriHelper.CreatePartUri(new Uri("Effects/AngularGradientEffect.ps"));
+            pixelShader.UriSource = new Uri("/So.Wpf;component/Effects/AngularGradientEffect.ps", UriKind.Relative);
 
             this.PixelShader = pixelShader;
 
