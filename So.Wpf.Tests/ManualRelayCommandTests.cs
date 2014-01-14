@@ -5,7 +5,6 @@ using So.Wpf.Misc;
 
 namespace So.Wpf.Tests
 {
-    [RequiresSTA, Explicit("Can't test it whith dispatcher invoke")]
     public class ManualRelayCommandTests
     {
         /// <summary>

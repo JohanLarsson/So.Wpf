@@ -8,13 +8,15 @@
         private readonly Predicate<object> _condition;
 
         protected RelayCommandBase(Action<object> action, Predicate<object> condition)
+            :this(action)
         {
-            _action = action;
             _condition = condition ?? (o => true);
         }
 
         protected RelayCommandBase(Action<object> action)
         {
+            if (action == null)
+                throw new ArgumentNullException("action");
             _action = action;
             _condition = (o) => true;
         }

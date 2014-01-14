@@ -46,24 +46,18 @@
         }
         private class InternalCanExecuteChangedEventManager : WeakEventManager
         {
+            private static readonly InternalCanExecuteChangedEventManager Manager = new InternalCanExecuteChangedEventManager();
             static InternalCanExecuteChangedEventManager()
             {
-                SetCurrentManager(typeof(InternalCanExecuteChangedEventManager), new InternalCanExecuteChangedEventManager());
-            }
-            private static InternalCanExecuteChangedEventManager CurrentManager
-            {
-                get
-                {
-                    return (InternalCanExecuteChangedEventManager)GetCurrentManager(typeof(InternalCanExecuteChangedEventManager));
-                }
+                SetCurrentManager(typeof(InternalCanExecuteChangedEventManager), Manager);
             }
             internal static void AddHandler(ManualRelayCommand source, EventHandler handler)
             {
-                CurrentManager.ProtectedAddHandler(source, handler);
+                Manager.ProtectedAddHandler(source, handler);
             }
             internal static void RemoveHandler(ManualRelayCommand source, EventHandler handler)
             {
-                CurrentManager.ProtectedRemoveHandler(source, handler);
+                Manager.ProtectedRemoveHandler(source, handler);
             }
             ////protected override ListenerList NewListenerList()
             ////{

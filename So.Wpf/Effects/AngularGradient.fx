@@ -34,9 +34,15 @@ float4 main(float2 uv : TEXCOORD) : COLOR
 	float degAngle =degrees((atan2(p.y,-1* p.x) + PI));
 	float diff = EndAngle - StartAngle;
 	float b = (degAngle - StartAngle) /diff;
-	float3 f = lerp(StartColor.rgb, EndColor.rgb, b);
-	float4 color = float4(src.a < 0.01 
-								? float3(0, 0, 0) // WPF uses pre-multiplied alpha everywhere internally for a number of performance reasons.
-								: f, src.a < 0.01 ? 0 : src.a);
-	return color;
+	
+	if(src.a < 0.01 || b < 0 || b > 1)
+  {
+  	return float4(0,0,0,0); // WPF uses pre-multiplied alpha everywhere internally for a number of performance reasons.
+  }
+  else
+  {
+	  float3 f = lerp(StartColor.rgb, EndColor.rgb, b);
+	  return float4(f, src.a);
+  }
+
 }
