@@ -11,7 +11,7 @@ namespace So.Wpf.Effects
     {
         public static readonly DependencyProperty InputProperty = ShaderEffect.RegisterPixelShaderSamplerProperty(
             "Input", 
-            typeof(AngularGradientEffect),
+            typeof(AngularGradientEffect), 
             0);
 
         public static readonly DependencyProperty CenterPointProperty = DependencyProperty.Register(
@@ -21,25 +21,25 @@ namespace So.Wpf.Effects
             new UIPropertyMetadata(new Point(0.5D, 0.5D), PixelShaderConstantCallback(0)));
 
         public static readonly DependencyProperty StartColorProperty = DependencyProperty.Register(
-            "StartColor",
+            "StartColor", 
             typeof(Color),
-            typeof(AngularGradientEffect), 
+            typeof(AngularGradientEffect),
             new UIPropertyMetadata(Color.FromArgb(255, 0, 0, 255), PixelShaderConstantCallback(1)));
 
         public static readonly DependencyProperty EndColorProperty = DependencyProperty.Register(
             "EndColor", 
-            typeof(Color), 
+            typeof(Color),
             typeof(AngularGradientEffect), 
             new UIPropertyMetadata(Color.FromArgb(255, 255, 0, 0), PixelShaderConstantCallback(2)));
 
         public static readonly DependencyProperty StartAngleProperty = DependencyProperty.Register(
-            "StartAngle",
-            typeof(double),
+            "StartAngle", 
+            typeof(double), 
             typeof(AngularGradientEffect),
             new UIPropertyMetadata(((double)(0D)), PixelShaderConstantCallback(3)));
 
-        public static readonly DependencyProperty EndAngleProperty = DependencyProperty.Register(
-            "EndAngle", 
+        public static readonly DependencyProperty ArcLengthProperty = DependencyProperty.Register(
+            "ArcLength", 
             typeof(double),
             typeof(AngularGradientEffect),
             new UIPropertyMetadata(((double)(360D)), PixelShaderConstantCallback(4)));
@@ -48,7 +48,6 @@ namespace So.Wpf.Effects
         {
             PixelShader pixelShader = new PixelShader();
             pixelShader.UriSource = new Uri("/So.Wpf;component/Effects/AngularGradientEffect.ps", UriKind.Relative);
-
             this.PixelShader = pixelShader;
 
             this.UpdateShaderValue(InputProperty);
@@ -56,7 +55,7 @@ namespace So.Wpf.Effects
             this.UpdateShaderValue(StartColorProperty);
             this.UpdateShaderValue(EndColorProperty);
             this.UpdateShaderValue(StartAngleProperty);
-            this.UpdateShaderValue(EndAngleProperty);
+            this.UpdateShaderValue(ArcLengthProperty);
         }
         public Brush Input
         {
@@ -93,7 +92,7 @@ namespace So.Wpf.Effects
                 this.SetValue(StartColorProperty, value);
             }
         }
-        /// <summary>The primary color of the gradient. </summary>
+        /// <summary>The secondary color of the gradient. </summary>
         public Color EndColor
         {
             get
@@ -117,16 +116,16 @@ namespace So.Wpf.Effects
                 this.SetValue(StartAngleProperty, value);
             }
         }
-        /// <summary>The end angle of the gradient, counterclockwise from X-axis</summary>
-        public double EndAngle
+        /// <summary>The arc length angle of the gradient, counterclockwise from X-axis</summary>
+        public double ArcLength
         {
             get
             {
-                return ((double)(this.GetValue(EndAngleProperty)));
+                return ((double)(this.GetValue(ArcLengthProperty)));
             }
             set
             {
-                this.SetValue(EndAngleProperty, value);
+                this.SetValue(ArcLengthProperty, value);
             }
         }
     }

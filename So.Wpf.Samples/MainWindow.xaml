@@ -248,13 +248,13 @@
                             <effects:AngularGradientEffect StartColor="Red" 
                                                            EndColor="Transparent" 
                                                            StartAngle="{Binding ElementName=StartAngle, Path=Value}"
-                                                           EndAngle="{Binding ElementName=EndAngle, Path=Value}"/>
+                                                           ArcLength="{Binding ElementName=EndAngle, Path=Value}"/>
                         </Ellipse.Effect>
                     </Ellipse>
                     <Label ap:Grid.Cell="1 0" Content="StartAngle:"/>
                     <Slider x:Name="StartAngle" ap:Grid.Cell="1 1" Minimum="0" Maximum="360"/>
                     <Label ap:Grid.Cell="2 0" Content="StartAngle:"/>
-                    <Slider x:Name="EndAngle" ap:Grid.Cell="2 1" Minimum="0" Maximum="360" Value="360"/>
+                    <Slider x:Name="EndAngle" ap:Grid.Cell="2 1" Minimum="-360" Maximum="360" Value="360"/>
                 </Grid>
             </TabItem>
 
